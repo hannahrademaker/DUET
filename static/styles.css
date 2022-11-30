@@ -7,9 +7,21 @@ form {
   flex-direction: column;
 }
 
+#login-page {
+  width: 30%;
+  align-items: center;
+  justify-content: center;
+}
+
 form > * {
   margin: 1rem;
 }
+
+/*div {*/
+/*  background-image: url(/fs-app-template-flex-hooks/duetimg/28RIHANNA-superJumbo.jpg);*/
+/*  background-size: 150px;*/
+/*  background-color: white;*/
+/*}*/
 
 nav {
   display: flex;
