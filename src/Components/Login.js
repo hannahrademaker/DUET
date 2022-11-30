@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { attemptLogin } from '../store';
 import { useDispatch } from 'react-redux';
+import {Button} from '@mui/material'
 
 const Login = ()=> {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const Login = ()=> {
           value={ credentials.password }
           onChange = { onChange }
         />
-        <button>Login</button>
+        <Button variant='contained'>Login</Button>
       </form>
     </div>
   );
