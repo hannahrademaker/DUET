@@ -4,6 +4,7 @@ import Login from './Login';
 import { useSelector, useDispatch } from 'react-redux';
 import { loginWithToken } from '../store';
 import { Link, Routes, Route } from 'react-router-dom';
+import {Box, AppBar, Toolbar, Typography, Button, IconButton} from '@mui/material';
 
 
 const App = ()=> {
@@ -14,7 +15,8 @@ const App = ()=> {
   }, []);
 
   return (
-    <div>
+    <Box sx={{ flexGrow: 1}}>
+      <AppBar position='static'>
       <h1>DUET: The Ultimate Events Social</h1>
       {
         auth.id ? <Home /> : <Login id='login-page' />
@@ -28,7 +30,8 @@ const App = ()=> {
           </div>
         )
       }
-    </div>
+      </AppBar>
+    </Box>
   );
 };
 
