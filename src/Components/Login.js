@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { attemptLogin } from '../store';
 import { useDispatch } from 'react-redux';
-import {Button, TextField} from '@mui/material'
 
 const Login = ()=> {
   const dispatch = useDispatch();
@@ -22,24 +21,19 @@ const Login = ()=> {
     <div>
       <h2>Login</h2>
       <form onSubmit={ login }>
-        <TextField
-          variant='outlined'
-          margin='dense'
-          label='username'
+        <input
+          placeholder='username'
           value = { credentials.username }
           name = 'username'
           onChange = { onChange }
           />
-        <TextField
-          variant='outlined'
-          margin='dense'
-          type='password'
-          label='password'
+        <input
+          placeholder='password'
           name = 'password'
           value={ credentials.password }
           onChange = { onChange }
         />
-        <Button type='submit' variant='contained'>Login</Button>
+        <button>Login</button>
       </form>
     </div>
   );
