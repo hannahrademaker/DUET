@@ -1,39 +1,50 @@
-import React, { useState } from 'react';
-import { attemptLogin } from '../store';
-import { useDispatch } from 'react-redux';
+import React, { useState } from "react";
+import { attemptLogin } from "../store";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Button, TextField } from "@mui/material";
 
-const Login = ()=> {
+const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
-    username: '',
-    password: ''
+    username: "",
+    password: "",
   });
 
-  const onChange = ev => {
-    setCredentials({...credentials, [ ev.target.name ]: ev.target.value });
+  const onChange = (ev) => {
+    setCredentials({ ...credentials, [ev.target.name]: ev.target.value });
   };
 
-  const login = (ev)=> {
+  const login = (ev) => {
     ev.preventDefault();
     dispatch(attemptLogin(credentials));
+    navigate("/");
   };
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={ login }>
-        <input
-          placeholder='username'
-          value = { credentials.username }
-          name = 'username'
-          onChange = { onChange }
-          />
-        <input
-          placeholder='password'
-          name = 'password'
-          value={ credentials.password }
-          onChange = { onChange }
+      <form onSubmit={login}>
+        <TextField
+          variant="outlined"
+          margin="dense"
+          label="username"
+          value={credentials.username}
+          name="username"
+          onChange={onChange}
         />
-        <button>Login</button>
+        <TextField
+          variant="outlined"
+          margin="dense"
+          type="password"
+          label="password"
+          name="password"
+          value={credentials.password}
+          onChange={onChange}
+        />
+        <Button type="submit" variant="contained">
+          Login
+        </Button>
       </form>
     </div>
   );
