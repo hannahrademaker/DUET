@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Home from "./Home";
 import Login from "./Login";
+import LoggedOut from "./LoggedOut";
 import { useSelector, useDispatch } from "react-redux";
 import { loginWithToken } from "../store";
 import { Link, Routes, Route } from "react-router-dom";
@@ -26,7 +27,6 @@ const AppProps = (props) => {
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Login</DialogTitle>
       <Login />
     </Dialog>
   );
@@ -75,6 +75,7 @@ const App = () => {
           )}
         </Toolbar>
       </AppBar>
+      {!!auth.id ? <Home /> : <LoggedOut />}
       <Routes>
         <Route path="/register" element={<Register />} />
       </Routes>
