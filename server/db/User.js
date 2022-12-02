@@ -44,13 +44,31 @@ const User = conn.define('user', {
       }
       return `${prefix}${data}`;
     }
-  }
+  },
+    description:{
+    type: TEXT
+  },
+  email: {
+    type: STRING,
+    validate: {
+      //isEmail: true
+    }
+  },
+  firstName:{
+    type: STRING,
+  },
+  lastName: {
+    type: STRING
+  },
+  // profileImage: {
+    
+  // }
 });
 
 User.prototype.createOrder = async function(){
   const cart = await this.getCart();
   cart.isCart = false;
-  await cart.save();
+   await cart.save();
   return cart;
 
 }
