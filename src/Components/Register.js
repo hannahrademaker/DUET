@@ -24,7 +24,7 @@ const Register = () => {
   };
   return (
     <div className="register">
-      <h4>register</h4>
+      <h2>register</h2>
       <form onSubmit={login}>
         <TextField
           id="standard-basic"
@@ -46,8 +46,12 @@ const Register = () => {
           onChange={onChange}
         />
         <br />
-        <Button type="submit" variant="text" style={{ textTransform: "none" }}>
-          create account
+        <Button
+          type="submit"
+          variant="contained"
+          style={{ textTransform: "none" }}
+        >
+          Create Account
         </Button>
       </form>
     </div>
