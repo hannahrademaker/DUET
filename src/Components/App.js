@@ -16,6 +16,7 @@ import {
   Dialog,
   DialogTitle,
 } from "@mui/material";
+import Register from "./Register";
 
 const AppProps = (props) => {
   const { onClose, open } = props;
@@ -60,6 +61,11 @@ const App = () => {
               <Button color="inherit" onClick={handleLoginOpen}>
                 Login
               </Button>
+              <Button color="inherit">
+                <Link to="/register" className="register-btn">
+                  Register
+                </Link>
+              </Button>
               <AppProps open={open} onClose={handleClose} />
             </>
           ) : (
@@ -70,6 +76,9 @@ const App = () => {
         </Toolbar>
       </AppBar>
       {!!auth.id ? <Home /> : <LoggedOut />}
+      <Routes>
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </Box>
   );
 };
