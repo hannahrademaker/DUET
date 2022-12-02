@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { attemptLogin } from "../store";
+import { register } from "../store";
 import { useDispatch } from "react-redux";
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField } from "@mui/material";
 
-const Login = () => {
+const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
@@ -18,36 +19,39 @@ const Login = () => {
 
   const login = (ev) => {
     ev.preventDefault();
-    dispatch(attemptLogin(credentials));
+    dispatch(register(credentials));
     navigate("/");
   };
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="register">
+      <h4>register</h4>
       <form onSubmit={login}>
         <TextField
-          variant="outlined"
-          margin="dense"
-          label="username"
+          id="standard-basic"
+          variant="standard"
+          placeholder="username"
           value={credentials.username}
           name="username"
           onChange={onChange}
         />
+        <br />
         <TextField
-          variant="outlined"
-          margin="dense"
+          id="standard-password-input"
+          autoComplete="current-password"
+          variant="standard"
+          placeholder="password"
           type="password"
-          label="password"
           name="password"
           value={credentials.password}
           onChange={onChange}
         />
-        <Button type="submit" variant="contained">
-          Login
+        <br />
+        <Button type="submit" variant="text" style={{ textTransform: "none" }}>
+          create account
         </Button>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;
