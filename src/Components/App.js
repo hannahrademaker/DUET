@@ -17,6 +17,12 @@ const theme = createTheme({
     // secondary: {
     //   main:
     // }
+    error: {
+      main: "#E43397",
+    },
+    success: {
+      main: "#00C4CC",
+    },
   },
 });
 
@@ -27,7 +33,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Nav />
       <Routes>
-        <Route path="/map" element={<Map />} />
+        <Route path="/map" element={!!auth.id ? <Map /> : null} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={!!auth.id ? <Home /> : <LoggedOut />} />
       </Routes>

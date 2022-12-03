@@ -5,7 +5,7 @@ import Map from "./Map";
 import LoggedOut from "./LoggedOut";
 import { useSelector, useDispatch } from "react-redux";
 import { loginWithToken } from "../store";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import { logout } from "../store";
 import {
   Box,
@@ -35,6 +35,8 @@ const NavProps = (props) => {
 const Nav = () => {
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(loginWithToken());
   }, []);
@@ -47,6 +49,11 @@ const Nav = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const _logout = () => {
+    dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -71,15 +78,17 @@ const Nav = () => {
               <NavProps open={open} onClose={handleClose} />
             </>
           ) : (
-            <Button color="inherit" onClick={() => dispatch(logout())}>
-              Logout
-            </Button>
+            <>
+              <Button color="inherit">
+                <Link className="link" to="/map">
+                  Map
+                </Link>
+              </Button>
+              <Button color="inherit" onClick={() => _logout()}>
+                Logout
+              </Button>
+            </>
           )}{" "}
-          <Button color="inherit">
-            <Link className="link" to="/map">
-              Map
-            </Link>
-          </Button>
         </Toolbar>
       </AppBar>
     </Box>
