@@ -24,7 +24,7 @@ const Register = () => {
   };
   return (
     <div className="register">
-      <h2>register</h2>
+      <h2>Register</h2>
       <form onSubmit={login}>
         <TextField
           id="standard-basic"
