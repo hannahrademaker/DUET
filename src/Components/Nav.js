@@ -54,7 +54,7 @@ const Nav = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            <Link to="/" className="link">
               DUET: The Ultimate Events Social
             </Link>
           </Typography>
@@ -64,11 +64,7 @@ const Nav = () => {
                 Login
               </Button>
               <Button color="inherit">
-                <Link
-                  to="/register"
-                  className="register-btn"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
+                <Link to="/register" className="link">
                   Register
                 </Link>
               </Button>
@@ -80,7 +76,7 @@ const Nav = () => {
             </Button>
           )}{" "}
           <Button color="inherit">
-            <Link to="/map" style={{ textDecoration: "none", color: "white" }}>
+            <Link className="link" to="/map">
               Map
             </Link>
           </Button>
