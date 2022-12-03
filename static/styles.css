@@ -25,3 +25,9 @@ nav {
   text-decoration: none;
   color: inherit;
 }
+
+.avatar-preview {
+  width: 50px;
+  height: auto;
+  border-radius: 50px;
+}

@@ -84,6 +84,11 @@ const Nav = () => {
                   Map
                 </Link>
               </Button>
+              <Button color="inherit">
+                <Link className="link" to="/user/">
+                  Profile
+                </Link>
+              </Button>
               <Button color="inherit" onClick={() => _logout()}>
                 Logout
               </Button>
