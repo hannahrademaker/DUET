@@ -1,5 +1,5 @@
 const conn = require("./conn");
-const { STRING, UUID, UUIDV4, TEXT, BOOLEAN, BLOB } = conn.Sequelize;
+const { STRING, UUID, UUIDV4, TEXT, BOOLEAN, INTEGER } = conn.Sequelize;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT;
@@ -50,7 +50,7 @@ const User = conn.define("user", {
   email: {
     type: STRING,
     validate: {
-      //isEmail: true
+      isEmail: true,
     },
   },
   firstName: {
@@ -59,8 +59,25 @@ const User = conn.define("user", {
   lastName: {
     type: STRING,
   },
-  profileImage: {
-    type: TEXT,
+  address: {
+    type: STRING,
+    defaultValue: "123 Maple Street",
+  },
+  addressDetails: {
+    type: STRING,
+    defaultValue: "",
+  },
+  city: {
+    type: STRING,
+    defaultValue: "Anytown",
+  },
+  state: {
+    type: STRING,
+    defaultValue: "NY",
+  },
+  zip: {
+    type: INTEGER,
+    defaultValue: 10036,
   },
 });
 

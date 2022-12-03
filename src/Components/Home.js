@@ -21,6 +21,7 @@ const Home = () => {
       <h1>Home</h1>
       <div>
         Welcome {auth.username}!!
+        <img src={auth.avatar} alt="moe" width="200" height="200" />
         <button onClick={() => dispatch(logout())}>Logout</button>
       </div>
     </div>
