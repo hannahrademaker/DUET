@@ -54,7 +54,9 @@ const Nav = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            DUET: The Ultimate Events Social
+            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+              DUET: The Ultimate Events Social
+            </Link>
           </Typography>
           {!auth.id ? (
             <>
@@ -62,7 +64,11 @@ const Nav = () => {
                 Login
               </Button>
               <Button color="inherit">
-                <Link to="/register" className="register-btn">
+                <Link
+                  to="/register"
+                  className="register-btn"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
                   Register
                 </Link>
               </Button>
@@ -73,10 +79,13 @@ const Nav = () => {
               Logout
             </Button>
           )}{" "}
-          <Link to="/map">Map</Link>
+          <Button color="inherit">
+            <Link to="/map" style={{ textDecoration: "none", color: "white" }}>
+              Map
+            </Link>
+          </Button>
         </Toolbar>
       </AppBar>
-      {!!auth.id ? <Home /> : <LoggedOut />}
     </Box>
   );
 };
