@@ -11,6 +11,14 @@ const Register = () => {
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    address: "",
+    addressDetails: "",
+    city: "",
+    state: "",
+    zip: "",
   });
 
   const onChange = (ev) => {
@@ -43,6 +51,87 @@ const Register = () => {
           type="password"
           name="password"
           value={credentials.password}
+          onChange={onChange}
+        />
+        <br />
+        <TextField
+          id="standard-email-input"
+          autoComplete="email"
+          variant="standard"
+          placeholder="email"
+          type="email"
+          name="email"
+          value={credentials.email}
+          onChange={onChange}
+        />
+        <br />
+        <TextField
+          id="standard-firstName-input"
+          autoComplete="firstName"
+          variant="standard"
+          placeholder="First Name"
+          name="firstName"
+          value={credentials.firstName}
+          onChange={onChange}
+        />
+        <br />
+        <TextField
+          id="standard-lastName-input"
+          autoComplete="lastName"
+          variant="standard"
+          placeholder="Last Name"
+          name="lastName"
+          value={credentials.lastName}
+          onChange={onChange}
+        />
+        <br />
+        <TextField
+          id="standard-address-input"
+          autoComplete="address"
+          variant="standard"
+          placeholder="Address"
+          name="address"
+          value={credentials.address}
+          onChange={onChange}
+        />
+        <br />
+        <TextField
+          id="standard-addressDetails-input"
+          autoComplete="addressDetails"
+          variant="standard"
+          placeholder="Apartment"
+          name="addressDetails"
+          value={credentials.addressDetails}
+          onChange={onChange}
+        />
+        <br />
+        <TextField
+          id="standard-city-input"
+          autoComplete="city"
+          variant="standard"
+          placeholder="City"
+          name="city"
+          value={credentials.city}
+          onChange={onChange}
+        />
+        <br />
+        <TextField
+          id="standard-state-input"
+          autoComplete="state"
+          variant="standard"
+          placeholder="State"
+          name="state"
+          value={credentials.state}
+          onChange={onChange}
+        />
+        <br />
+        <TextField
+          id="standard-zip-input"
+          autoComplete="zip"
+          variant="standard"
+          placeholder="Zip"
+          name="zip"
+          value={credentials.zip}
           onChange={onChange}
         />
         <br />
