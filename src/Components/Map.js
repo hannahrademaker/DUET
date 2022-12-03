@@ -3,11 +3,11 @@ import React, { useEffect, useMemo } from "react";
 import { loginWithToken } from "../store";
 import { Link } from "react-router-dom";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-// import mapStyles from "../mapStyles";
+import mapStyles from "../store/mapStyles";
 
 const libraries = ["places"];
 const options = {
-  //   styles: mapStyles,
+  styles: mapStyles,
   disableDefaultUI: true,
   zoomControl: true,
 };

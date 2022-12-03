@@ -17,11 +17,16 @@ nav {
 }
 
 .map-container {
-  width: 100%;
+  width: 50%;
   height: 100vh;
 }
 
 .link {
   text-decoration: none;
   color: inherit;
+}
+
+.logo {
+  height: 100px;
+  width: auto;
 }
