@@ -1,4 +1,5 @@
 import React from "react";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Register from "./Register";
 import Map from "./Map";
 import Nav from "./Nav";
@@ -7,18 +8,36 @@ import LoggedOut from "./LoggedOut";
 import { Link, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#12163F",
+      contrastText: "#ED3DC9",
+    },
+    // secondary: {
+    //   main:
+    // }
+    error: {
+      main: "#E43397",
+    },
+    success: {
+      main: "#00C4CC",
+    },
+  },
+});
+
 const App = () => {
   const { auth } = useSelector((state) => state);
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
       <Nav />
       <Routes>
-        <Route path="/map" element={<Map />} />
+        <Route path="/map" element={!!auth.id ? <Map /> : null} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={!!auth.id ? <Home /> : <LoggedOut />} />
       </Routes>
-    </div>
+    </ThemeProvider>
   );
 };
 

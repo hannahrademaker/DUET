@@ -5,7 +5,7 @@ import Map from "./Map";
 import LoggedOut from "./LoggedOut";
 import { useSelector, useDispatch } from "react-redux";
 import { loginWithToken } from "../store";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, useNavigate } from "react-router-dom";
 import { logout } from "../store";
 import {
   Box,
@@ -35,6 +35,8 @@ const NavProps = (props) => {
 const Nav = () => {
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     dispatch(loginWithToken());
   }, []);
@@ -49,12 +51,17 @@ const Nav = () => {
     setOpen(false);
   };
 
+  const _logout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            <Link to="/" className="link">
               DUET: The Ultimate Events Social
             </Link>
           </Typography>
@@ -64,26 +71,24 @@ const Nav = () => {
                 Login
               </Button>
               <Button color="inherit">
-                <Link
-                  to="/register"
-                  className="register-btn"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
+                <Link to="/register" className="link">
                   Register
                 </Link>
               </Button>
               <NavProps open={open} onClose={handleClose} />
             </>
           ) : (
-            <Button color="inherit" onClick={() => dispatch(logout())}>
-              Logout
-            </Button>
+            <>
+              <Button color="inherit">
+                <Link className="link" to="/map">
+                  Map
+                </Link>
+              </Button>
+              <Button color="inherit" onClick={() => _logout()}>
+                Logout
+              </Button>
+            </>
           )}{" "}
-          <Button color="inherit">
-            <Link to="/map" style={{ textDecoration: "none", color: "white" }}>
-              Map
-            </Link>
-          </Button>
         </Toolbar>
       </AppBar>
     </Box>
