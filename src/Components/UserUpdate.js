@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { updateAuth } from "../store";
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material/";
 
 const UserUpdate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { auth } = useSelector((state) => state);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -45,63 +48,94 @@ const UserUpdate = () => {
         </Link>
       </div>
       <form onSubmit={update}>
-        <label>First Name:</label>
-        <input
-          placeholder="Please enter a valid first name"
+        <TextField
+          id="standard-firstName-input"
+          autoComplete="firstName"
+          variant="standard"
+          placeholder="First Name"
+          name="firstName"
           value={firstName}
           onChange={(ev) => setFirstName(ev.target.value)}
         />
 
-        <label>Last Name:</label>
-        <input
-          placeholder="Please enter a valid last name"
+        <TextField
+          id="standard-lastName-input"
+          autoComplete="lastName"
+          variant="standard"
+          placeholder="Last Name"
+          name="lastName"
           value={lastName}
           onChange={(ev) => setLastName(ev.target.value)}
         />
-        <br />
-        <label>Email:</label>
-        <input
-          placeholder="Please enter your email"
+
+        <TextField
+          id="standard-email-input"
+          autoComplete="email"
+          variant="standard"
+          placeholder="Email"
+          type="email"
+          name="email"
           value={email}
           onChange={(ev) => setEmail(ev.target.value)}
         />
 
-        <label>Address Line 1:</label>
-        <input
-          placeholder="Street and number, P.O box, c/o"
+        <TextField
+          id="standard-address-input"
+          autoComplete="address"
+          variant="standard"
+          placeholder="Address"
+          name="address"
           value={address}
           onChange={(ev) => setAddress(ev.target.value)}
         />
 
-        <label>Address details:</label>
-        <input
-          placeholder="Apt, suite, unit, building, floor, etc."
+        <TextField
+          id="standard-addressDetails-input"
+          autoComplete="addressDetails"
+          variant="standard"
+          placeholder="Apartment"
+          name="addressDetails"
           value={addressDetails}
           onChange={(ev) => setAddressDetails(ev.target.value)}
         />
 
-        <label>City:</label>
-        <input
-          placeholder="Please enter your city"
+        <TextField
+          id="standard-city-input"
+          autoComplete="city"
+          variant="standard"
+          placeholder="City"
+          name="city"
           value={city}
           onChange={(ev) => setCity(ev.target.value)}
         />
 
-        <label>State:</label>
-        <input
-          placeholder="Please enter your state"
+        <TextField
+          id="standard-state-input"
+          autoComplete="state"
+          variant="standard"
+          placeholder="State"
+          name="state"
           value={state}
           onChange={(ev) => setState(ev.target.value)}
         />
 
-        <label>ZIP Code:</label>
-        <input
-          placeholder="Please enter your zipcode"
+        <TextField
+          id="standard-zip-input"
+          autoComplete="zip"
+          variant="standard"
+          placeholder="Zip"
+          name="zip"
           value={zip}
           onChange={(ev) => setZip(ev.target.value)}
         />
 
-        <button>Update</button>
+        <Button
+          type="submit"
+          variant="contained"
+          style={{ textTransform: "none" }}
+        >
+          Update
+        </Button>
       </form>
     </div>
   );
