@@ -46,9 +46,11 @@ nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  width: 50%;
 }
 
 .Events-list li {
+  list-style-type: none;
   flex: 0 0 45%;
   margin: 1em 0;
   padding: 1em;

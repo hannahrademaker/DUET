@@ -1,11 +1,11 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 const API_KEY = "fmAEcxmSvwqhltBAynkfzAyvdJLNg28X";
 
 const Events = (props) => {
-  const [userLocation, setUserLocation] = React.useState(null);
-  const [events, setEvents] = React.useState([]);
-  const [filter, setFilter] = React.useState(null);
+  const [userLocation, setUserLocation] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [filter, setFilter] = useState(null);
+  const [radius, setRadius] = useState(1);
 
   const filterEvents = (events) => {
     if (filter) {
@@ -16,7 +16,7 @@ const Events = (props) => {
     return events;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       setUserLocation({
         lat: position.coords.latitude,
@@ -25,10 +25,10 @@ const Events = (props) => {
     });
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (userLocation) {
       fetch(
-        `https://app.ticketmaster.com/discovery/v2/events.json?latlong=${userLocation.lat},${userLocation.lng}&radius=10&unit=miles&apikey=${API_KEY}`
+        `https://app.ticketmaster.com/discovery/v2/events.json?latlong=${userLocation.lat},${userLocation.lng}&radius=${radius}&unit=miles&apikey=${API_KEY}`
       )
         .then((response) => response.json())
         .then((data) => setEvents(data._embedded.events));
@@ -50,6 +50,15 @@ const Events = (props) => {
             <option value="Miscellaneous">Miscellaneous</option>
           </select>
         </label>
+        {/* <label>
+          Filter by radius:
+          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+            <option value="1">1 Mile</option>
+            <option value="5">5 Miles</option>
+            <option value="10">10 Miles</option>
+            <option value="20">20 Miles</option>
+          </select>
+        </label> */}
       </form>
       {userLocation && (
         <ul className="Events-list">
