@@ -10,19 +10,7 @@ const User = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="account-container">
-      <div className="profile-head">
-        <h3>Profile</h3>
-        <Link to="/user/update">
-          <Button
-            type="submit"
-            variant="contained"
-            style={{ textTransform: "none" }}
-          >
-            Edit Profile
-          </Button>
-        </Link>
-      </div>
+    <div>
       <div>
         <h4>Email address</h4>
         <p>{auth.email}</p>
@@ -41,6 +29,18 @@ const User = () => {
       <p>
         {auth.city}, {auth.state} {auth.zip}
       </p>
+      <div>
+        <h3>Profile</h3>
+        <Link to="/user/update">
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ textTransform: "none" }}
+          >
+            Edit Profile
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 };

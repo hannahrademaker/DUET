@@ -19,10 +19,7 @@ const Home = () => {
   return (
     <div>
       <h1>Home</h1>
-      <div>
-        Welcome {auth.username}!!
-        <img src={auth.avatar} alt="moe" width="200" height="200" />
-      </div>
+      <div>Welcome {auth.username}!!</div>
     </div>
   );
 };

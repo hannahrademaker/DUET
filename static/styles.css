@@ -31,3 +31,8 @@ nav {
   height: auto;
   border-radius: 50px;
 }
+
+.profile-image {
+  max-width: 25px;
+  border-radius: 25px;
+}
