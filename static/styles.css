@@ -30,3 +30,14 @@ nav {
   height: 100px;
   width: auto;
 }
+
+.avatar-preview {
+  width: 50px;
+  height: auto;
+  border-radius: 50px;
+}
+
+.profile-image {
+  max-width: 25px;
+  border-radius: 25px;
+}

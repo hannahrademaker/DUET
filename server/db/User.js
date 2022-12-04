@@ -32,14 +32,14 @@ const User = conn.define("user", {
   },
   avatar: {
     type: TEXT,
+    defaultValue: "",
     get: function () {
       const prefix = "data:image/png;base64,";
       const data = this.getDataValue("avatar");
-      if (!data) {
-        return data;
-      }
       if (data.startsWith(prefix)) {
         return data;
+      } else if (data === "") {
+        return null;
       }
       return `${prefix}${data}`;
     },
