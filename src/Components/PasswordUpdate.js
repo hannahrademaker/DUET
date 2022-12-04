@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { updateAuth } from "../store";
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material/";
 
 const PasswordUpdate = () => {
   const dispatch = useDispatch();
@@ -35,7 +37,13 @@ const PasswordUpdate = () => {
           onChange={(ev) => setPassword(ev.target.value)}
         />
 
-        <button>Change Password</button>
+        <Button
+          type="submit"
+          variant="contained"
+          style={{ textTransform: "none" }}
+        >
+          Change Password
+        </Button>
       </form>
     </div>
   );

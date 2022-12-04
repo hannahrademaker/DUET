@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { updateAuth } from "../store";
@@ -9,6 +9,9 @@ const UserUpdate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { auth } = useSelector((state) => state);
+
+  const [el, setEl] = useState(null);
+  const [data, setData] = useState("");
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -39,12 +42,38 @@ const UserUpdate = () => {
     }
   };
 
+  useEffect(() => {
+    if (el) {
+      el.addEventListener("change", (ev) => {
+        const file = ev.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.addEventListener("load", () => {
+          setData(reader.result);
+        });
+      });
+    }
+  }, [el]);
+
+  const save = async (ev) => {
+    ev.preventDefault();
+    await dispatch(updateAuth({ avatar: data }));
+    el.value = "";
+    setData("");
+  };
+
   return (
     <div className="account-update">
       <div className="profile-head">
         <h3>Profile</h3>
         <Link to="/user/password">
-          <button>Change Password</button>
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ textTransform: "none" }}
+          >
+            Change Password
+          </Button>
         </Link>
       </div>
       <form onSubmit={update}>
@@ -137,6 +166,20 @@ const UserUpdate = () => {
           Update
         </Button>
       </form>
+      <form className="avatar-form" onSubmit={save}>
+        <input type="file" ref={(x) => setEl(x)} />
+
+        <Button
+          type="submit"
+          variant="contained"
+          style={{ textTransform: "none" }}
+          disabled={!data}
+        >
+          Upload Avatar
+        </Button>
+      </form>
+      {data ? <h6>Avatar Preview</h6> : null}
+      <img src={data} className={data ? "avatar-preview" : null} />
     </div>
   );
 };
