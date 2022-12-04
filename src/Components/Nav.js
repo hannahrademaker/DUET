@@ -92,6 +92,9 @@ const Nav = () => {
               <Button color="inherit" onClick={() => _logout()}>
                 Logout
               </Button>
+              {!!auth.avatar && (
+                <img className="profile-image" src={auth.avatar} />
+              )}
             </>
           )}{" "}
         </Toolbar>
