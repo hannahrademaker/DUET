@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, fetchTicketMasterEvents } from "../store";
 import axios from "axios";
+import Events from "./Events";
 
 const Home = () => {
   const { auth } = useSelector((state) => state);
@@ -20,6 +21,7 @@ const Home = () => {
     <div>
       <h1>Home</h1>
       <div>Welcome {auth.username}!!</div>
+      <Events />
     </div>
   );
 };

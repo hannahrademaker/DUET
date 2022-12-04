@@ -62,7 +62,7 @@ const Nav = () => {
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to="/" className="link">
-              DUET: The Ultimate Events Social
+              <img className="logo" src="./static/logo.png" />
             </Link>
           </Typography>
           {!auth.id ? (
