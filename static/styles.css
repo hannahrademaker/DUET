@@ -46,14 +46,14 @@ nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 50%;
+  width: 90%;
 }
 
 .Events-list li {
   list-style-type: none;
-  flex: 0 0 45%;
-  margin: 1em 0;
-  padding: 1em;
+  flex: 0 0 25%;
+  margin: 1rem;
+  padding: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -65,4 +65,27 @@ nav {
 .Events-list img {
   max-width: 100%;
   height: auto;
+}
+
+.welcome {
+  font-size: 3rem;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+  margin-left: 10rem;
+  margin-right: 10rem;
+}
+
+.duet {
+  color: #00c4cc;
+}
+
+.welcomeP {
+  text-align: center;
+}
+
+.background {
+  height: 75rem;
+  background-size: cover;
+  align-items: center;
 }
