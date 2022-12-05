@@ -15,6 +15,8 @@ const getImage = (path) => {
   });
 };
 
+User.belongsToMany(User, { as: "friend", through: "Friended" });
+
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
 
@@ -28,6 +30,15 @@ const syncAndSeed = async () => {
     User.create({ username: "larry", password: "123" }),
     User.create({ username: "ethyl", password: "123" }),
   ]);
+
+  moe.friendId = lucy.id;
+  lucy.friendId = moe.id;
+  ethyl.friendId = moe.id;
+  lucy.friendId = ethyl.id;
+
+  console.log(lucy.friend);
+
+  await Promise.all([moe.save(), lucy.save(), ethyl.save()]);
 
   return {
     users: {
