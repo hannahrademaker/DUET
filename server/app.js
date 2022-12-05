@@ -11,6 +11,7 @@ app.get("/", (req, res) =>
 );
 
 app.use("/api/auth", require("./api/auth"));
+app.use("/api/friends", require("./api/friends"));
 
 // app.get('/discovery/v2/events', async(req, res, next)=>{
 
