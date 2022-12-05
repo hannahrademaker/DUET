@@ -80,9 +80,9 @@ const Nav = () => {
           ) : (
             <>
               <Button color="inherit">
-                <Link className="link" to="/map">
+                {/* <Link className="link" to="/map">
                   Map
-                </Link>
+                </Link> */}
               </Button>
               <Button color="inherit">
                 <Link className="link" to="/user/">
