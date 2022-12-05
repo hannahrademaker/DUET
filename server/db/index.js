@@ -1,5 +1,6 @@
 const conn = require("./conn");
 const User = require("./User");
+const Friendships = require("./Friendships");
 const path = require("path");
 const fs = require("fs");
 
@@ -15,7 +16,10 @@ const getImage = (path) => {
   });
 };
 
-User.belongsToMany(User, { as: "friend", through: "Friended" });
+//User.belongsToMany(User, { as: "friend", through: "Friended" });
+Friendships.hasMany(User);
+Friendships.belongsTo(User);
+User.hasMany(Friendships);
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
@@ -31,14 +35,17 @@ const syncAndSeed = async () => {
     User.create({ username: "ethyl", password: "123" }),
   ]);
 
-  moe.friendId = lucy.id;
-  lucy.friendId = moe.id;
-  ethyl.friendId = moe.id;
-  lucy.friendId = ethyl.id;
+  const [friendships] = await Promise.all([
+    Friendships.create({ requesterId: moe.id, accepterId: lucy.id }),
+  ]);
 
-  console.log(lucy.friend);
+  moe.friendshipId = friendships.id;
+  lucy.friendshipId = friendships.id;
 
-  await Promise.all([moe.save(), lucy.save(), ethyl.save()]);
+  moe.save();
+  lucy.save();
+
+  console.log(friendships);
 
   return {
     users: {
@@ -47,10 +54,12 @@ const syncAndSeed = async () => {
       larry,
       ethyl,
     },
+    friendships,
   };
 };
 
 module.exports = {
   syncAndSeed,
   User,
+  Friendships,
 };
