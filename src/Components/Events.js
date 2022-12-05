@@ -5,7 +5,7 @@ const Events = (props) => {
   const [userLocation, setUserLocation] = useState(null);
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState(null);
-  const [radius, setRadius] = useState(1);
+  const [radius, setRadius] = useState(10);
 
   const filterEvents = (events) => {
     if (filter) {
