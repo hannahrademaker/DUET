@@ -21,7 +21,22 @@ app.get("/", async (req, res, next) => {
     res.send(
       JSON.stringify(
         await User.findAll({
-          include: [{ model: User, as: "friend" }],
+          include: [
+            {
+              model: User,
+              as: "requester",
+              attributes: {
+                exclude: ["password", "address", "addressDetails"],
+              },
+            },
+            {
+              model: User,
+              as: "accepter",
+              attributes: {
+                exclude: ["password", "address", "addressDetails"],
+              },
+            },
+          ],
         })
       )
     );

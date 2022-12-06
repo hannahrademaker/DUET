@@ -1,21 +1,18 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, fetchTicketMasterEvents, fetchFriends } from "../store";
+import { logout, fetchTicketMasterEvents, fetchUsers } from "../store";
 import axios from "axios";
 import Events from "./Events";
 import Map from "./Map";
 
 const Home = () => {
-  const { auth, friendships } = useSelector((state) => state);
+  const { auth, users } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  console.log(auth);
-
   useEffect(() => {
-    dispatch(fetchFriends());
+    dispatch(fetchUsers());
   }, []);
 
-  console.log(friendships);
   // const { events } = useSelector(state => state);
 
   // useEffect(()=>{
