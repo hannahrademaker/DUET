@@ -1,6 +1,6 @@
 const conn = require("./conn");
 const User = require("./User");
-const Friendships = require("./Friendships");
+const Friendship = require("./Friendship");
 const path = require("path");
 const fs = require("fs");
 
@@ -16,10 +16,14 @@ const getImage = (path) => {
   });
 };
 
-//User.belongsToMany(User, { as: "friend", through: "Friended" });
-Friendships.hasMany(User);
-Friendships.belongsTo(User);
-User.hasMany(Friendships);
+User.belongsToMany(User, {
+  as: "friend",
+  through: "Friendship",
+  //uniqueKey: "friendshipId",
+});
+Friendship.hasMany(User);
+//Friendship.belongsToMany(User);
+// User.hasMany(Friendship);
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
@@ -35,18 +39,30 @@ const syncAndSeed = async () => {
     User.create({ username: "ethyl", password: "123" }),
   ]);
 
-  const [friendships] = await Promise.all([
-    Friendships.create({ requesterId: moe.id, accepterId: lucy.id }),
+  const [friendship] = await Promise.all([
+    Friendship.create({ requesterId: moe.id, accepterId: lucy.id }),
   ]);
 
-  moe.friendshipId = friendships.id;
-  lucy.friendshipId = friendships.id;
+  moe.friendshipId = friendship.id;
+  lucy.friendshipId = friendship.id;
 
   moe.save();
   lucy.save();
 
-  console.log(friendships);
+  console.log(friendship);
 
+  const test = () => {
+    let friend;
+    if (lucy.id === friendship.requesterId) {
+      friend = friendship.accepterId;
+    } else {
+      friend = friendship.requesterId;
+    }
+    return friend;
+  };
+
+  console.log(test(lucy));
+  // console.log(User_Friendships)
   return {
     users: {
       moe,
@@ -54,12 +70,12 @@ const syncAndSeed = async () => {
       larry,
       ethyl,
     },
-    friendships,
+    friendship,
   };
 };
 
 module.exports = {
   syncAndSeed,
   User,
-  Friendships,
+  Friendship,
 };

@@ -9,17 +9,13 @@ const friendships = (state = [], action) => {
 
 export const fetchFriends = () => {
   return async (dispatch) => {
-    try {
-      const token = window.localStorage.getItem("token");
-      const response = await axios.get("/api/friends", {
-        headers: {
-          authorization: token,
-        },
-      });
-      dispatch({ type: "SET_FRIENDSHIPS", friendships: response.data });
-    } catch (ex) {
-      console.log(ex);
-    }
+    const token = window.localStorage.getItem("token");
+    const response = await axios.get("/api/friends", {
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch({ type: "SET_FRIENDSHIPS", friendships: response.data });
   };
 };
 

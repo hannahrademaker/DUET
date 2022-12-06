@@ -1,17 +1,20 @@
 const express = require("express");
 const app = express.Router();
-const { User, Friendships } = require("../db");
+const { User, Friendship } = require("../db");
+const { isLoggedIn } = require("./middleware");
 
 module.exports = app;
 
-app.get("/", async (req, res, next) => {
-  try {
-    const friends = await Friendships.findAll();
-    res.send(friends);
-  } catch (err) {
-    next(err);
-  }
-});
+// app.get("/", isLoggedIn, async (req, res, next) => {
+//   try {
+//     const friends = await Friendship.findAll({
+//       include: [{ model: User }],
+//     });
+//     res.send(friends);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 app.get("/", async (req, res, next) => {
   try {
