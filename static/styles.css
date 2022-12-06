@@ -17,7 +17,7 @@ nav {
 }
 
 .map-container {
-  width: 50%;
+  width: 50vw;
   height: 100vh;
 }
 
@@ -45,8 +45,8 @@ nav {
 .Events-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  width: 90%;
+  justify-content: space-around;
+  width: 50vw;
 }
 
 .Events-list li {
@@ -68,9 +68,11 @@ nav {
 }
 
 .welcome {
+  color: #12163F;
   font-size: 3rem;
   text-transform: uppercase;
   text-align: center;
+  text-shadow: 2px 1px 2px #E43397, 0 0 1em #00C4CC, 0 0 0.5em #00C4CC;
   line-height: 1;
   margin-left: 10rem;
   margin-right: 10rem;
@@ -81,11 +83,35 @@ nav {
 }
 
 .welcomeP {
+  color: #12163F;
   text-align: center;
+  text-shadow: 2px 1px 2px #E43397, 0 0 1em #00C4CC, 0 0 0.5em #00C4CC;
 }
 
 .background {
   height: 75rem;
   background-size: cover;
   align-items: center;
+}
+
+#map_events_container {
+  display: flex;
+}
+
+#login {
+  padding: 0 15px 0 15px;
+}
+
+#login > h2 {
+  color: #12163F;
+  text-align: center;
+  text-shadow: 2px 1px 2px #E43397, 0 0 1em #00C4CC, 0 0 0.5em #00C4CC;
+  text-transform: uppercase;
+}
+
+.home_container {
+  color: #12163F;
+  text-align: center;
+  text-shadow: 2px 1px 2px #E43397, 0 0 1em #00C4CC, 0 0 0.5em #00C4CC;
+  text-transform: uppercase;
 }

@@ -14,14 +14,14 @@ const LoggedOut = () => {
       setCurrentImage((currentIndex) => (currentIndex + 1) % imageUrls.length);
     }
 
-    const intervalId = setInterval(updateBackground, 2500);
+    const intervalId = setInterval(updateBackground, 3000);
 
     return () => clearInterval(intervalId);
   }, []);
 
   return (
     <div>
-      <body
+      <div
         className="background"
         style={{
           backgroundImage: `url(${imageUrls[currentImage]})`,
@@ -39,7 +39,7 @@ const LoggedOut = () => {
           Taylor Swift. You can hit up, and meet other Swifties before or at the
           concert to enjoy together!
         </p>
-      </body>
+      </div>
     </div>
   );
 };
