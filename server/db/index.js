@@ -36,8 +36,6 @@ const syncAndSeed = async () => {
   ethyl.friendId = moe.id;
   lucy.friendId = ethyl.id;
 
-  console.log(lucy.friend);
-
   await Promise.all([moe.save(), lucy.save(), ethyl.save()]);
 
   return {
