@@ -25,11 +25,12 @@ const Home = () => {
   // console.log(events)
 
   return (
-    <div>
-      <h1>Home</h1>
-      <div>Welcome {auth.username}!!</div>
-      <Events />
-      <Map />
+    <div className="home_container">
+      <h2>What are we doing this weekend?</h2>
+      <div id="map_events_container">
+        <Map />
+        <Events />
+      </div>
     </div>
   );
 };

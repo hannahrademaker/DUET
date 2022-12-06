@@ -43,12 +43,6 @@ const syncAndSeed = async () => {
     Friendship.create({ requesterId: moe.id, accepterId: lucy.id }),
   ]);
 
-  moe.friendshipId = friendship.id;
-  lucy.friendshipId = friendship.id;
-
-  moe.save();
-  lucy.save();
-
   console.log(friendship);
 
   const test = () => {
