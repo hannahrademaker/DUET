@@ -17,45 +17,57 @@ const getImage = (path) => {
 };
 
 User.belongsToMany(User, {
-  as: "friend",
-  through: "Friendship",
+  as: "requester",
+  through: Friendship,
+  foreignKey: "requesterId",
   //uniqueKey: "friendshipId",
 });
-Friendship.hasMany(User);
-//Friendship.belongsToMany(User);
-// User.hasMany(Friendship);
+User.belongsToMany(User, {
+  as: "accepter",
+  through: Friendship,
+  foreignKey: "accepterId",
+  //uniqueKey: "friendshipId",
+});
+User.hasMany(Friendship, { foreignKey: "requesterId" });
+User.hasMany(Friendship, { foreignKey: "accepterId" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
 
-  const avatar = await getImage(
-    path.join(__dirname, "../../static/DUET/Moe_Szyslak.png")
-  );
+  // const avatar = await getImage(
+  //   path.join(__dirname, "../../static/DUET/Moe_Szyslak.png")
+  // );
 
   const [moe, lucy, larry, ethyl] = await Promise.all([
-    User.create({ username: "moe", password: "123", avatar }),
+    User.create({ username: "moe", password: "123" /*avatar*/ }),
     User.create({ username: "lucy", password: "123" }),
     User.create({ username: "larry", password: "123" }),
     User.create({ username: "ethyl", password: "123" }),
   ]);
 
-  const [friendship] = await Promise.all([
+  const [fs1, fs2, fs3] = await Promise.all([
     Friendship.create({ requesterId: moe.id, accepterId: lucy.id }),
+    Friendship.create({ requesterId: lucy.id, accepterId: ethyl.id }),
+    Friendship.create({ requesterId: larry.id, accepterId: ethyl.id }),
   ]);
 
-  console.log(friendship);
+  console.log(fs1);
+  // console.log(fs2);
+  // console.log(fs3);
+  console.log(lucy);
+  console.log(moe.id);
 
-  const test = () => {
-    let friend;
-    if (lucy.id === friendship.requesterId) {
-      friend = friendship.accepterId;
-    } else {
-      friend = friendship.requesterId;
-    }
-    return friend;
-  };
+  // const test = () => {
+  //   let friend;
+  //   if (lucy.id === friendship.requesterId) {
+  //     friend = friendship.accepterId;
+  //   } else {
+  //     friend = friendship.requesterId;
+  //   }
+  //   return friend;
+  // };
 
-  console.log(test(lucy));
+  // console.log(test(lucy));
   // console.log(User_Friendships)
   return {
     users: {
@@ -64,7 +76,11 @@ const syncAndSeed = async () => {
       larry,
       ethyl,
     },
-    friendship,
+    friendships: {
+      fs1,
+      fs2,
+      fs3,
+    },
   };
 };
 
