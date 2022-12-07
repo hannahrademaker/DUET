@@ -13,19 +13,7 @@ const options = {
   zoomControl: true,
 };
 
-const markersFromEvents = (events) => {
-  console.log(events);
-  // return events.map((event) => {
-  //   return {
-  //     lat: event._embedded.venues[0].location.latitude,
-  //     lng: event._embedded.venues[0].location.longitude,
-  //   };
-  // });
-};
-
-const Map = () => {
-  const dispatch = useDispatch();
-
+const Map = ({ filteredEvents }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBM-kc17ICi5elvOP04xO4yj_HZR3F2hTw",
     libraries,
