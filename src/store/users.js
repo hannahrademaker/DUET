@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const users = (state = [], action) => {
-  if (action === "SET_USERS") {
+  if (action.type === "SET_USERS") {
     state = action.users;
   }
   return state;

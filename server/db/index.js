@@ -39,7 +39,13 @@ const syncAndSeed = async () => {
   // );
 
   const [moe, lucy, larry, ethyl] = await Promise.all([
-    User.create({ username: "moe", password: "123" /*avatar*/ }),
+    User.create({
+      username: "moe",
+      password: "123",
+      firstName: "Moe",
+      lastName: "Money",
+      bio: "Hi! My name is Moe! My favorite genres of music are bubble gum pop and hardcore rap.",
+    }),
     User.create({ username: "lucy", password: "123" }),
     User.create({ username: "larry", password: "123" }),
     User.create({ username: "ethyl", password: "123" }),
