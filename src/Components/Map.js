@@ -29,7 +29,6 @@ export default Map;
 
 function Maps() {
   const events = useSelector((state) => state.events);
-  const markers = useMemo(() => markersFromEvents(events), [events]);
   console.log(events);
   const center = useMemo(() => ({ lat: 40.69, lng: -74 }), []);
   return (
