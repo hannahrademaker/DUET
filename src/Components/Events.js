@@ -1,41 +1,15 @@
 import React, { useEffect, useState } from "react";
-const API_KEY = "fmAEcxmSvwqhltBAynkfzAyvdJLNg28X";
+
 import { Link } from "react-router-dom";
 
-const Events = () => {
-  const [userLocation, setUserLocation] = useState(null);
-  const [events, setEvents] = useState([]);
-  const [filter, setFilter] = useState(null);
-  const [radius, setRadius] = useState(10);
-
-  const filterEvents = (events) => {
-    if (filter) {
-      return events.filter(
-        (event) => event.classifications[0].segment.name === filter
-      );
-    }
-    return events;
-  };
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setUserLocation({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      });
-    });
-  }, []);
-
-  useEffect(() => {
-    if (userLocation) {
-      fetch(
-        `https://app.ticketmaster.com/discovery/v2/events.json?latlong=${userLocation.lat},${userLocation.lng}&radius=${radius}&unit=miles&apikey=${API_KEY}`
-      )
-        .then((response) => response.json())
-        .then((data) => setEvents(data._embedded.events));
-    }
-  }, [userLocation]);
-
+const Events = ({
+  filter,
+  radius,
+  userLocation,
+  filteredEvents,
+  setFilter,
+  setRadius,
+}) => {
   return (
     <div className="Events">
       <h1>Concerts Near You</h1>
@@ -63,7 +37,7 @@ const Events = () => {
       </form>
       {userLocation && (
         <ul className="Events-list">
-          {filterEvents(events).map((event) => (
+          {filteredEvents.map((event) => (
             <Link to={`/event/${event.id}`}>
               <li key={event.id}>
                 <h2>{event.name}</h2>

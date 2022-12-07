@@ -13,19 +13,7 @@ const options = {
   zoomControl: true,
 };
 
-const markersFromEvents = (events) => {
-  console.log(events);
-  // return events.map((event) => {
-  //   return {
-  //     lat: event._embedded.venues[0].location.latitude,
-  //     lng: event._embedded.venues[0].location.longitude,
-  //   };
-  // });
-};
-
-const Map = () => {
-  const dispatch = useDispatch();
-
+const Map = ({ filteredEvents }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBM-kc17ICi5elvOP04xO4yj_HZR3F2hTw",
     libraries,
@@ -34,14 +22,13 @@ const Map = () => {
   if (loadError) return <div>Error Loading Maps</div>;
 
   if (!isLoaded) return <div>Loading...</div>;
-  return <Maps />;
+  return <Maps filteredEvents={filteredEvents} />;
 };
 
 export default Map;
 
-function Maps() {
+function Maps({ filteredEvents }) {
   const events = useSelector((state) => state.events);
-  const markers = useMemo(() => markersFromEvents(events), [events]);
   console.log(events);
   const center = useMemo(() => ({ lat: 40.69, lng: -74 }), []);
   return (
@@ -51,9 +38,14 @@ function Maps() {
       mapContainerClassName="map-container"
       options={options}
     >
-      {/* {markers.map((marker) => (
-        <Marker position={{ lat: marker.lat, lng: marker.lng }} />
-      ))} */}
+      {filteredEvents.map((event) => (
+        <Marker
+          position={{
+            lat: parseFloat(event._embedded.venues[0].location.latitude),
+            lng: parseFloat(event._embedded.venues[0].location.longitude),
+          }}
+        />
+      ))}
 
       <Marker position={{ lat: 40.734929, lng: -74.0059575 }} />
     </GoogleMap>
