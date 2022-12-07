@@ -44,7 +44,7 @@ const User = conn.define("user", {
       return `${prefix}${data}`;
     },
   },
-  description: {
+  bio: {
     type: TEXT,
   },
   email: {
