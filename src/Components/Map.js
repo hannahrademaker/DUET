@@ -22,12 +22,12 @@ const Map = ({ filteredEvents }) => {
   if (loadError) return <div>Error Loading Maps</div>;
 
   if (!isLoaded) return <div>Loading...</div>;
-  return <Maps />;
+  return <Maps filteredEvents={filteredEvents} />;
 };
 
 export default Map;
 
-function Maps() {
+function Maps({ filteredEvents }) {
   const events = useSelector((state) => state.events);
   console.log(events);
   const center = useMemo(() => ({ lat: 40.69, lng: -74 }), []);
@@ -38,9 +38,14 @@ function Maps() {
       mapContainerClassName="map-container"
       options={options}
     >
-      {/* {markers.map((marker) => (
-        <Marker position={{ lat: marker.lat, lng: marker.lng }} />
-      ))} */}
+      {filteredEvents.map((event) => (
+        <Marker
+          position={{
+            lat: parseFloat(event._embedded.venues[0].location.latitude),
+            lng: parseFloat(event._embedded.venues[0].location.longitude),
+          }}
+        />
+      ))}
 
       <Marker position={{ lat: 40.734929, lng: -74.0059575 }} />
     </GoogleMap>
