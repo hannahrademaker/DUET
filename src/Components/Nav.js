@@ -85,6 +85,11 @@ const Nav = () => {
                 </Link> */}
               </Button>
               <Button color="inherit">
+                <Link className="link" to="/chat/">
+                  Chat
+                </Link>
+              </Button>
+              <Button color="inherit">
                 <Link className="link" to="/user/">
                   Profile
                 </Link>
