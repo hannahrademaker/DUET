@@ -10,6 +10,8 @@ const User = () => {
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
 
+  const friendList = auth.requester.concat(auth.accepter);
+
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
@@ -25,7 +27,7 @@ const User = () => {
         </div>
         <div>
           <span>Events ()</span>
-          <span>Friends ()</span>
+          <span>Friends ({friendList.length})</span>
         </div>
       </div>
       <div>
@@ -36,28 +38,21 @@ const User = () => {
       </div>
       <div className="list-6-friends">
         <div>
-          {users.map((user) => {
-            const userProfile = users.find((user) => user.id === auth.id);
-            const listFriends = userProfile.requester.concat(
-              userProfile.accepter
+          {friendList.map((friend) => {
+            buddy = friend;
+            return (
+              <div key={friend.id} className="friend-card">
+                <li>
+                  <Link to={`/users/${friend.id}`}>{friend.username}</Link>
+                  <img
+                    src={friend.avatar}
+                    alt="Pic of User"
+                    width="200"
+                    height="200"
+                  />
+                </li>
+              </div>
             );
-            return listFriends.map((friend) => {
-              if (friend.id === user.id) {
-                return (
-                  <div key={friend.id} className="friend-card">
-                    <li>
-                      {friend.username}
-                      <img
-                        src={friend.avatar}
-                        alt="Pic of User"
-                        width="200"
-                        height="200"
-                      />
-                    </li>
-                  </div>
-                );
-              }
-            });
           })}
         </div>
       </div>
@@ -105,6 +100,20 @@ const User = () => {
             Edit Profile
           </Button>
         </Link>
+      </div>
+      <div className="people-you-may-know-cards">
+        <p>People you may know</p>
+        <ul>
+          {users.map((user) => {
+            let stranger;
+            for (let i = 0; i < friendList.length; i++) {
+              stranger = friendList[i];
+            }
+            if (stranger.id !== user.id && user.id !== auth.id) {
+              return <li key={user.id}>{user.username}</li>;
+            }
+          })}
+        </ul>
       </div>
     </div>
   );

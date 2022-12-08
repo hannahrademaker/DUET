@@ -19,27 +19,27 @@ module.exports = app;
 app.get("/", async (req, res, next) => {
   try {
     res.send(
-      JSON.stringify(
-        await User.findAll({
-          include: [
-            {
-              model: User,
-              as: "requester",
-              attributes: {
-                exclude: ["password", "address", "addressDetails"],
-              },
+    JSON.stringify(
+      await User.findAll({
+        include: [
+          {
+            model: User,
+            as: "requester",
+            attributes: {
+              exclude: ["password", "address", "addressDetails"],
             },
-            {
-              model: User,
-              as: "accepter",
-              attributes: {
-                exclude: ["password", "address", "addressDetails"],
-              },
+          },
+          {
+            model: User,
+            as: "accepter",
+            attributes: {
+              exclude: ["password", "address", "addressDetails"],
             },
-          ],
-        })
-      )
-    );
+          },
+        ],
+      })
+    )
+      );
   } catch (err) {
     next(err);
   }

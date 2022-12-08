@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import UserUpdate from "./UserUpdate";
 import User from "./User";
 import PasswordUpdate from "./PasswordUpdate";
+import FriendPage from "./FriendPage";
 
 const theme = createTheme({
   palette: {
@@ -49,6 +50,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
 
         <Route path="/" element={!!auth.id ? <Home /> : <LoggedOut />} />
+        <Route path="/users/:id" element={<FriendPage />} />
       </Routes>
     </ThemeProvider>
   );

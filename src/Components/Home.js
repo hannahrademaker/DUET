@@ -6,7 +6,7 @@ import Events from "./Events";
 import Map from "./Map";
 
 const Home = () => {
-  const { auth } = useSelector((state) => state);
+  const { auth, users } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   // const { events } = useSelector(state => state);
