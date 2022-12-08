@@ -57,11 +57,11 @@ const syncAndSeed = async () => {
     Friendship.create({ requesterId: larry.id, accepterId: ethyl.id }),
   ]);
 
-  console.log(fs1);
+  // console.log(fs1);
   // console.log(fs2);
   // console.log(fs3);
-  console.log(lucy);
-  console.log(moe.id);
+  // console.log(lucy);
+  // console.log(moe.id);
 
   // const test = () => {
   //   let friend;

@@ -40,6 +40,7 @@ function Maps({ filteredEvents }) {
     >
       {filteredEvents.map((event) => (
         <Marker
+          key={event.id}
           position={{
             lat: parseFloat(event._embedded.venues[0].location.latitude),
             lng: parseFloat(event._embedded.venues[0].location.longitude),

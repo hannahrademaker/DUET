@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 const Events = ({
@@ -13,39 +22,45 @@ const Events = ({
   return (
     <div className="Events">
       <h1>Concerts Near You</h1>
-      <form>
-        <label>
-          Filter by type:
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="">All</option>
-            <option value="Music">Music</option>
-            <option value="Sports">Sports</option>
-            <option value="Arts & Theatre">Arts & Theatre</option>
-            <option value="Film">Film</option>
-            <option value="Miscellaneous">Miscellaneous</option>
-          </select>
-        </label>
-        <label>
-          Filter by radius:
-          <select value={radius} onChange={(e) => setRadius(e.target.value)}>
-            <option value="1">1 Mile</option>
-            <option value="5">5 Miles</option>
-            <option value="10">10 Miles</option>
-            <option value="20">20 Miles</option>
-          </select>
-        </label>
-      </form>
+      <FormControl sx={{ m: 1, minWidth: 200 }}>
+        <InputLabel id="filter-by-type">Filter by Type:</InputLabel>
+        <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
+          <MenuItem value="">All</MenuItem>
+          <MenuItem value="Music">Music</MenuItem>
+          <MenuItem value="Sports">Sports</MenuItem>
+          <MenuItem value="Arts & Theatre">Arts & Theatre</MenuItem>
+          <MenuItem value="Film">Film</MenuItem>
+          <MenuItem value="Miscellaneous">Miscellaneous</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl sx={{ m: 1, minWidth: 200 }}>
+        <InputLabel id="filter-by-radius">Filter by Radius:</InputLabel>
+        <Select value={radius} onChange={(e) => setRadius(e.target.value)}>
+          <MenuItem value="1">1 Mile</MenuItem>
+          <MenuItem value="5">5 Miles</MenuItem>
+          <MenuItem value="10">10 Miles</MenuItem>
+          <MenuItem value="20">20 Miles</MenuItem>
+        </Select>
+      </FormControl>
       {userLocation && (
         <ul className="Events-list">
           {filteredEvents.map((event) => (
-            <Link to={`/event/${event.id}`}>
-              <li key={event.id}>
-                <h2>{event.name}</h2>
-                {event.images.length > 0 && (
-                  <img src={event.images[0].url} alt={event.name} />
-                )}
-              </li>
-            </Link>
+            <Card key={event.id} sx={{ maxWidth: 300 }}>
+              <CardContent>
+                <Link className="event_link" to={`/event/${event.id}`}>
+                  <Typography variant="h6" component="h1">
+                    {event.name}
+                  </Typography>
+                  {event.images.length > 0 && (
+                    <CardMedia
+                      component="img"
+                      src={event.images[0].url}
+                      alt={event.name}
+                    />
+                  )}
+                </Link>
+              </CardContent>
+            </Card>
           ))}
         </ul>
       )}
