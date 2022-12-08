@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, fetchTicketMasterEvents } from "../store";
-import { filterEvents, fetchEvents } from "../Helpers/ticketmaster";
+import { filterEvents, fetchEvents } from "../Helpers/TicketMaster";
 import axios from "axios";
 import Events from "./Events";
 import Map from "./Map";
@@ -12,7 +12,7 @@ const Home = () => {
 
   const [userLocation, setUserLocation] = useState(null);
   const [events, setEvents] = useState([]);
-  const [filter, setFilter] = useState(null);
+  const [filter, setFilter] = useState("");
   const [radius, setRadius] = useState(10);
 
   const filteredEvents = filterEvents(events, filter);
@@ -39,7 +39,7 @@ const Home = () => {
   // useEffect(()=>{
   //   dispatch(fetchTicketMasterEvents())
   // }, []);
-  console.log(auth);
+  // console.log(auth);
   //console.log(userProfile.city);
 
   return (
