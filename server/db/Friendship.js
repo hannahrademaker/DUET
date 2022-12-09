@@ -19,11 +19,11 @@ const Friendship = conn.define("friendship", {
     //primaryKey: true,
     allowNull: false,
   },
-  id: {
-    type: UUID,
-    primaryKey: true,
-    defaultValue: UUIDV4,
-  },
+  // id: {
+  //   type: UUID,
+  //   primaryKey: true,
+  //   defaultValue: UUIDV4,
+  // },
 });
 
 module.exports = Friendship;
