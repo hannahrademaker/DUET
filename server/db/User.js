@@ -26,26 +26,29 @@ const User = conn.define(
       validate: {
         notEmpty: true,
       },
+  },
+  isAdmin: {
+    type: BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
+  avatar: {
+    type: TEXT,
+    defaultValue: "",
+    get: function () {
+      const prefixPNG = "data:image/png;base64,";
+      const prefixJPG = "data:image/jpeg;base64,";
+      const data = this.getDataValue("avatar") || "";
+      if (data.startsWith(prefixPNG)) {
+        return data;
+      } else if (data.startsWith(prefixJPG)) {
+        return data;
+      } else if (!data) {
+        return null;
+      }
+      return `${prefixPNG}${data}`;
     },
-    isAdmin: {
-      type: BOOLEAN,
-      allowNull: false,
-      defaultValue: false,
-    },
-    avatar: {
-      type: TEXT,
-      defaultValue: "",
-      get: function () {
-        const prefix = "data:image/png;base64,";
-        const data = this.getDataValue("avatar");
-        if (data.startsWith(prefix)) {
-          return data;
-        } else if (data === "") {
-          return null;
-        }
-        return `${prefix}${data}`;
-      },
-    },
+  },
     bio: {
       type: TEXT,
     },

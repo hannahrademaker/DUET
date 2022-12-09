@@ -1,10 +1,13 @@
-import React, { useEffect, useMemo } from "react";
-// import { useSelector, useDispatch } from "react-redux";
-import { loginWithToken } from "../store";
-import { Link } from "react-router-dom";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import mapStyles from "../store/mapStyles";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useCallback, useMemo, useRef, useState } from "react";
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
+import mapStyles from "../Helpers/mapStyles";
+import { useSelector } from "react-redux";
+// import { ContentCutOutlined } from "@mui/icons-material";
 
 const libraries = ["places"];
 const options = {
@@ -19,24 +22,39 @@ const Map = ({ filteredEvents }) => {
     libraries,
   });
 
+  const [selected, setSelected] = useState(null);
+
+  const mapref = useRef();
+  const onMapLoad = useCallback((map) => {
+    mapref.current = map;
+  }, []);
+
   if (loadError) return <div>Error Loading Maps</div>;
 
   if (!isLoaded) return <div>Loading...</div>;
-  return <Maps filteredEvents={filteredEvents} />;
+  return (
+    <Maps
+      filteredEvents={filteredEvents}
+      onMapLoad={onMapLoad}
+      selected={selected}
+      setSelected={setSelected}
+    />
+  );
 };
 
 export default Map;
 
-function Maps({ filteredEvents }) {
+function Maps({ filteredEvents, onMapLoad, selected, setSelected }) {
   const events = useSelector((state) => state.events);
-  // console.log(events);
   const center = useMemo(() => ({ lat: 40.69, lng: -74 }), []);
+
   return (
     <GoogleMap
       zoom={10.5}
       center={center}
       mapContainerClassName="map-container"
       options={options}
+      onLoad={onMapLoad}
     >
       {filteredEvents.map((event) => (
         <Marker
@@ -45,10 +63,33 @@ function Maps({ filteredEvents }) {
             lat: parseFloat(event._embedded.venues[0].location.latitude),
             lng: parseFloat(event._embedded.venues[0].location.longitude),
           }}
+          icon={{
+            url: "../static/DUET/icons8-map-pin-64.png",
+            origin: new window.google.maps.Point(0, 0),
+            anchor: new window.google.maps.Point(15, 15),
+          }}
+          onClick={() => {
+            setSelected(event);
+          }}
         />
       ))}
 
-      <Marker position={{ lat: 40.734929, lng: -74.0059575 }} />
+      {selected ? (
+        <InfoWindow
+          position={{
+            lat: parseFloat(selected._embedded.venues[0].location.latitude),
+            lng: parseFloat(selected._embedded.venues[0].location.longitude),
+          }}
+          onCloseClick={() => {
+            setSelected(null);
+          }}
+        >
+          <div>
+            <h2>{selected.name}</h2>
+            <p>{selected._embedded.venues[0].name}</p>
+          </div>
+        </InfoWindow>
+      ) : null}
     </GoogleMap>
   );
 }
