@@ -4,82 +4,88 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT;
 
-const User = conn.define("user", {
-  id: {
-    type: UUID,
-    primaryKey: true,
-    defaultValue: UUIDV4,
-  },
-  username: {
-    type: STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
+const User = conn.define(
+  "user",
+  {
+    id: {
+      type: UUID,
+      primaryKey: true,
+      defaultValue: UUIDV4,
     },
-    unique: true,
-  },
-  password: {
-    type: STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
+    username: {
+      type: STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+      unique: true,
+    },
+    password: {
+      type: STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    isAdmin: {
+      type: BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    avatar: {
+      type: TEXT,
+      defaultValue: "",
+      get: function () {
+        const prefix = "data:image/png;base64,";
+        const data = this.getDataValue("avatar");
+        if (data.startsWith(prefix)) {
+          return data;
+        } else if (data === "") {
+          return null;
+        }
+        return `${prefix}${data}`;
+      },
+    },
+    bio: {
+      type: TEXT,
+    },
+    email: {
+      type: STRING,
+      validate: {
+        isEmail: true,
+      },
+    },
+    firstName: {
+      type: STRING,
+    },
+    lastName: {
+      type: STRING,
+    },
+    address: {
+      type: STRING,
+      defaultValue: "123 Maple Street",
+    },
+    addressDetails: {
+      type: STRING,
+      defaultValue: "",
+    },
+    city: {
+      type: STRING,
+      defaultValue: "Anytown",
+    },
+    state: {
+      type: STRING,
+      defaultValue: "NY",
+    },
+    zip: {
+      type: INTEGER,
+      defaultValue: 10036,
     },
   },
-  isAdmin: {
-    type: BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
-  avatar: {
-    type: TEXT,
-    defaultValue: "",
-    get: function () {
-      const prefix = "data:image/png;base64,";
-      const data = this.getDataValue("avatar");
-      if (data.startsWith(prefix)) {
-        return data;
-      } else if (data === "") {
-        return null;
-      }
-      return `${prefix}${data}`;
-    },
-  },
-  bio: {
-    type: TEXT,
-  },
-  email: {
-    type: STRING,
-    validate: {
-      isEmail: true,
-    },
-  },
-  firstName: {
-    type: STRING,
-  },
-  lastName: {
-    type: STRING,
-  },
-  address: {
-    type: STRING,
-    defaultValue: "123 Maple Street",
-  },
-  addressDetails: {
-    type: STRING,
-    defaultValue: "",
-  },
-  city: {
-    type: STRING,
-    defaultValue: "Anytown",
-  },
-  state: {
-    type: STRING,
-    defaultValue: "NY",
-  },
-  zip: {
-    type: INTEGER,
-    defaultValue: 10036,
-  },
-});
+  {
+    paranoid: true,
+  }
+);
 
 User.prototype.createOrder = async function () {
   const cart = await this.getCart();

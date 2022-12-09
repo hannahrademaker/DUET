@@ -28,8 +28,8 @@ User.belongsToMany(User, {
   foreignKey: "accepterId",
   //uniqueKey: "friendshipId",
 });
-User.hasMany(Friendship, { foreignKey: "requesterId" });
-User.hasMany(Friendship, { foreignKey: "accepterId" });
+User.hasMany(Friendship, { foreignKey: "requesterId", onDelete: "CASCADE" });
+User.hasMany(Friendship, { foreignKey: "accepterId", onDelete: "CASCADE" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
