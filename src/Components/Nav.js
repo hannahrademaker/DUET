@@ -79,11 +79,11 @@ const Nav = () => {
             </>
           ) : (
             <>
-              <Button color="inherit">
-                {/* <Link className="link" to="/map">
+              {/* <Button color="inherit">
+                <Link className="link" to="/map">
                   Map
-                </Link> */}
-              </Button>
+                </Link>
+              </Button> */}
               <Button color="inherit">
                 <Link className="link" to="/chat/">
                   Chat

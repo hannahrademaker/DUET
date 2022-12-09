@@ -8,7 +8,11 @@ import {
   Select,
   MenuItem,
   FormControl,
+  CardActions,
+  IconButton,
 } from "@mui/material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
 
 const Events = ({
@@ -19,6 +23,14 @@ const Events = ({
   setFilter,
   setRadius,
 }) => {
+  const attendingEvent = (e) => {
+    console.log(e.id);
+  };
+
+  const interestedInAttending = (e) => {
+    console.log(e.name);
+  };
+
   return (
     <div className="Events">
       <h1>Concerts Near You</h1>
@@ -60,6 +72,20 @@ const Events = ({
                   )}
                 </Link>
               </CardContent>
+              <CardActions>
+                <IconButton
+                  aria-label="attending"
+                  onClick={() => attendingEvent(event)}
+                >
+                  <AddCircleIcon color="secondary" />
+                </IconButton>
+                <IconButton
+                  aria-label="interested-in-attending"
+                  onClick={() => interestedInAttending(event)}
+                >
+                  <FavoriteIcon color="secondary" />
+                </IconButton>
+              </CardActions>
             </Card>
           ))}
         </ul>
