@@ -69,6 +69,7 @@ nav {
 
 .MuiCard-root {
   margin: .5em;
+  background-color: #00c4cc
 }
 
 .MuiCard-root:hover {
@@ -130,7 +131,7 @@ nav {
 .home_container {
   color: #12163f;
   text-align: center;
-  text-shadow: 2px 1px 2px #e43397, 0 0 1em #00c4cc, 0 0 0.5em #00c4cc;
+  text-shadow: 2px 1px 2px #00c4cc;
   text-transform: uppercase;
 }
 
@@ -138,7 +139,7 @@ nav {
   color: #12163f;
   text-align: center;
   text-transform: uppercase;
-  text-shadow: 2px 1px 2px #e43397, 0 0 1em #00c4cc, 0 0 0.5em #00c4cc;
+  text-shadow: 2px 1px 2px #e43397;
 }
 
 /* Begin Chat CSS */
