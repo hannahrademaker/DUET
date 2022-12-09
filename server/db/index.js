@@ -1,6 +1,8 @@
 const conn = require("./conn");
 const User = require("./User");
 const Friendship = require("./Friendship");
+const Attending = require("./Attending");
+const Interested = require("./Interested");
 const path = require("path");
 const fs = require("fs");
 
@@ -30,6 +32,8 @@ User.belongsToMany(User, {
 });
 User.hasMany(Friendship, { foreignKey: "requesterId", onDelete: "CASCADE" });
 User.hasMany(Friendship, { foreignKey: "accepterId", onDelete: "CASCADE" });
+User.hasMany(Attending, { onDelete: "CASCADE" });
+User.hasMany(Interested, { onDelete: "CASCADE" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });

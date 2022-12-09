@@ -29,7 +29,7 @@ export default Map;
 
 function Maps({ filteredEvents }) {
   const events = useSelector((state) => state.events);
-  console.log(events);
+  // console.log(events);
   const center = useMemo(() => ({ lat: 40.69, lng: -74 }), []);
   return (
     <GoogleMap

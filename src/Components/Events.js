@@ -23,6 +23,14 @@ const Events = ({
   setFilter,
   setRadius,
 }) => {
+  const attendingEvent = (e) => {
+    console.log(e.id);
+  };
+
+  const interestedInAttending = (e) => {
+    console.log(e.name);
+  };
+
   return (
     <div className="Events">
       <h1>Concerts Near You</h1>
@@ -65,10 +73,16 @@ const Events = ({
                 </Link>
               </CardContent>
               <CardActions>
-                <IconButton aria-label="attending">
+                <IconButton
+                  aria-label="attending"
+                  onClick={() => attendingEvent(event)}
+                >
                   <AddCircleIcon color="secondary" />
                 </IconButton>
-                <IconButton aria-label="interested-in-attending">
+                <IconButton
+                  aria-label="interested-in-attending"
+                  onClick={() => interestedInAttending(event)}
+                >
                   <FavoriteIcon color="secondary" />
                 </IconButton>
               </CardActions>
