@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateAuth, fetchUsers, friendRequest } from "../store";
+import {
+  updateAuth,
+  fetchUsers,
+  friendRequest,
+  fetchFriendships,
+} from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
@@ -26,8 +31,8 @@ const User = () => {
     try {
       //ev.preventDefault();
       //console.log(ev);
-      console.log(ev.requester);
-      await dispatch(friendRequest(ev.requester.push(auth)));
+      await ev.requester.push(auth);
+      await dispatch(friendRequest(ev));
     } catch (err) {
       console.log(err);
     }
@@ -133,7 +138,10 @@ const User = () => {
                       width="200"
                       height="200"
                     />
-                    <button onClick={() => addFriend(user)}>
+                    <button
+                      disabled={user.requester.includes(auth)}
+                      onClick={() => addFriend(user)}
+                    >
                       Send Friend Request
                     </button>
                   </li>

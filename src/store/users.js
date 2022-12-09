@@ -12,6 +12,8 @@ const users = (state = [], action) => {
   return state;
 };
 
+//const requesters = (state = {friendship: []})
+
 export const fetchUsers = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
@@ -28,7 +30,7 @@ export const friendRequest = (user) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
     const response = await axios.get(
-      `/api/friends/${user.id}`,
+      "/api/friends",
       { user },
       {
         headers: {

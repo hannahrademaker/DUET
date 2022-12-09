@@ -12,7 +12,12 @@ const FriendPage = () => {
     <div id="user-page">
       {users.map((friend) => {
         if (friend.id === id) {
-          const friendList = friend.accepter.concat(friend.requester);
+          // console.log(auth.accepter.includes(friend));
+          // let friendList = friend.requester.filter((mutual) => {
+          //   console.log(mutual.accepter.friendship.status);
+          // });
+          //friendList = friendList.concat(friend.accepter);
+          let friendList = friend.requester.concat(friend.accepter);
           const friendListIds = friendList.map((friendId) => friendId.id);
 
           return (

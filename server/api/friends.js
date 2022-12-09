@@ -5,7 +5,7 @@ const { isLoggedIn } = require("./middleware");
 
 module.exports = app;
 
-// app.get("/friendships", isLoggedIn, async (req, res, next) => {
+// app.get("/", isLoggedIn, async (req, res, next) => {
 //   try {
 //     const friends = await Friendship.findAll();
 //     res.send(friends);
@@ -43,7 +43,7 @@ app.get("/", async (req, res, next) => {
   }
 });
 
-app.put("/:id", async (req, res, next) => {
+app.put("/", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     await user.update(req.body);
