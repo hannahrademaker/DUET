@@ -134,6 +134,13 @@ nav {
   text-transform: uppercase;
 }
 
+.indvEvent{
+  color: #12163f;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 2px 1px 2px #e43397, 0 0 1em #00c4cc, 0 0 0.5em #00c4cc;
+}
+
 /* Begin Chat CSS */
 .ChatApp {
   width: 100vw;
