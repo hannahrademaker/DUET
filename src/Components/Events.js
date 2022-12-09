@@ -1,74 +1,66 @@
 import React, { useEffect, useState } from "react";
-const API_KEY = "fmAEcxmSvwqhltBAynkfzAyvdJLNg28X";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardMedia,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 
-const Events = (props) => {
-  const [userLocation, setUserLocation] = useState(null);
-  const [events, setEvents] = useState([]);
-  const [filter, setFilter] = useState(null);
-  const [radius, setRadius] = useState(10);
-
-  const filterEvents = (events) => {
-    if (filter) {
-      return events.filter(
-        (event) => event.classifications[0].segment.name === filter
-      );
-    }
-    return events;
-  };
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setUserLocation({
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      });
-    });
-  }, []);
-
-  useEffect(() => {
-    if (userLocation) {
-      fetch(
-        `https://app.ticketmaster.com/discovery/v2/events.json?latlong=${userLocation.lat},${userLocation.lng}&radius=${radius}&unit=miles&apikey=${API_KEY}`
-      )
-        .then((response) => response.json())
-        .then((data) => setEvents(data._embedded.events));
-    }
-  }, [userLocation]);
-
+const Events = ({
+  filter,
+  radius,
+  userLocation,
+  filteredEvents,
+  setFilter,
+  setRadius,
+}) => {
   return (
     <div className="Events">
       <h1>Concerts Near You</h1>
-      <form>
-        <label>
-          Filter by type:
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="">All</option>
-            <option value="Music">Music</option>
-            <option value="Sports">Sports</option>
-            <option value="Arts & Theatre">Arts & Theatre</option>
-            <option value="Film">Film</option>
-            <option value="Miscellaneous">Miscellaneous</option>
-          </select>
-        </label>
-        {/* <label>
-          Filter by radius:
-          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-            <option value="1">1 Mile</option>
-            <option value="5">5 Miles</option>
-            <option value="10">10 Miles</option>
-            <option value="20">20 Miles</option>
-          </select>
-        </label> */}
-      </form>
+      <FormControl sx={{ m: 1, minWidth: 200 }}>
+        <InputLabel id="filter-by-type">Filter by Type:</InputLabel>
+        <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
+          <MenuItem value="">All</MenuItem>
+          <MenuItem value="Music">Music</MenuItem>
+          <MenuItem value="Sports">Sports</MenuItem>
+          <MenuItem value="Arts & Theatre">Arts & Theatre</MenuItem>
+          <MenuItem value="Film">Film</MenuItem>
+          <MenuItem value="Miscellaneous">Miscellaneous</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl sx={{ m: 1, minWidth: 200 }}>
+        <InputLabel id="filter-by-radius">Filter by Radius:</InputLabel>
+        <Select value={radius} onChange={(e) => setRadius(e.target.value)}>
+          <MenuItem value="1">1 Mile</MenuItem>
+          <MenuItem value="5">5 Miles</MenuItem>
+          <MenuItem value="10">10 Miles</MenuItem>
+          <MenuItem value="20">20 Miles</MenuItem>
+        </Select>
+      </FormControl>
       {userLocation && (
         <ul className="Events-list">
-          {filterEvents(events).map((event) => (
-            <li key={event.id}>
-              <h2>{event.name}</h2>
-              {event.images.length > 0 && (
-                <img src={event.images[0].url} alt={event.name} />
-              )}
-            </li>
+          {filteredEvents.map((event) => (
+            <Card key={event.id} sx={{ maxWidth: 300 }}>
+              <CardContent>
+                <Link className="event_link" to={`/event/${event.id}`}>
+                  <Typography variant="h6" component="h1">
+                    {event.name}
+                  </Typography>
+                  {event.images.length > 0 && (
+                    <CardMedia
+                      component="img"
+                      src={event.images[0].url}
+                      alt={event.name}
+                    />
+                  )}
+                </Link>
+              </CardContent>
+            </Card>
           ))}
         </ul>
       )}

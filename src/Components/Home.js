@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, fetchTicketMasterEvents } from "../store";
+import { filterEvents, fetchEvents } from "../Helpers/TicketMaster";
 import axios from "axios";
 import Events from "./Events";
 import Map from "./Map";
@@ -9,20 +10,52 @@ const Home = () => {
   const { auth, users } = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  const [userLocation, setUserLocation] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [filter, setFilter] = useState("");
+  const [radius, setRadius] = useState(10);
+
+  const filteredEvents = filterEvents(events, filter);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setUserLocation({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    if (userLocation) {
+      fetchEvents(userLocation, radius)
+        .then((response) => response.json())
+        .then((data) => setEvents(data._embedded.events));
+    }
+  }, [userLocation]);
+
   // const { events } = useSelector(state => state);
 
   // useEffect(()=>{
   //   dispatch(fetchTicketMasterEvents())
   // }, []);
-  console.log(auth);
+  // console.log(auth);
   //console.log(userProfile.city);
 
   return (
     <div className="home_container">
       <h2>What are we doing this weekend?</h2>
       <div id="map_events_container">
-        <Map />
-        <Events /> <div>{}</div>
+        <Map filteredEvents={filteredEvents} />
+        <Events
+          filter={filter}
+          radius={radius}
+          userLocation={userLocation}
+          filteredEvents={filteredEvents}
+          setFilter={setFilter}
+          setRadius={setRadius}
+        />{" "}
+        <div>{}</div>
       </div>
     </div>
   );

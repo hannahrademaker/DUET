@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateAuth, fetchUsers } from "../store";
+import { updateAuth, fetchUsers /*fetchFriendships*/ } from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
 
 const User = () => {
-  const { auth, users } = useSelector((state) => state);
+  const { auth, users, friendships } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
 
   const friendList = auth.requester.concat(auth.accepter);
+  const friendListIds = friendList.map((friendId) => friendId.id);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
 
+  // useEffect(() => {
+  //   dispatch(fetchFriendships());
+  // });
+
+  const addFriend = async (ev) => {
+    try {
+      //ev.preventDefault();
+      console.log(ev);
+      //await dispatch(friendRequest({ev}))
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div>
+    <div id="user-page">
       <div className="username-top">
         <h3>{auth.username}</h3>
       </div>
@@ -39,9 +54,8 @@ const User = () => {
       <div className="list-6-friends">
         <div>
           {friendList.map((friend) => {
-            buddy = friend;
             return (
-              <div key={friend.id} className="friend-card">
+              <div key={friend.id} className="friend-card" auth={auth.id}>
                 <li>
                   <Link to={`/users/${friend.id}`}>{friend.username}</Link>
                   <img
@@ -56,40 +70,41 @@ const User = () => {
           })}
         </div>
       </div>
-
-      {!toggle && (
-        <button
-          className="see-user-details-button"
-          onClick={() => {
-            setToggle(!toggle);
-          }}
-        >
-          See User Info
-        </button>
-      )}
-      {toggle && (
-        <div className="user-details">
-          <div>
-            <h4>Email address</h4>
-            <p>{auth.email}</p>
-          </div>
-          <h4>Address</h4>
-          <p>
-            {auth.address} {auth.addressDetails}
-          </p>
-          <p>
-            {auth.city}, {auth.state} {auth.zip}
-          </p>
+      <div className="toggle-user-details">
+        {!toggle && (
           <button
-            className="hide-user-details-button"
+            className="see-user-details-button"
             onClick={() => {
               setToggle(!toggle);
             }}
           >
-            Hide User Details
+            See User Info
           </button>
-        </div>
-      )}
+        )}
+        {toggle && (
+          <div className="user-details">
+            <div>
+              <h4>Email address</h4>
+              <p>{auth.email}</p>
+            </div>
+            <h4>Address</h4>
+            <p>
+              {auth.address} {auth.addressDetails}
+            </p>
+            <p>
+              {auth.city}, {auth.state} {auth.zip}
+            </p>
+            <button
+              className="hide-user-details-button"
+              onClick={() => {
+                setToggle(!toggle);
+              }}
+            >
+              Hide User Details
+            </button>
+          </div>
+        )}
+      </div>
       <div>
         <Link to="/user/update">
           <Button
@@ -105,12 +120,23 @@ const User = () => {
         <p>People you may know</p>
         <ul>
           {users.map((user) => {
-            let stranger;
-            for (let i = 0; i < friendList.length; i++) {
-              stranger = friendList[i];
-            }
-            if (stranger.id !== user.id && user.id !== auth.id) {
-              return <li key={user.id}>{user.username}</li>;
+            if (!friendListIds.includes(user.id) && user.id !== auth.id) {
+              return (
+                <div key={user.id}>
+                  <li>
+                    <Link to={`/users/${user.id}`}>{user.username}</Link>
+                    <img
+                      src={user.avatar}
+                      alt="Pic of User"
+                      width="200"
+                      height="200"
+                    />
+                    <button onClick={() => addFriend(user)}>
+                      Send Friend Request
+                    </button>
+                  </li>
+                </div>
+              );
             }
           })}
         </ul>

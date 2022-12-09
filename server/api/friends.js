@@ -5,11 +5,9 @@ const { isLoggedIn } = require("./middleware");
 
 module.exports = app;
 
-// app.get("/", isLoggedIn, async (req, res, next) => {
+// app.get("/friendships", isLoggedIn, async (req, res, next) => {
 //   try {
-//     const friends = await Friendship.findAll({
-//       include: [{ model: User }],
-//     });
+//     const friends = await Friendship.findAll();
 //     res.send(friends);
 //   } catch (err) {
 //     next(err);
@@ -19,27 +17,35 @@ module.exports = app;
 app.get("/", async (req, res, next) => {
   try {
     res.send(
-    JSON.stringify(
-      await User.findAll({
-        include: [
-          {
-            model: User,
-            as: "requester",
-            attributes: {
-              exclude: ["password", "address", "addressDetails"],
+      JSON.stringify(
+        await User.findAll({
+          include: [
+            {
+              model: User,
+              as: "requester",
+              attributes: {
+                exclude: ["password", "address", "addressDetails"],
+              },
             },
-          },
-          {
-            model: User,
-            as: "accepter",
-            attributes: {
-              exclude: ["password", "address", "addressDetails"],
+            {
+              model: User,
+              as: "accepter",
+              attributes: {
+                exclude: ["password", "address", "addressDetails"],
+              },
             },
-          },
-        ],
-      })
-    )
-      );
+          ],
+        })
+      )
+    );
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post("/", async (req, res, next) => {
+  try {
+    res.send();
   } catch (err) {
     next(err);
   }

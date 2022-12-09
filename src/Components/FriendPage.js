@@ -2,23 +2,28 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-const FriendPage = () => {
+const FriendPage = ({ auth }) => {
+  console.log(auth);
   const { users } = useSelector((state) => state);
   const { id } = useParams();
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
+  const activeUser = users.find((user) => user.id);
+  let counter = 0;
 
   return (
-    <div id="friend-page">
+    <div id="user-page">
       {users.map((friend) => {
         if (friend.id === id) {
           const friendList = friend.accepter.concat(friend.requester);
+          const friendListIds = friendList.map((friendId) => friendId.id);
+
           return (
             <div key={friend.id}>
-              <div className="friendname-top">
+              <div className="username-top">
                 <h3>{friend.username}</h3>
               </div>
-              <div className="friend-profile-page-details-top">
+              <div className="profile-page-details-top">
                 <img
                   src={friend.avatar}
                   alt="Pic of friend"
@@ -34,7 +39,7 @@ const FriendPage = () => {
                 <div>
                   {friendList.map((friendOfFriend) => {
                     return (
-                      <div key={friendOfFriend.id} className="friend-car">
+                      <div key={friendOfFriend.id} className="friend-card">
                         <ul>
                           <li>
                             <Link to={`/users/${friendOfFriend.id}`}>
@@ -53,7 +58,7 @@ const FriendPage = () => {
                   })}
                 </div>
               </div>
-              <div className="toggle-friend-details">
+              <div className="toggle-user-details">
                 {!toggle && (
                   <button
                     className="see-user-details-button"
@@ -89,21 +94,22 @@ const FriendPage = () => {
                 )}
               </div>
               <div className="people-you-may-know-cards">
-                <p>People you may know</p>
+                <p>People {`${friend.username}`} may know</p>
                 <ul>
-                  {users.map((user) => {
-                    console.log(friendList);
-                    let stranger;
-                    for (let i = 0; i < friendList.length; i++) {
-                      stranger = friendList[i];
-                      console.log(stranger);
-                    }
+                  {users.map((user, i) => {
                     if (
-                      stranger &&
-                      stranger.id !== user.id &&
+                      !friendListIds.includes(user.id) &&
                       user.id !== friend.id
                     ) {
-                      return <li key={user.id}>{user.username}</li>;
+                      return (
+                        <div key={user.id}>
+                          <li>
+                            <Link to={`/users/${user.id}`}>
+                              {user.username}
+                            </Link>
+                          </li>
+                        </div>
+                      );
                     }
                   })}
                 </ul>
