@@ -43,9 +43,11 @@ app.get("/", async (req, res, next) => {
   }
 });
 
-app.post("/", async (req, res, next) => {
+app.put("/:id", async (req, res, next) => {
   try {
-    res.send();
+    const user = await User.findByPk(req.params.id);
+    await user.update(req.body);
+    res.send(user);
   } catch (err) {
     next(err);
   }

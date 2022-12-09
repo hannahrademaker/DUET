@@ -21,4 +21,6 @@ export const fetchFriendships = () => {
   };
 };
 
+
+
 export default friendships;

@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-const FriendPage = ({ auth }) => {
-  console.log(auth);
-  const { users } = useSelector((state) => state);
+const FriendPage = () => {
+  const { users, auth } = useSelector((state) => state);
   const { id } = useParams();
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
-  const activeUser = users.find((user) => user.id);
-  let counter = 0;
 
   return (
     <div id="user-page">
