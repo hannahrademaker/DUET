@@ -120,6 +120,25 @@ User.prototype.getCart = async function () {
   return cart;
 };
 
+User.prototype.sendFriendRequest = async function () {
+  let friendship = await conn.models.friendship.findOne({
+    where: {
+      requesterId: this.id,
+      status: "pending",
+    },
+  });
+  if (!friendship) {
+    friendship = await conn.models.friendship.create({
+      requesterId: this.id,
+    });
+  }
+  return friendship;
+};
+
+User.prototype.acceptFriendRequest = async function () {
+  const friendship = await this.sendFriendRequest();
+};
+
 User.prototype.addToCart = async function ({ product, quantity }) {
   const cart = await this.getCart();
   let lineItem = cart.lineItems.find((lineItem) => {
@@ -162,7 +181,22 @@ User.findByToken = async function (token) {
   try {
     const { id } = jwt.verify(token, process.env.JWT);
     const user = await this.findByPk(id, {
-      include: [conn.models.attending],
+      include: [
+        {
+          model: User,
+          as: "requester",
+          attributes: {
+            exclude: ["password", "address", "addressDetails"],
+          },
+        },
+        {
+          model: User,
+          as: "accepter",
+          attributes: {
+            exclude: ["password", "address", "addressDetails"],
+          },
+        },
+      ],
     });
     if (user) {
       return user;

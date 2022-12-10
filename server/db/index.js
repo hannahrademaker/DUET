@@ -49,9 +49,25 @@ const syncAndSeed = async () => {
       lastName: "Money",
       bio: "Hi! My name is Moe! My favorite genres of music are bubble gum pop and hardcore rap.",
     }),
-    User.create({ username: "lucy", password: "123" }),
-    User.create({ username: "larry", password: "123" }),
-    User.create({ username: "ethyl", password: "123" }),
+    User.create({
+      username: "lucy",
+      password: "123",
+      firstName: "Lucy",
+      lastName: "Goosey",
+      address: "Old Town Road",
+    }),
+    User.create({
+      username: "larry",
+      password: "123",
+      firstName: "Larry",
+      lastName: "Mariah-Carey",
+    }),
+    User.create({
+      username: "ethyl",
+      password: "123",
+      firstName: "Ethyl",
+      lastName: "Bobethyl",
+    }),
   ]);
 
   const [fs1, fs2, fs3] = await Promise.all([

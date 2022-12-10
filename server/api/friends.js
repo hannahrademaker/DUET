@@ -7,9 +7,7 @@ module.exports = app;
 
 // app.get("/", isLoggedIn, async (req, res, next) => {
 //   try {
-//     const friends = await Friendship.findAll({
-//       include: [{ model: User }],
-//     });
+//     const friends = await Friendship.findAll();
 //     res.send(friends);
 //   } catch (err) {
 //     next(err);
@@ -44,6 +42,16 @@ app.get("/", async (req, res, next) => {
         })
       )
     );
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.put("/friends/:id", async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    await user.update(req.body);
+    res.send(user);
   } catch (err) {
     next(err);
   }
