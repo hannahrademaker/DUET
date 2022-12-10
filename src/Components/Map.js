@@ -16,7 +16,7 @@ const options = {
   zoomControl: true,
 };
 
-const Map = ({ filteredEvents }) => {
+const Map = ({ filteredEvents, userLocation, setUserLocation }) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBM-kc17ICi5elvOP04xO4yj_HZR3F2hTw",
     libraries,
@@ -38,15 +38,36 @@ const Map = ({ filteredEvents }) => {
       onMapLoad={onMapLoad}
       selected={selected}
       setSelected={setSelected}
+      userLocation={userLocation}
+      setUserLocation={setUserLocation}
     />
   );
 };
 
 export default Map;
 
-function Maps({ filteredEvents, onMapLoad, selected, setSelected }) {
+function Maps({
+  filteredEvents,
+  onMapLoad,
+  selected,
+  setSelected,
+  userLocation,
+  setUserLocation,
+}) {
   const events = useSelector((state) => state.events);
-  const center = useMemo(() => ({ lat: 40.69, lng: -74 }), []);
+  const center = useMemo(() => {
+    if (userLocation) {
+      return {
+        lat: userLocation.lat,
+        lng: userLocation.lng,
+      };
+    } else {
+      return {
+        lat: 40.7128,
+        lng: -74.006,
+      };
+    }
+  }, [userLocation]);
 
   return (
     <GoogleMap

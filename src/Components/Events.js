@@ -19,6 +19,7 @@ const Events = ({
   filter,
   radius,
   userLocation,
+  setUserLocation,
   filteredEvents,
   setFilter,
   setRadius,
@@ -33,7 +34,7 @@ const Events = ({
 
   return (
     <div className="Events">
-      <h1>Concerts Near You</h1>
+      <h1>Events Near You</h1>
       <FormControl sx={{ m: 1, minWidth: 200 }}>
         <InputLabel id="filter-by-type">Filter by Type:</InputLabel>
         <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
