@@ -10,6 +10,7 @@ const {
   DATE,
   DATEONLY,
 } = conn.Sequelize;
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT;
@@ -27,7 +28,7 @@ const Comment = conn.define("comment", {
   },
   userId: {
     type: UUID,
-    allowNull: false,
+    allowNull: true,
   },
   caption: {
     type: TEXT,

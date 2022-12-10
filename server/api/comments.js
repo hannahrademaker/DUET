@@ -13,13 +13,14 @@ app.get("/", async (req, res, next) => {
   }
 });
 
-// app.post("/", async (req, res, next) => {
-//   try {
-//     res.send(await Comments.create(req.body));
-//   } catch (ex) {
-//     next(ex);
-//   }
-// });
+app.post("/", async (req, res, next) => {
+  try {
+    const comment = await Comment.create(req.body);
+    res.send(comment);
+  } catch (ex) {
+    next(ex);
+  }
+});
 
 // app.put("/:id", async (req, res, next) => {
 //   try {
