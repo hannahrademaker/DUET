@@ -2,7 +2,6 @@ const conn = require("./conn");
 const User = require("./User");
 const Friendship = require("./Friendship");
 const Attending = require("./Attending");
-const Interested = require("./Interested");
 const path = require("path");
 const fs = require("fs");
 
@@ -33,7 +32,7 @@ User.belongsToMany(User, {
 User.hasMany(Friendship, { foreignKey: "requesterId", onDelete: "CASCADE" });
 User.hasMany(Friendship, { foreignKey: "accepterId", onDelete: "CASCADE" });
 User.hasMany(Attending, { onDelete: "CASCADE" });
-User.hasMany(Interested, { onDelete: "CASCADE" });
+Attending.belongsTo(User);
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
@@ -60,6 +59,14 @@ const syncAndSeed = async () => {
     Friendship.create({ requesterId: lucy.id, accepterId: ethyl.id }),
     Friendship.create({ requesterId: larry.id, accepterId: ethyl.id }),
   ]);
+
+  const [test1, test2] = await Promise.all([
+    Attending.create({ userId: moe.id, isAttending: true }),
+    Attending.create({ userId: lucy.id, isAttending: true }),
+  ]);
+
+  console.log(test1);
+  console.log(test2);
 
   // console.log(fs1);
   // console.log(fs2);
@@ -98,4 +105,5 @@ module.exports = {
   syncAndSeed,
   User,
   Friendship,
+  Attending,
 };

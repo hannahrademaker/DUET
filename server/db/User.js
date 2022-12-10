@@ -26,29 +26,29 @@ const User = conn.define(
       validate: {
         notEmpty: true,
       },
-  },
-  isAdmin: {
-    type: BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  },
-  avatar: {
-    type: TEXT,
-    defaultValue: "",
-    get: function () {
-      const prefixPNG = "data:image/png;base64,";
-      const prefixJPG = "data:image/jpeg;base64,";
-      const data = this.getDataValue("avatar") || "";
-      if (data.startsWith(prefixPNG)) {
-        return data;
-      } else if (data.startsWith(prefixJPG)) {
-        return data;
-      } else if (!data) {
-        return null;
-      }
-      return `${prefixPNG}${data}`;
     },
-  },
+    isAdmin: {
+      type: BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    avatar: {
+      type: TEXT,
+      defaultValue: "",
+      get: function () {
+        const prefixPNG = "data:image/png;base64,";
+        const prefixJPG = "data:image/jpeg;base64,";
+        const data = this.getDataValue("avatar") || "";
+        if (data.startsWith(prefixPNG)) {
+          return data;
+        } else if (data.startsWith(prefixJPG)) {
+          return data;
+        } else if (!data) {
+          return null;
+        }
+        return `${prefixPNG}${data}`;
+      },
+    },
     bio: {
       type: TEXT,
     },
@@ -161,7 +161,9 @@ User.addHook("beforeSave", async (user) => {
 User.findByToken = async function (token) {
   try {
     const { id } = jwt.verify(token, process.env.JWT);
-    const user = await this.findByPk(id);
+    const user = await this.findByPk(id, {
+      include: [conn.models.attending],
+    });
     if (user) {
       return user;
     }

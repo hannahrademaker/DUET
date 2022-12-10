@@ -47,11 +47,11 @@ app.get("/", (req, res) =>
   res.sendFile(path.join(__dirname, "../static/index.html"))
 );
 
+app.use("/api/events", require("./api/events"));
 app.use("/api/auth", require("./api/auth"));
 app.use("/api/friends", require("./api/friends"));
 
 // app.get('/discovery/v2/events', async(req, res, next)=>{
-
 //     const { apikey, secret } = process.env;
 //     const rooturl = `https://app.ticketmaster.com/discovery/v2/events.json?${apikey}`
 // })
