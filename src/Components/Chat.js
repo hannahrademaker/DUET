@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import ChatRoom from "./ChatRoom";
 
 const socket = io.connect("http://localhost:3001");
 
 const Chat = () => {
+  const { auth } = useSelector((state) => state);
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
+
+  useEffect(() => {
+    setUsername(auth.username);
+  });
 
   const joinRoom = () => {
     if (username !== "" && room !== "") {
@@ -21,13 +27,13 @@ const Chat = () => {
       {!showChat ? (
         <div className="joinChatContainer">
           <h3>Join A Chat</h3>
-          <input
+          {/* <input
             type="text"
             placeholder="Username"
             onChange={(event) => {
               setUsername(event.target.value);
             }}
-          />
+          /> */}
           <input
             type="text"
             placeholder="Room ID..."
