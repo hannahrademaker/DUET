@@ -3,6 +3,7 @@ const User = require("./User");
 const Friendship = require("./Friendship");
 const Attending = require("./Attending");
 const Interested = require("./Interested");
+const Comment = require("./Comment");
 const path = require("path");
 const fs = require("fs");
 
@@ -30,10 +31,13 @@ User.belongsToMany(User, {
   foreignKey: "accepterId",
   //uniqueKey: "friendshipId",
 });
+
 User.hasMany(Friendship, { foreignKey: "requesterId", onDelete: "CASCADE" });
 User.hasMany(Friendship, { foreignKey: "accepterId", onDelete: "CASCADE" });
 User.hasMany(Attending, { onDelete: "CASCADE" });
 User.hasMany(Interested, { onDelete: "CASCADE" });
+User.hasMany(Comment, { foreignKey: "userId", onDelete: "CASCADE" });
+Comment.belongsTo(User, { foreignKey: "userId" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
@@ -59,6 +63,24 @@ const syncAndSeed = async () => {
     Friendship.create({ requesterId: moe.id, accepterId: lucy.id }),
     Friendship.create({ requesterId: lucy.id, accepterId: ethyl.id }),
     Friendship.create({ requesterId: larry.id, accepterId: ethyl.id }),
+  ]);
+
+  const [comment1, comment2, comment3] = await Promise.all([
+    Comment.create({
+      userId: moe.id,
+      caption: "This is a comment",
+      eventId: "Z7r9jZ1Ad4s-N",
+    }),
+    Comment.create({
+      userId: lucy.id,
+      caption: "This is a comment",
+      eventId: "Z7r9jZ1Ad4s-N",
+    }),
+    Comment.create({
+      userId: ethyl.id,
+      caption: "This is a comment",
+      eventId: "Z7r9jZ1Ad4s-N",
+    }),
   ]);
 
   // console.log(fs1);
@@ -91,6 +113,11 @@ const syncAndSeed = async () => {
       fs2,
       fs3,
     },
+    comments: {
+      comment1,
+      comment2,
+      comment3,
+    },
   };
 };
 
@@ -98,4 +125,5 @@ module.exports = {
   syncAndSeed,
   User,
   Friendship,
+  Comment,
 };
