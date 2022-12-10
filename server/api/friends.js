@@ -43,7 +43,7 @@ app.get("/", async (req, res, next) => {
   }
 });
 
-app.put("/", async (req, res, next) => {
+app.put("/friends/:id", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);
     await user.update(req.body);

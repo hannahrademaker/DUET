@@ -30,6 +30,7 @@ User.belongsToMany(User, {
 });
 User.hasMany(Friendship, { foreignKey: "requesterId" });
 User.hasMany(Friendship, { foreignKey: "accepterId" });
+Friendship.belongsTo(User);
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });

@@ -29,7 +29,7 @@ export const fetchUsers = () => {
 export const friendRequest = (user) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
-    const response = await axios.put(
+    const response = await axios.get(
       "/api/friends",
       { user },
       {
