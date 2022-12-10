@@ -15,14 +15,12 @@ const User = () => {
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
 
-  const friendList = auth.requester.concat(auth.accepter);
-
-  const friendListIds = friendList.map((friendId) => friendId.id);
-
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
+  const friendList = auth.accepter.concat(auth.requester);
 
+  const friendListIds = friendList.map((friendId) => friendId.id);
   // useEffect(() => {
   //   dispatch(fetchFriendships());
   // });
