@@ -7,10 +7,12 @@ import Nav from "./Nav";
 import Home from "./Home";
 import LoggedOut from "./LoggedOut";
 import { Link, Routes, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, connect } from "react-redux";
 import UserUpdate from "./UserUpdate";
 import User from "./User";
 import PasswordUpdate from "./PasswordUpdate";
+import Chat from "./Chat";
+import { fetchOnlineUsers } from "../store";
 import FriendPage from "./FriendPage";
 
 const theme = createTheme({
@@ -31,8 +33,30 @@ const theme = createTheme({
   },
 });
 
+class Socket extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (prevProps.auth.id && !this.props.auth.id) {
+      window.socket.close();
+    }
+    if (!prevProps.auth.id && this.props.auth.id) {
+      window.socket = io();
+      window.socket.emit("auth", window.localStorage.getItem("token"));
+      this.props.dispatch(fetchOnlineUsers());
+      window.socket.on("userEntered", (user) => {
+        this.props.dispatch({ type: "USER_ENTERED", user });
+      });
+      window.socket.on("userLeft", (user) => {
+        this.props.dispatch({ type: "USER_LEFT", user });
+      });
+    }
+  }
+  render() {
+    return <App />;
+  }
+}
+
 const App = () => {
-  const { auth } = useSelector((state) => state);
+  const { auth, onlineUsers } = useSelector((state) => state);
 
   return (
     <ThemeProvider theme={theme}>
@@ -51,10 +75,12 @@ const App = () => {
         <Route path="/register" element={<Register />} />
 
         <Route path="/" element={!!auth.id ? <Home /> : <LoggedOut />} />
+        <Route path="/chat" element={!!auth.id ? <Chat /> : null} />
+        <Route path="/event/:id" element={!!auth.id ? <Event /> : null} />
         <Route path="/users/:id" element={<FriendPage />} />
       </Routes>
     </ThemeProvider>
   );
 };
 
-export default App;
+export default connect((state) => state)(Socket);

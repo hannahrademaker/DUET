@@ -1,6 +1,8 @@
 const conn = require("./conn");
-const { UUID, UUIDV4, STRING } = conn.Sequelize;
-const User = require("./User");
+const { UUID, UUIDV4, STRING, BOOLEAN, VIRTUAL } = conn.Sequelize;
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const JWT = process.env.JWT;
 
 const Attending = conn.define("attending", {
   id: {
@@ -10,18 +12,27 @@ const Attending = conn.define("attending", {
   },
   userId: {
     type: UUID,
-    references: {
-      model: User,
-      key: "id",
-    },
     allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
   },
   eventId: {
     type: STRING,
-    allowNull: false,
+    // allowNull: false,
+  },
+  isAttending: {
+    type: BOOLEAN,
+  },
+  isInterested: {
+    type: BOOLEAN,
+  },
+  decided: {
+    type: VIRTUAL,
+    get: function () {
+      if (this.isAttending === true) {
+        this.isInterested = false;
+      } else if (this.isInterested === true) {
+        this.isAttending = false;
+      }
+    },
   },
 });
 
