@@ -56,4 +56,6 @@ app.use("/api/friends", require("./api/friends"));
 //     const rooturl = `https://app.ticketmaster.com/discovery/v2/events.json?${apikey}`
 // })
 
+app.use("/api/onlineUsers", require("./api/onlineUsers"));
+
 module.exports = app;
