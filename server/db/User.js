@@ -182,6 +182,8 @@ User.findByToken = async function (token) {
     const { id } = jwt.verify(token, process.env.JWT);
     const user = await this.findByPk(id, {
       include: [
+        conn.models.attending,
+        conn.models.friendship,
         {
           model: User,
           as: "requester",
