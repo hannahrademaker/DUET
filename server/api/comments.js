@@ -21,13 +21,3 @@ app.post("/", async (req, res, next) => {
     next(ex);
   }
 });
-
-// app.put("/:id", async (req, res, next) => {
-//   try {
-//     const comment = await Comments.findByPk(req.params.id);
-//     await comment.update(req.body);
-//     res.send(comment);
-//   } catch (ex) {
-//     next(ex);
-//   }
-// });

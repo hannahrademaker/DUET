@@ -38,20 +38,25 @@ const Comments = ({ eventId }) => {
       <h1>Comments</h1>
       <div className="Comments-list">
         {eventComments.map((comment) => (
-          <h1 key={comment.id}>
+          <div key={comment.id}>
             {/* <Link to={`/users/${username!!`}>
-              <h3>{comment.user}</h3>
+              <p>{comment.user}</p>
             </Link> */}
-            <p>{comment.caption}</p>
-          </h1>
+            <div>{comment.caption}</div>
+          </div>
         ))}
       </div>
       <form onSubmit={handleSubmit}>
-        <label>
+        <label className="commentsLabel">
           Comment:
-          <input type="text" value={newComment} onChange={handleChange} />
+          <input
+            className="commmentInput"
+            type="text"
+            value={newComment}
+            onChange={handleChange}
+          />
         </label>
-        <input type="submit" value="Submit" />
+        <input className="commentsSubmit" type="submit" value="Submit" />
       </form>
     </div>
   );
