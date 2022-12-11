@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const friendships = (state = [], action) => {
+const friendships = (state = { friendships: [] }, action) => {
   if (action.type === "SET_FRIENDSHIPS") {
     state = action.friendships;
   }
@@ -10,7 +10,7 @@ const friendships = (state = [], action) => {
 export const fetchFriendships = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
-    const response = await axios.get("/api/friendships", {
+    const response = await axios.get("/api/users/friendships", {
       headers: {
         authorization: token,
       },

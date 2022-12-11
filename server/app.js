@@ -52,12 +52,7 @@ app.use("/api/auth", require("./api/auth"));
 app.use("/api/friends", require("./api/friends"));
 app.use("/api/comments", require("./api/comments"));
 app.use("/api/users", require("./api/users"));
-
-// app.get('/discovery/v2/events', async(req, res, next)=>{
-//     const { apikey, secret } = process.env;
-//     const rooturl = `https://app.ticketmaster.com/discovery/v2/events.json?${apikey}`
-// })
-
+app.use("/api/friendships", require("./api/friendships"));
 app.use("/api/onlineUsers", require("./api/onlineUsers"));
 
 module.exports = app;

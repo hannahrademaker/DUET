@@ -5,9 +5,11 @@ const users = (state = [], action) => {
     state = action.users;
   }
   if (action.type === "UPDATE_USER") {
-    state = state.map((user) =>
-      user.id === action.user.id ? action.user : user
+    state = state.map(
+      (user) => (user.id === action.user.id ? action.user : user)
+      //state.requester = [...state.requester, action.user];
     );
+    //return action.user;
   }
   return state;
 };
@@ -29,15 +31,11 @@ export const fetchUsers = () => {
 export const friendRequest = (user) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
-    const response = await axios.get(
-      "/api/friends",
-      { user },
-      {
-        headers: {
-          authorization: token,
-        },
-      }
-    );
+    const response = await axios.put(`/api/friends/${user.id}`, user, {
+      headers: {
+        authorization: token,
+      },
+    });
     dispatch({ type: "UPDATE_USER", user: response.data });
   };
 };

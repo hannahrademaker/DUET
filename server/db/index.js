@@ -19,21 +19,26 @@ const getImage = (path) => {
 };
 
 User.belongsToMany(User, {
-  as: "requester",
+  as: "Requester",
   through: Friendship,
   foreignKey: "requesterId",
   //uniqueKey: "friendshipId",
 });
 User.belongsToMany(User, {
-  as: "accepter",
+  as: "Accepter",
   through: Friendship,
   foreignKey: "accepterId",
   //uniqueKey: "friendshipId",
 });
 
-User.hasMany(Friendship, { foreignKey: "requesterId", onDelete: "CASCADE" });
+User.hasMany(Friendship, {
+  foreignKey: "requesterId",
+  onDelete: "CASCADE",
+});
 User.hasMany(Friendship, { foreignKey: "accepterId", onDelete: "CASCADE" });
 User.hasMany(Attending, { onDelete: "CASCADE" });
+//Friendship.belongsTo(User);
+//Friendship.belongsTo(User);
 Attending.belongsTo(User);
 User.hasMany(Comment, { foreignKey: "userId", onDelete: "CASCADE" });
 Comment.belongsTo(User, { foreignKey: "userId" });
@@ -71,11 +76,15 @@ const syncAndSeed = async () => {
       password: "123",
       firstName: "Ethyl",
       lastName: "Bobethyl",
+      requestedFrom: ["007"],
     }),
   ]);
 
   const [fs1, fs2, fs3] = await Promise.all([
-    Friendship.create({ requesterId: moe.id, accepterId: lucy.id }),
+    Friendship.create({
+      requesterId: moe.id,
+      accepterId: lucy.id,
+    }),
     Friendship.create({ requesterId: lucy.id, accepterId: ethyl.id }),
     Friendship.create({ requesterId: larry.id, accepterId: ethyl.id }),
   ]);
@@ -109,14 +118,12 @@ const syncAndSeed = async () => {
     Attending.create({ userId: lucy.id, isAttending: true }),
   ]);
 
-  console.log(test1);
-  console.log(test2);
-
+  //console.log(test1);
+  // console.log(test2);
+  // console.log(ethyl.requestedFrom.includes("00"));
   // console.log(fs1);
-  // console.log(fs2);
-  // console.log(fs3);
-  // console.log(lucy);
-  // console.log(moe.id);
+  // console.log(lucy.findThisUser());
+  console.log(lucy.findThisUser());
 
   // const test = () => {
   //   let friend;
@@ -129,7 +136,7 @@ const syncAndSeed = async () => {
   // };
 
   // console.log(test(lucy));
-  // console.log(User_Friendships)
+  //console.log(User_Friendships)
   return {
     users: {
       moe,

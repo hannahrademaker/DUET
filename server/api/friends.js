@@ -17,41 +17,58 @@ module.exports = app;
 app.get("/", async (req, res, next) => {
   try {
     res.send(
-      JSON.stringify(
-        await User.findAll({
-          include: [
-            {
-              model: User,
-              as: "requester",
-              attributes: {
-                exclude: ["password", "address", "addressDetails"],
-              },
+      // JSON.stringify(
+      await User.findAll({
+        include: [
+          {
+            model: User,
+            as: "requester",
+            attributes: {
+              exclude: ["password", "address", "addressDetails"],
             },
-            {
-              model: User,
-              as: "accepter",
-              attributes: {
-                exclude: ["password", "address", "addressDetails"],
-              },
+          },
+          {
+            model: User,
+            as: "accepter",
+            attributes: {
+              exclude: ["password", "address", "addressDetails"],
             },
-            {
-              model: Attending,
-              // as: "attending",
-            },
-          ],
-        })
-      )
+          },
+          {
+            model: Attending,
+            // as: "attending",
+          },
+        ],
+      })
     );
+    //  );
   } catch (err) {
     next(err);
   }
 });
+// app.put("/friends", async (req, res, next) => {
+//   try {
+//     const friendsRequested = await this.requestUser();
+//     console.log(friendsRequested);
+//     res.send(friendsRequested);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
-app.put("/friends/:id", async (req, res, next) => {
+// app.get("/friendships", async (req, res) => {
+//   try {
+//     const requestedList = await User.friendsRequestedUser();
+//     console.log(requestedList);
+//     res.send(requestedList);
+//   } catch (err) {
+//     return err;
+//   }
+// });
+
+app.post("/", async (req, res, next) => {
   try {
-    const user = await User.findByPk(req.params.id);
-    await user.update(req.body);
-    res.send(user);
+    res.send();
   } catch (err) {
     next(err);
   }

@@ -5,15 +5,15 @@ const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT;
 
 const Friendship = conn.define("friendship", {
-  id: {
-    type: UUID,
-    defaultValue: UUIDV4,
-    allowNull: false,
-    primaryKey: true,
-  },
+  // id: {
+  //   type: UUID,
+  //   defaultValue: UUIDV4,
+  //   allowNull: false,
+  //   primaryKey: true,
+  // },
   requesterId: {
     type: UUID,
-    primaryKey: true,
+    //primaryKey: true,
     // references: {
     //   model: User,
     //   key: "id",
@@ -21,13 +21,13 @@ const Friendship = conn.define("friendship", {
   },
   accepterId: {
     type: UUID,
-    primaryKey: true,
+    //primaryKey: true,
     // references: {
     //   model: User,
     //   key: "id",
     // },
   },
-  status: {
+  relationship: {
     type: ENUM("pending", "accepted", "rejected", "blocked"),
     allowNull: false,
     defaultValue: "pending",

@@ -5,35 +5,33 @@ import {
   fetchUsers,
   friendRequest,
   fetchFriendships,
+  sendFriendRequest,
 } from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
 
 const User = () => {
-  const { auth, users, friendships } = useSelector((state) => state);
+  const { auth, users } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
+  const [requested, setRequested] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
-  const friendList = auth.accepter.concat(auth.requester);
+
+  const friendList = auth.Accepter.concat(auth.Requester);
 
   const friendListIds = friendList.map((friendId) => friendId.id);
+
   // useEffect(() => {
   //   dispatch(fetchFriendships());
   // });
+  //console.log(friendships);
 
   const addFriend = async (ev) => {
-    try {
-      //ev.preventDefault();
-      //console.log(ev);
-      await ev.requester.push(auth);
-      await dispatch(friendRequest(ev));
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch(sendFriendRequest(ev));
   };
 
   return (
@@ -137,8 +135,8 @@ const User = () => {
                       height="200"
                     />
                     <button
-                      disabled={user.requester.includes(auth)}
-                      onClick={() => addFriend(user)}
+                      onClick={() => addFriend(user) && setRequested(true)}
+                      disabled={requested}
                     >
                       Send Friend Request
                     </button>
