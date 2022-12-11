@@ -17,7 +17,7 @@ const users = (state = [], action) => {
 export const fetchUsers = () => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
-    const response = await axios.get("/api/friends", {
+    const response = await axios.get("/api/users", {
       headers: {
         authorization: token,
       },
