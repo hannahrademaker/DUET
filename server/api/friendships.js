@@ -5,9 +5,10 @@ const { isLoggedIn } = require("./middleware");
 
 module.exports = app;
 
-app.get("/friendships", isLoggedIn, async (req, res, next) => {
+app.post("/", isLoggedIn, async (req, res, next) => {
   try {
-    res.send(await Friendship.findAll());
+    const user = req.user;
+    res.send(await user.createFriendRequest(req.body));
   } catch (err) {
     next(err);
   }

@@ -123,7 +123,7 @@ const syncAndSeed = async () => {
   // console.log(ethyl.requestedFrom.includes("00"));
   // console.log(fs1);
   // console.log(lucy.findThisUser());
-  console.log(lucy.friendsRequestedUser(larry));
+  console.log(lucy.findThisUser());
 
   // const test = () => {
   //   let friend;

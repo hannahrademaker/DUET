@@ -20,20 +20,20 @@ app.get("/", async (req, res, next) => {
       // JSON.stringify(
       await User.findAll({
         include: [
-          // {
-          //   model: User,
-          //   as: "requester",
-          //   attributes: {
-          //     exclude: ["password", "address", "addressDetails"],
-          //   },
-          // },
-          // {
-          //   model: User,
-          //   as: "accepter",
-          //   attributes: {
-          //     exclude: ["password", "address", "addressDetails"],
-          //   },
-          // },
+          {
+            model: User,
+            as: "requester",
+            attributes: {
+              exclude: ["password", "address", "addressDetails"],
+            },
+          },
+          {
+            model: User,
+            as: "accepter",
+            attributes: {
+              exclude: ["password", "address", "addressDetails"],
+            },
+          },
           {
             model: Attending,
             // as: "attending",
@@ -56,12 +56,20 @@ app.get("/", async (req, res, next) => {
 //   }
 // });
 
-app.get("/friendships", async (req, res) => {
+// app.get("/friendships", async (req, res) => {
+//   try {
+//     const requestedList = await User.friendsRequestedUser();
+//     console.log(requestedList);
+//     res.send(requestedList);
+//   } catch (err) {
+//     return err;
+//   }
+// });
+
+app.post("/", async (req, res, next) => {
   try {
-    const requestedList = await User.friendsRequestedUser();
-    console.log(requestedList);
-    res.send(requestedList);
+    res.send();
   } catch (err) {
-    return err;
+    next(err);
   }
 });

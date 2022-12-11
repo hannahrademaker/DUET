@@ -122,12 +122,10 @@ User.prototype.friendsRequestedUser = async function (user) {
   }
 };
 
-User.prototype.findRequestedFriends = async function () {
-  let requestedFriends = await conn.models.friendships.findAll({
-    where: {
-      requesterId: this.id,
-      status: "pending",
-    },
+User.prototype.createFriendRequest = async function (obj) {
+  let requestedFriends = await conn.models.friendship.create({
+    requesterId: this.id,
+    accepterId: obj.id,
   });
   return requestedFriends;
 };

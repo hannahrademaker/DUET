@@ -5,6 +5,7 @@ import {
   fetchUsers,
   friendRequest,
   fetchFriendships,
+  sendFriendRequest,
 } from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
@@ -30,20 +31,7 @@ const User = () => {
   //console.log(friendships);
 
   const addFriend = async (ev) => {
-    try {
-      //const user = users.find((user) => auth.id === user.id);
-      //const test = user.friendsRequestedUser(ev);
-      //ev.preventDefault()
-      // if (!ev.requestedFrom) {
-      //   ev.requestedFrom = [auth.id];
-      // } else {
-      //   ev.requestedFrom.push(auth.id);
-      // }
-      console.log(await auth.findThisUser());
-      // await dispatch(friendRequest(ev));
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch(sendFriendRequest(ev));
   };
 
   return (
