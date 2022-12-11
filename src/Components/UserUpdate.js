@@ -180,7 +180,6 @@ const UserUpdate = () => {
       </form>
       {data ? <h6>Avatar Preview</h6> : null}
       <img src={data} className={data ? "avatar-preview" : null} />
-      console.log(data)
     </div>
   );
 };

@@ -68,8 +68,8 @@ nav {
 /*}*/
 
 .MuiCard-root {
-  margin: .5em;
-  background-color: #00c4cc
+  margin: 0.5em;
+  background-color: #00c4cc;
 }
 
 .MuiCard-root:hover {
@@ -135,7 +135,7 @@ nav {
   text-transform: uppercase;
 }
 
-.indvEvent{
+.indvEvent {
   color: #12163f;
   text-align: center;
   text-transform: uppercase;

@@ -10,11 +10,12 @@ const {
   DATE,
   DATEONLY,
 } = conn.Sequelize;
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT;
 
-const Comments = conn.define("comments", {
+const Comment = conn.define("comment", {
   id: {
     type: UUID,
     primaryKey: true,
@@ -22,17 +23,21 @@ const Comments = conn.define("comments", {
   },
   createdAt: {
     type: DATE,
-    allowNull: false,
+    allowNull: true,
     defaultValue: Date.now(),
   },
   userId: {
     type: UUID,
-    allowNull: false,
+    allowNull: true,
   },
   caption: {
     type: TEXT,
     allowNull: false,
   },
+  eventId: {
+    type: STRING,
+    allowNull: true,
+  },
 });
 
-module.exports = Comments;
+module.exports = Comment;

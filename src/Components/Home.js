@@ -32,7 +32,7 @@ const Home = () => {
         .then((response) => response.json())
         .then((data) => setEvents(data._embedded.events));
     }
-  }, [userLocation]);
+  }, [userLocation, radius]);
 
   // const { events } = useSelector(state => state);
 
@@ -44,17 +44,18 @@ const Home = () => {
 
   return (
     <div className="home_container">
-      <h2>What are we doing this weekend?</h2>
+      <h2>What do you want to do?!</h2>
       <div id="map_events_container">
         <Map filteredEvents={filteredEvents} />
         <Events
           filter={filter}
           radius={radius}
           userLocation={userLocation}
+          setUserLocation={setUserLocation}
           filteredEvents={filteredEvents}
           setFilter={setFilter}
           setRadius={setRadius}
-        />{" "}
+        />
         <div>{}</div>
       </div>
     </div>
