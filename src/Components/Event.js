@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Typography } from "@mui/material";
 import dayjs from "dayjs";
 const API_KEY = "fmAEcxmSvwqhltBAynkfzAyvdJLNg28X";
+import Comments from "./Comments";
 
 const Event = (props) => {
   const [event, setEvent] = useState(null);
@@ -35,6 +36,7 @@ const Event = (props) => {
           event._embedded.venues[0].postalCode}
       </Typography>
       <img src={event.images[0].url} alt="event" />
+      <Comments eventId={id} />
     </div>
   );
 };
