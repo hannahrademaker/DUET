@@ -39,7 +39,7 @@ const User = () => {
       // } else {
       //   ev.requestedFrom.push(auth.id);
       // }
-      console.log(auth.findThisUser());
+      console.log(await auth.findThisUser());
       // await dispatch(friendRequest(ev));
     } catch (err) {
       console.log(err);
