@@ -4,7 +4,7 @@ const auth = (state = {}, action) => {
     return action.auth;
   }
   if (action.type === "UPDATE_ATTENDING") {
-    return (state.attendings = [...state.attendings, action.attending]);
+    state.attendings = [...state.attendings, action.attending];
   }
   return state;
 };
