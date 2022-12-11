@@ -17,7 +17,7 @@ const FriendPage = () => {
           //   console.log(mutual.accepter.friendship.status);
           // });
           //friendList = friendList.concat(friend.accepter);
-          let friendList = friend.requester.concat(friend.accepter);
+          let friendList = friend.Requester.concat(friend.Accepter);
           const friendListIds = friendList.map((friendId) => friendId.id);
 
           return (
@@ -40,45 +40,43 @@ const FriendPage = () => {
               <div className="list-6-friends">
                 <div>
                   {friendList.map((friendOfFriend) => {
-                    if (friendOfFriend.id !== auth.id){
-                    return (
-                      <div key={friendOfFriend.id} className="friend-card">
-                        <ul>
-                          <li>
-                            <Link to={`/users/${friendOfFriend.id}`}>
-                              {friendOfFriend.username}
-                            </Link>
-                            <img
-                              src={friendOfFriend.avatar}
-                              alt="Pic of Friend"
-                              width="200"
-                              height="200"
-                            />
-                          </li>
-                        </ul>
-                      </div>
-                    );
-                 } else if(friendOfFriend.id === auth.id){
-                       return (
-                      <div key={auth.id} className="friend-card">
-                        <ul>
-                          <li>
-                            <Link to={`/user`}>
-                              {auth.username}
-                            </Link>
-                            <img
-                              src={auth.avatar}
-                              alt="Pic of Friend"
-                              width="200"
-                              height="200"
-                            />
-                          </li>
-                        </ul>
-                      </div>
-                    )
-                 }})}
+                    if (friendOfFriend.id !== auth.id) {
+                      return (
+                        <div key={friendOfFriend.id} className="friend-card">
+                          <ul>
+                            <li>
+                              <Link to={`/users/${friendOfFriend.id}`}>
+                                {friendOfFriend.username}
+                              </Link>
+                              <img
+                                src={friendOfFriend.avatar}
+                                alt="Pic of Friend"
+                                width="200"
+                                height="200"
+                              />
+                            </li>
+                          </ul>
+                        </div>
+                      );
+                    } else if (friendOfFriend.id === auth.id) {
+                      return (
+                        <div key={auth.id} className="friend-card">
+                          <ul>
+                            <li>
+                              <Link to={`/user`}>{auth.username}</Link>
+                              <img
+                                src={auth.avatar}
+                                alt="Pic of Friend"
+                                width="200"
+                                height="200"
+                              />
+                            </li>
+                          </ul>
+                        </div>
+                      );
+                    }
+                  })}
                 </div>
-                
               </div>
               <div className="toggle-user-details">
                 {!toggle && (
@@ -121,7 +119,8 @@ const FriendPage = () => {
                   {users.map((user, i) => {
                     if (
                       !friendListIds.includes(user.id) &&
-                      user.id !== friend.id && user.id !== auth.id
+                      user.id !== friend.id &&
+                      user.id !== auth.id
                     ) {
                       return (
                         <div key={user.id}>

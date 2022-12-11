@@ -17,42 +17,51 @@ module.exports = app;
 app.get("/", async (req, res, next) => {
   try {
     res.send(
-      JSON.stringify(
-        await User.findAll({
-          include: [
-            {
-              model: User,
-              as: "requester",
-              attributes: {
-                exclude: ["password", "address", "addressDetails"],
-              },
-            },
-            {
-              model: User,
-              as: "accepter",
-              attributes: {
-                exclude: ["password", "address", "addressDetails"],
-              },
-            },
-            {
-              model: Attending,
-              // as: "attending",
-            },
-          ],
-        })
-      )
+      // JSON.stringify(
+      await User.findAll({
+        include: [
+          // {
+          //   model: User,
+          //   as: "requester",
+          //   attributes: {
+          //     exclude: ["password", "address", "addressDetails"],
+          //   },
+          // },
+          // {
+          //   model: User,
+          //   as: "accepter",
+          //   attributes: {
+          //     exclude: ["password", "address", "addressDetails"],
+          //   },
+          // },
+          {
+            model: Attending,
+            // as: "attending",
+          },
+        ],
+      })
     );
+    //  );
   } catch (err) {
     next(err);
   }
 });
+// app.put("/friends", async (req, res, next) => {
+//   try {
+//     const friendsRequested = await this.requestUser();
+//     console.log(friendsRequested);
+//     res.send(friendsRequested);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
-app.put("/friends/:id", async (req, res, next) => {
+app.post("/friendships", async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.id);
-    await user.update(req.body);
-    res.send(user);
+    const requestedList = await User.friendsRequestedUser();
+    console.log(requestedList);
+    res.send(requestedList);
   } catch (err) {
-    next(err);
+    return err;
   }
 });

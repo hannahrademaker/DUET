@@ -1,5 +1,6 @@
 const conn = require("./conn");
-const { STRING, UUID, UUIDV4, TEXT, BOOLEAN, INTEGER } = conn.Sequelize;
+const { STRING, UUID, UUIDV4, TEXT, BOOLEAN, INTEGER, VIRTUAL, ARRAY } =
+  conn.Sequelize;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const JWT = process.env.JWT;
@@ -84,59 +85,107 @@ const User = conn.define(
       type: INTEGER,
       defaultValue: 10036,
     },
+    requestedFrom: {
+      type: ARRAY(TEXT),
+    },
   },
   {
     paranoid: true,
   }
 );
 
-User.prototype.createOrder = async function () {
-  const cart = await this.getCart();
-  cart.isCart = false;
-  await cart.save();
-  return cart;
-};
-
-User.prototype.getCart = async function () {
-  let cart = await conn.models.order.findOne({
-    where: {
-      userId: this.id,
-      isCart: true,
-    },
-  });
-  if (!cart) {
-    cart = await conn.models.order.create({
-      userId: this.id,
-    });
+User.prototype.findThisUser = async function () {
+  try {
+    const currentUser = await User.findByPk(this.id);
+    console.log(currentUser);
+    return currentUser;
+  } catch (err) {
+    return err;
   }
-  cart = await conn.models.order.findByPk(cart.id, {
-    include: [
-      {
-        model: conn.models.lineItem,
-        include: [conn.models.product],
-      },
-    ],
-  });
-  return cart;
 };
 
-User.prototype.sendFriendRequest = async function () {
-  let friendship = await conn.models.friendship.findOne({
+User.prototype.friendsRequestedUser = async function (user) {
+  try {
+    // let thisUser = await this.models.getRequester({
+    //   where: { id: this.id },
+    // });
+    // console.log(thisUser);
+    // return thisUser
+    const currentUser = await this.findThisUser();
+    const requestUser = await this.models.Requester.findOne({
+      where: { id: user.id },
+    });
+    currentUser.addRequester(requestUser);
+    return currentUser.getRequester();
+  } catch (err) {
+    return err;
+  }
+};
+
+User.prototype.findRequestedFriends = async function () {
+  let requestedFriends = await conn.models.friendships.findAll({
     where: {
       requesterId: this.id,
       status: "pending",
     },
   });
-  if (!friendship) {
-    friendship = await conn.models.friendship.create({
-      requesterId: this.id,
-    });
-  }
-  return friendship;
+  return requestedFriends;
 };
+
+User.prototype.findFriends = async function () {
+  let friendsRequestedAcceptedUser = await conn.models.friendships.findAll({
+    where: {
+      requestedId: this.id,
+      status: "accepted",
+    },
+  });
+  let friendsRequestedUserAccepted = await conn.models.friendships.findAll({
+    where: {
+      accepterId: this.id,
+      status: "accepted",
+    },
+  });
+  let friends = friendsRequestedAcceptedUser.concat(
+    friendsRequestedUserAccepted
+  );
+  return friends;
+};
+
+User.prototype.requestUser = async function ({ user }) {
+  try {
+    const currentUser = await this.findThisUser();
+    const toRequestUser = await conn.models.requester.findOne({
+      where: { id: user.id },
+    });
+    currentUser.addUser(toRequestUser);
+    console.log(currentUser.getUser());
+    return currentUser.getUser();
+  } catch (err) {
+    return err;
+  }
+};
+
+// User.prototype.sendFriendRequest = async function ({user}) {
+//   let friendship = await conn.models.requester.findOne({
+//     where: {
+//       requesterId: this.id,
+//       relationship: "pending",
+//     },
+//   });
+//   if (!friendship) {
+//     friendship = await conn.models.friendship.create({
+//       requesterId: this.id,
+//     });
+//   }
+//   return friendship;
+// };
 
 User.prototype.acceptFriendRequest = async function () {
   const friendship = await this.sendFriendRequest();
+  friendship.accepter = this.id;
+  friendship.relationship = "accepted";
+  await friendship.save();
+  return friendship;
 };
 
 User.prototype.addToCart = async function ({ product, quantity }) {
@@ -186,14 +235,14 @@ User.findByToken = async function (token) {
         conn.models.friendship,
         {
           model: User,
-          as: "requester",
+          as: "Requester",
           attributes: {
             exclude: ["password", "address", "addressDetails"],
           },
         },
         {
           model: User,
-          as: "accepter",
+          as: "Accepter",
           attributes: {
             exclude: ["password", "address", "addressDetails"],
           },
