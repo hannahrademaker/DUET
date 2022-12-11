@@ -65,21 +65,27 @@ const syncAndSeed = async () => {
     Friendship.create({ requesterId: larry.id, accepterId: ethyl.id }),
   ]);
 
-  const [comment1, comment2, comment3] = await Promise.all([
+  const [comment1, comment2, comment3, comment4] = await Promise.all([
     Comment.create({
       userId: moe.id,
-      caption: "This is a comment",
+      caption: "I love the Nets! Who wants to hang out and watch the game?",
       eventId: "Z7r9jZ1Ad4s-N",
     }),
     Comment.create({
       userId: lucy.id,
-      caption: "This is a comment",
+      caption: "I really want to go to this event! who wants to join?",
       eventId: "Z7r9jZ1Ad4s-N",
     }),
     Comment.create({
       userId: ethyl.id,
       caption: "This is a comment",
       eventId: "Z7r9jZ1Ad4s-N",
+    }),
+    Comment.create({
+      userId: larry.id,
+      caption:
+        "Hey guys, I'm going to this event! None of my friends like Shinia Twain, who wants to join me?",
+      eventId: "G5diZ94NPjotW",
     }),
   ]);
 
@@ -117,6 +123,7 @@ const syncAndSeed = async () => {
       comment1,
       comment2,
       comment3,
+      comment4,
     },
   };
 };
