@@ -56,7 +56,7 @@ app.get("/", async (req, res, next) => {
 //   }
 // });
 
-app.post("/friendships", async (req, res) => {
+app.get("/friendships", async (req, res) => {
   try {
     const requestedList = await User.friendsRequestedUser();
     console.log(requestedList);

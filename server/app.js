@@ -52,6 +52,7 @@ app.use("/api/auth", require("./api/auth"));
 app.use("/api/friends", require("./api/friends"));
 app.use("/api/comments", require("./api/comments"));
 app.use("/api/users", require("./api/users"));
+//app.use("/api/friendships", require("./api/friendships"));
 
 // app.get('/discovery/v2/events', async(req, res, next)=>{
 //     const { apikey, secret } = process.env;
