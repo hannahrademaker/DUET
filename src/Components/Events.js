@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Card,
   CardContent,
@@ -11,6 +12,7 @@ import {
   CardActions,
   IconButton,
 } from "@mui/material";
+import { attendingEvent } from "../store";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
@@ -24,11 +26,15 @@ const Events = ({
   setFilter,
   setRadius,
 }) => {
-  const attendingEvent = (e) => {
-    console.log(e.id);
+  const { auth } = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const attending = (e) => {
+    const letsGo = { userId: auth.id, eventId: e.id, isAttending: true };
+    console.log(letsGo);
+    dispatch(attendingEvent(letsGo));
   };
 
-  const interestedInAttending = (e) => {
+  const interested = (e) => {
     console.log(e.name);
   };
 
@@ -76,13 +82,13 @@ const Events = ({
               <CardActions>
                 <IconButton
                   aria-label="attending"
-                  onClick={() => attendingEvent(event)}
+                  onClick={() => attending(event)}
                 >
                   <AddCircleIcon color="secondary" />
                 </IconButton>
                 <IconButton
                   aria-label="interested-in-attending"
-                  onClick={() => interestedInAttending(event)}
+                  onClick={() => interested(event)}
                 >
                   <FavoriteIcon color="secondary" />
                 </IconButton>

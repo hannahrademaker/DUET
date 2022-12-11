@@ -13,6 +13,7 @@ import User from "./User";
 import PasswordUpdate from "./PasswordUpdate";
 import Chat from "./Chat";
 import { fetchOnlineUsers } from "../store";
+import FriendPage from "./FriendPage";
 
 const theme = createTheme({
   palette: {
@@ -76,6 +77,7 @@ const App = () => {
         <Route path="/" element={!!auth.id ? <Home /> : <LoggedOut />} />
         <Route path="/chat" element={!!auth.id ? <Chat /> : null} />
         <Route path="/event/:id" element={!!auth.id ? <Event /> : null} />
+        <Route path="/users/:id" element={<FriendPage />} />
       </Routes>
     </ThemeProvider>
   );

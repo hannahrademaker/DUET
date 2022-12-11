@@ -2,7 +2,6 @@ const conn = require("./conn");
 const User = require("./User");
 const Friendship = require("./Friendship");
 const Attending = require("./Attending");
-const Interested = require("./Interested");
 const Comment = require("./Comment");
 const path = require("path");
 const fs = require("fs");
@@ -35,7 +34,7 @@ User.belongsToMany(User, {
 User.hasMany(Friendship, { foreignKey: "requesterId", onDelete: "CASCADE" });
 User.hasMany(Friendship, { foreignKey: "accepterId", onDelete: "CASCADE" });
 User.hasMany(Attending, { onDelete: "CASCADE" });
-User.hasMany(Interested, { onDelete: "CASCADE" });
+Attending.belongsTo(User);
 User.hasMany(Comment, { foreignKey: "userId", onDelete: "CASCADE" });
 Comment.belongsTo(User, { foreignKey: "userId" });
 
@@ -54,9 +53,25 @@ const syncAndSeed = async () => {
       lastName: "Money",
       bio: "Hi! My name is Moe! My favorite genres of music are bubble gum pop and hardcore rap.",
     }),
-    User.create({ username: "lucy", password: "123" }),
-    User.create({ username: "larry", password: "123" }),
-    User.create({ username: "ethyl", password: "123" }),
+    User.create({
+      username: "lucy",
+      password: "123",
+      firstName: "Lucy",
+      lastName: "Goosey",
+      address: "Old Town Road",
+    }),
+    User.create({
+      username: "larry",
+      password: "123",
+      firstName: "Larry",
+      lastName: "Mariah-Carey",
+    }),
+    User.create({
+      username: "ethyl",
+      password: "123",
+      firstName: "Ethyl",
+      lastName: "Bobethyl",
+    }),
   ]);
 
   const [fs1, fs2, fs3] = await Promise.all([
@@ -88,6 +103,14 @@ const syncAndSeed = async () => {
       eventId: "G5diZ94NPjotW",
     }),
   ]);
+
+  const [test1, test2] = await Promise.all([
+    Attending.create({ userId: moe.id, isAttending: true }),
+    Attending.create({ userId: lucy.id, isAttending: true }),
+  ]);
+
+  console.log(test1);
+  console.log(test2);
 
   // console.log(fs1);
   // console.log(fs2);
@@ -133,4 +156,5 @@ module.exports = {
   User,
   Friendship,
   Comment,
+  Attending,
 };
