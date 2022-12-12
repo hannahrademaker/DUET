@@ -4,21 +4,23 @@ import { Typography } from "@mui/material";
 import dayjs from "dayjs";
 const API_KEY = "fmAEcxmSvwqhltBAynkfzAyvdJLNg28X";
 import Comments from "./Comments";
+import { fetchEvent } from "../Helpers/TicketMaster";
+import { useSelector } from "react-redux";
 
 const Event = (props) => {
   const [event, setEvent] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(
-      `https://app.ticketmaster.com/discovery/v2/events/${id}?apikey=${API_KEY}`
-    )
+    fetchEvent(id)
       .then((response) => response.json())
       .then((data) => setEvent(data));
   }, []);
+
   if (!event) {
     return <div />;
   }
+
   return (
     <div className="indvEvent">
       <Typography variant="h2">{event.name}</Typography>
