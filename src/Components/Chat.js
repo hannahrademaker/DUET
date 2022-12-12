@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
@@ -36,12 +37,12 @@ const Chat = () => {
           /> */}
           <input
             type="text"
-            placeholder="Room ID..."
+            placeholder="Room ID"
             onChange={(event) => {
               setRoom(event.target.value);
             }}
           />
-          <button onClick={joinRoom}>Join A Room</button>
+          <Button onClick={joinRoom}>Join A Room</Button>
         </div>
       ) : (
         <ChatRoom socket={socket} username={username} room={room} />
