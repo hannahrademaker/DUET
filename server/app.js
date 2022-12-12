@@ -54,5 +54,6 @@ app.use("/api/comments", require("./api/comments"));
 app.use("/api/users", require("./api/users"));
 app.use("/api/friendships", require("./api/friendships"));
 app.use("/api/onlineUsers", require("./api/onlineUsers"));
+app.use("/api/posts", require("./api/posts"));
 
 module.exports = app;

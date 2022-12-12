@@ -3,6 +3,7 @@ const User = require("./User");
 const Friendship = require("./Friendship");
 const Attending = require("./Attending");
 const Comment = require("./Comment");
+const Post = require("./Post");
 const path = require("path");
 const fs = require("fs");
 
@@ -42,6 +43,8 @@ User.hasMany(Attending, { onDelete: "CASCADE" });
 Attending.belongsTo(User);
 User.hasMany(Comment, { foreignKey: "userId", onDelete: "CASCADE" });
 Comment.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Post, { foreignKey: "userId", onDelete: "CASCADE" });
+Post.belongsTo(User, { foreignKey: "userId" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
@@ -146,6 +149,27 @@ const syncAndSeed = async () => {
     }),
   ]);
 
+  const [post1, post2, post3] = await Promise.all([
+    Post.create({
+      userId: moe.id,
+      caption: "Looking for a friend to walk dogs with!",
+      createdAt: "2021-06-01",
+      body: "I love dogs and I love walking. I'm looking for a friend to walk dogs with!",
+    }),
+    Post.create({
+      userId: lucy.id,
+      caption: "Im new to tennis and I need a friend to play with!",
+      createdAt: "2021-06-01",
+      body: "I love tennis and I love playing. I'm looking for a friend to play tennis with!",
+    }),
+    Post.create({
+      userId: ethyl.id,
+      caption: "I love to cook and I need a friend to cook with!",
+      createdAt: "2021-06-01",
+      body: "I love cooking and I love eating. I'm looking for a friend to cook with!",
+    }),
+  ]);
+
   const [test1, test2, test3] = await Promise.all([
     Attending.create({
       userId: moe.id,
@@ -210,6 +234,11 @@ const syncAndSeed = async () => {
       test2,
       test3,
     },
+    posts: {
+      post1,
+      post2,
+      post3,
+    },
   };
 };
 
@@ -219,4 +248,5 @@ module.exports = {
   Friendship,
   Comment,
   Attending,
+  Post,
 };
