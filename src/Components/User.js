@@ -41,7 +41,9 @@ const User = () => {
       </div>
       <div>
         <div className="profile-page-details-top">
-          <img src={auth.avatar} alt="Pic of User" width="200" height="200" />
+          {auth.img && (
+            <img src={auth.img} alt="Pic of User" width="200" height="200" />
+          )}
         </div>
         <div>
           <span>Events ()</span>
@@ -123,17 +125,23 @@ const User = () => {
         <p>People you may know</p>
         <ul>
           {users.map((user) => {
+            //set up a max of 6 people you may know?? or just show all?
             if (!friendListIds.includes(user.id) && user.id !== auth.id) {
               return (
                 <div key={user.id}>
                   <li>
                     <Link to={`/users/${user.id}`}>{user.username}</Link>
-                    <img
-                      src={user.avatar}
-                      alt="Pic of User"
-                      width="200"
-                      height="200"
-                    />
+                    {user.img && (
+                      <img src={user.img} width="200" height="200" />
+                    )}
+                    {!user.img && (
+                      <img
+                        src="../static/DUET/blankprofile.png"
+                        alt="blank profile"
+                        width="200"
+                        height="200"
+                      />
+                    )}
                     <button
                       onClick={() => addFriend(user) && setRequested(true)}
                       disabled={requested}
