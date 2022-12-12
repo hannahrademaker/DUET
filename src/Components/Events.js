@@ -99,13 +99,29 @@ const Events = ({
                   aria-label="attending"
                   onClick={() => attending(event)}
                 >
-                  <AddCircleIcon color="secondary" />
+                  <AddCircleIcon
+                    color={
+                      auth.attendings.find(
+                        (e) => e.eventId === event.id && e.isAttending === true
+                      )
+                        ? "secondary"
+                        : undefined
+                    }
+                  />
                 </IconButton>
                 <IconButton
                   aria-label="interested-in-attending"
                   onClick={() => interested(event)}
                 >
-                  <FavoriteIcon color="secondary" />
+                  <FavoriteIcon
+                    color={
+                      auth.attendings.find(
+                        (e) => e.eventId === event.id && e.isInterested === true
+                      )
+                        ? "secondary"
+                        : undefined
+                    }
+                  />
                 </IconButton>
               </CardActions>
             </Card>
