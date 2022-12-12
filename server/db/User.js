@@ -124,8 +124,8 @@ User.prototype.friendsRequestedUser = async function (user) {
 
 User.prototype.createFriendRequest = async function (obj) {
   let requestedFriends = await conn.models.friendship.create({
-    requesterId: obj.id,
-    accepterId: this.id,
+    requesterId: this.id,
+    accepterId: obj.id,
     status: "pending",
   });
   return requestedFriends;

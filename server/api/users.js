@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express.Router();
-const { User, Attending } = require("../db");
+const { User, Attending, conn, Friendship } = require("../db");
 
 module.exports = app;
 
@@ -26,6 +26,9 @@ app.get("/", async (req, res, next) => {
           model: Attending,
           // as: "attending",
         },
+        {
+          model: Friendship,
+        },
       ],
     });
     res.send(users);
@@ -33,3 +36,11 @@ app.get("/", async (req, res, next) => {
     next(ex);
   }
 });
+
+// app.post("/", async (req, res, next) => {
+//   try {
+//     res.send();
+//   } catch (err) {
+//     next(err);
+//   }
+// });

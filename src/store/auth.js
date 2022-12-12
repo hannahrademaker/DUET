@@ -7,6 +7,7 @@ const auth = (state = {}, action) => {
     state.attendings = [...state.attendings, action.attending];
   }
   if (action.type === "FRIEND_REQUEST") {
+    //return { ...state, friendships: [...state.friendships, action.friendship] };
     state.friendships = [...state.friendships, action.friendship];
   }
   if (action.type === "FETCH_FRIENDS") {
@@ -74,15 +75,15 @@ export const attendingEvent = (attending) => {
   };
 };
 
-export const sendFriendRequest = (friend) => {
+export const sendFriendRequest = (friendships) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
-    const response = await axios.post("/api/friendships", friend, {
+    const response = await axios.post("/api/friendships", friendships, {
       headers: {
         authorization: token,
       },
     });
-    dispatch({ type: "FRIEND_REQUEST", friendship: response.data });
+    dispatch({ type: "FRIEND_REQUEST", friendships: response.data });
   };
 };
 

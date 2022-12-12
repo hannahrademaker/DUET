@@ -28,9 +28,9 @@ const Friendship = conn.define("friendship", {
     // },
   },
   status: {
-    type: ENUM("pending", "accepted", "rejected", "blocked", "stranger"),
+    type: ENUM("pending", "accepted", "rejected", "blocked"),
     allowNull: false,
-    defaultValue: "stranger",
+    defaultValue: "pending",
   },
   createdAt: {
     type: DATE,

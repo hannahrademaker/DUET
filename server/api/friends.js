@@ -66,10 +66,10 @@ app.get("/", async (req, res, next) => {
 //   }
 // });
 
-app.post("/", async (req, res, next) => {
-  try {
-    res.send();
-  } catch (err) {
-    next(err);
-  }
-});
+// app.post("/", async (req, res, next) => {
+//   try {
+//     res.send();
+//   } catch (err) {
+//     next(err);
+//   }
+// });

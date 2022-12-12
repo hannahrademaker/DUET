@@ -64,19 +64,21 @@ const syncAndSeed = async () => {
       firstName: "Lucy",
       lastName: "Goosey",
       address: "Old Town Road",
+      bio: "I love the oldies!",
     }),
     User.create({
       username: "larry",
       password: "123",
       firstName: "Larry",
       lastName: "Mariah-Carey",
+      bio: "Native New Yorker and lover of K-pop.",
     }),
     User.create({
       username: "ethyl",
       password: "123",
       firstName: "Ethyl",
       lastName: "Bobethyl",
-      requestedFrom: ["007"],
+      bio: "Metal head and musicals, baby.",
     }),
   ]);
 
@@ -129,7 +131,6 @@ const syncAndSeed = async () => {
 
   //console.log(test1);
   // console.log(test2);
-  console.log(ethyl.requestedFrom.includes("00"));
   // console.log(fs1);
   // console.log(lucy.findThisUser());
   console.log(lucy.findFriends());

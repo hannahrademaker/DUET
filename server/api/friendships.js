@@ -8,18 +8,20 @@ module.exports = app;
 app.post("/", isLoggedIn, async (req, res, next) => {
   try {
     const user = req.user;
-    res.send(await user.createFriendRequest(req.body));
+    const createFriendship = user.createFriendRequest(req.body);
+    res.send(await createFriendship);
   } catch (err) {
     next(err);
   }
 });
 
-// app.get("/", isLoggedIn, async (req, res, next) => {
-//   try {
-//     const user = req.user;
-//     //const friends = await user.findFriends();
-//     res.send(await user.findFriends());
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+//
+
+app.get("/", async (req, res, next) => {
+  try {
+    const friendships = await Friendship.findAll();
+    res.send(friendships);
+  } catch (err) {
+    next(err);
+  }
+});

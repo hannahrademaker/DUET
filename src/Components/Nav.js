@@ -94,6 +94,11 @@ const Nav = () => {
                   Profile
                 </Link>
               </Button>
+              <Button color="inherit">
+                <Link className="link" to="/user/friendrequests">
+                  Friend Requests()
+                </Link>
+              </Button>
               <Button color="inherit" onClick={() => _logout()}>
                 Logout
               </Button>

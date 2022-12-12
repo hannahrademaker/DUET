@@ -6,28 +6,22 @@ import {
   friendRequest,
   fetchFriendRelationships,
   sendFriendRequest,
+  fetchFriendships,
 } from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
 
 const User = () => {
-  const { auth, users } = useSelector((state) => state);
+  const { auth, users, friendships } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
-  const [requested, setRequested] = useState(false);
+  // const [requested, setRequested] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
 
-  // const fetchFriends = () => {
-  //   return dispatch(fetchFriendRelationships());
-  //   // console.log(friendsArray);
-  //   // return friendsArray;
-  // };
-
-  // console.log(fetchFriends());
   const friendList = auth.Accepter.concat(auth.Requester).filter(
     (friend) => friend.friendship.status === "accepted"
   );
@@ -35,12 +29,14 @@ const User = () => {
   const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
     (friend) => friend.friendship.status === "pending"
   );
-  console.log(pendingFriendList);
+
+  //inbox of friend request invitations
+  const inbox = auth.Accepter.map((request) => request.status === "pending");
 
   const friendListIds = friendList.map((friendId) => friendId.id);
-  const addFriend = async (ev) => {
-    dispatch(sendFriendRequest(ev));
-  };
+  const pendingFriendListIds = pendingFriendList.map(
+    (pendingId) => pendingId.id
+  );
 
   return (
     <div id="user-page">
@@ -131,26 +127,40 @@ const User = () => {
         <p>People you may know</p>
         <ul>
           {users.map((user) => {
-            let requestedUser = user.Requester.filter(
-              (reqdfriend) =>
-                reqdfriend.friendship.status === "pending" &&
-                reqdfriend.id === auth.id
-            );
-            console.log(requestedUser);
             if (!friendListIds.includes(user.id) && user.id !== auth.id) {
               return (
                 <div key={user.id}>
                   <li>
-                    <Link to={`/users/${user.id}`}>{user.username}</Link>
-                    <img
-                      src={user.avatar}
-                      alt="Pic of User"
-                      width="200"
-                      height="200"
-                    />
-                    <button onClick={() => addFriend(user)}>
-                      Send Friend Request
-                    </button>
+                    <Link to={`/users/${user.id}`}>
+                      {user.username}
+                      <img
+                        src={user.avatar}
+                        alt="Pic of User"
+                        width="200"
+                        height="200"
+                      />
+                    </Link>
+                    {!pendingFriendListIds.includes(user.id) && (
+                      <button
+                        onClick={() =>
+                          dispatch(sendFriendRequest(user)) &&
+                          console.log(dispatch(sendFriendRequest(user)))
+                        }
+                      >
+                        Send Friend Request
+                      </button>
+                    )}
+                    {pendingFriendListIds.includes(user.id) && (
+                      <button
+                        onClick={() =>
+                          dispatch(sendFriendRequest(user)) &&
+                          console.log(dispatch(sendFriendRequest(user)))
+                        }
+                        disabled={true}
+                      >
+                        Friend Request Sent
+                      </button>
+                    )}
                   </li>
                 </div>
               );
