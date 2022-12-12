@@ -4,7 +4,7 @@ import {
   updateAuth,
   fetchUsers,
   friendRequest,
-  fetchFriendships,
+  fetchFriendRelationships,
   sendFriendRequest,
 } from "../store";
 import { Link } from "react-router-dom";
@@ -21,15 +21,23 @@ const User = () => {
     dispatch(fetchUsers());
   }, []);
 
-  const friendList = auth.Accepter.concat(auth.Requester);
+  // const fetchFriends = () => {
+  //   return dispatch(fetchFriendRelationships());
+  //   // console.log(friendsArray);
+  //   // return friendsArray;
+  // };
+
+  // console.log(fetchFriends());
+  const friendList = auth.Accepter.concat(auth.Requester).filter(
+    (friend) => friend.friendship.status === "accepted"
+  );
+
+  const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
+    (friend) => friend.friendship.status === "pending"
+  );
+  console.log(pendingFriendList);
 
   const friendListIds = friendList.map((friendId) => friendId.id);
-
-  // useEffect(() => {
-  //   dispatch(fetchFriendships());
-  // });
-  //console.log(friendships);
-
   const addFriend = async (ev) => {
     dispatch(sendFriendRequest(ev));
   };
@@ -123,6 +131,12 @@ const User = () => {
         <p>People you may know</p>
         <ul>
           {users.map((user) => {
+            let requestedUser = user.Requester.filter(
+              (reqdfriend) =>
+                reqdfriend.friendship.status === "pending" &&
+                reqdfriend.id === auth.id
+            );
+            console.log(requestedUser);
             if (!friendListIds.includes(user.id) && user.id !== auth.id) {
               return (
                 <div key={user.id}>
@@ -134,10 +148,7 @@ const User = () => {
                       width="200"
                       height="200"
                     />
-                    <button
-                      onClick={() => addFriend(user) && setRequested(true)}
-                      disabled={requested}
-                    >
+                    <button onClick={() => addFriend(user)}>
                       Send Friend Request
                     </button>
                   </li>

@@ -9,6 +9,9 @@ const auth = (state = {}, action) => {
   if (action.type === "FRIEND_REQUEST") {
     state.friendships = [...state.friendships, action.friendship];
   }
+  if (action.type === "FETCH_FRIENDS") {
+    state.action;
+  }
   return state;
 };
 
@@ -80,6 +83,18 @@ export const sendFriendRequest = (friend) => {
       },
     });
     dispatch({ type: "FRIEND_REQUEST", friendship: response.data });
+  };
+};
+
+export const fetchFriendRelationships = () => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem("token");
+    const response = await axios.get("/api/friendships", {
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch({ type: "FETCH_FRIENDS", friendships: response.data });
   };
 };
 

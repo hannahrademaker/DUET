@@ -11,6 +11,7 @@ const FriendPage = () => {
   return (
     <div id="user-page">
       {users.map((friend) => {
+        console.log(friend);
         if (friend.id === id) {
           // console.log(auth.accepter.includes(friend));
           // let friendList = friend.requester.filter((mutual) => {

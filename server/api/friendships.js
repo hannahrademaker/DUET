@@ -13,3 +13,13 @@ app.post("/", isLoggedIn, async (req, res, next) => {
     next(err);
   }
 });
+
+// app.get("/", isLoggedIn, async (req, res, next) => {
+//   try {
+//     const user = req.user;
+//     //const friends = await user.findFriends();
+//     res.send(await user.findFriends());
+//   } catch (err) {
+//     next(err);
+//   }
+// });

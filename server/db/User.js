@@ -124,26 +124,27 @@ User.prototype.friendsRequestedUser = async function (user) {
 
 User.prototype.createFriendRequest = async function (obj) {
   let requestedFriends = await conn.models.friendship.create({
-    requesterId: this.id,
-    accepterId: obj.id,
+    requesterId: obj.id,
+    accepterId: this.id,
+    status: "pending",
   });
   return requestedFriends;
 };
 
 User.prototype.findFriends = async function () {
-  let friendsRequestedAcceptedUser = await conn.models.friendships.findAll({
+  let friendsRequestedAcceptedUser = await conn.models.friendship.findAll({
     where: {
-      requestedId: this.id,
-      status: "accepted",
+      requesterId: this.id,
+      status: "pending",
     },
   });
-  let friendsRequestedUserAccepted = await conn.models.friendships.findAll({
+  let friendsRequestedUserAccepted = await conn.models.friendship.findAll({
     where: {
       accepterId: this.id,
-      status: "accepted",
+      status: "pending",
     },
   });
-  let friends = friendsRequestedAcceptedUser.concat(
+  let friends = await friendsRequestedAcceptedUser.concat(
     friendsRequestedUserAccepted
   );
   return friends;
