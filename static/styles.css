@@ -264,30 +264,30 @@ nav {
 }
 
 #you {
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 #you .message-content {
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 #you .message-meta {
-  justify-content: flex-start;
-  margin-left: 5px;
+  justify-content: flex-end;
+  margin-right: 5px;
 }
 
 #other {
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 #other .message-content {
-  justify-content: flex-end;
+  justify-content: flex-start;
   background-color: cornflowerblue;
 }
 
 #other .message-meta {
-  justify-content: flex-end;
-  margin-right: 5px;
+  justify-content: flex-start;
+  margin-left: 5px;
 }
 
 .message-meta #author {
@@ -309,7 +309,7 @@ nav {
 
 .chat-window .chat-footer input {
   height: 100%;
-  flex: 85%;
+  flex: 95%;
   border: 0;
   padding: 0 0.7em;
   font-size: 1em;
@@ -324,7 +324,7 @@ nav {
   display: grid;
   place-items: center;
   cursor: pointer;
-  flex: 15%;
+  flex: 5%;
   height: 100%;
   background: transparent;
   outline: none;
@@ -346,3 +346,7 @@ nav {
   margin: 45px 0 0 0;
 }
 /* End Chat CSS */
+
+.chat-sidebar > ul {
+  list-style-type: none;
+}
