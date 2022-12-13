@@ -4,10 +4,14 @@ import { fetchPosts } from "../store/posts";
 import { useDispatch } from "react-redux";
 import { fetchUsers } from "../store";
 import { Link } from "react-router-dom";
+import { createPost } from "../store/posts";
 
 const Feed = () => {
   const { posts, users } = useSelector((state) => state);
-  const [newPost, setNewPost] = useState([]);
+  const [caption, setCaption] = useState("");
+  const [body, setBody] = useState("");
+  const [newPost, setNewPost] = useState("");
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,10 +36,6 @@ const Feed = () => {
     }
   };
 
-  const addNewPost = (post) => {
-    setNewPost([...newPost, post]);
-  };
-
   useEffect(() => {
     dispatch(fetchPosts());
   }, []);
@@ -43,16 +43,18 @@ const Feed = () => {
   return (
     <div className="feed">
       <h1>Lets Meet!</h1>
-      <div className="PostInput">
+      {/* <div className="PostInput">
         <textarea
           placeholder="What are you looking to do?"
           className="PostInput-input"
         />
         <div>
           <button>Add a photo</button>
-          <button>Post</button>
+          <button className="PostInput-button" type="submit">
+            Post
+          </button>
         </div>
-      </div>
+      </div> */}
       <ul className="feedList">
         {posts.map((post, index) => (
           <div>
@@ -64,7 +66,7 @@ const Feed = () => {
               {post.caption}
             </li>
             {post.img && <img className="feedImg" src={post.img} />}
-            <li className="feedItem" key={index}>
+            <li className="feedItem" key={post.body}>
               {post.body}
             </li>
           </div>
