@@ -6,6 +6,7 @@ import {
   friendRequest,
   fetchFriendRelationships,
   sendFriendRequest,
+  acceptFriendRequest,
   fetchFriendships,
 } from "../store";
 import { Link } from "react-router-dom";
@@ -154,7 +155,9 @@ const User = () => {
                       </button>
                     )}
                     {inboxIds.includes(user.id) && (
-                      <button onClick={() => console.log("respond to request")}>
+                      <button
+                        onClick={() => dispatch(acceptFriendRequest(user))}
+                      >
                         Confirm
                       </button>
                     )}

@@ -13,6 +13,14 @@ const auth = (state = {}, action) => {
   if (action.type === "FETCH_FRIENDS") {
     state.action;
   }
+  if (action.type === "ACCEPT_REQUEST") {
+    // state.friendships = [...state.friendships, action.friendship];
+    return state.friendships.map((friendship) =>
+      friendship.requesterId === action.friendship.requesterId
+        ? action.friendship
+        : friendship
+    );
+  }
   return state;
 };
 
@@ -84,6 +92,18 @@ export const sendFriendRequest = (friendships) => {
       },
     });
     dispatch({ type: "FRIEND_REQUEST", friendships: response.data });
+  };
+};
+
+export const acceptFriendRequest = (friendships) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem("token");
+    const response = await axios.put(`/api/friendships/`, friendships, {
+      headers: {
+        authorization: token,
+      },
+    });
+    dispatch({ type: "ACCEPT_REQUEST", friendships: response.data });
   };
 };
 
