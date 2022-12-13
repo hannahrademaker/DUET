@@ -131,6 +131,21 @@ User.prototype.createFriendRequest = async function (obj) {
   return requestedFriends;
 };
 
+User.prototype.acceptFriendRequest = async function (obj) {
+  let friendRequest = await conn.models.friendship.findOne({
+    where: {
+      requesterId: obj.id,
+      accepterId: this.id,
+      status: "pending",
+    },
+  });
+  if (friendRequest) {
+    friendRequest.status = "accepted";
+    await friendRequest.save();
+  }
+  return friendRequest;
+};
+
 User.prototype.findFriends = async function () {
   let friendsRequestedAcceptedUser = await conn.models.friendship.findAll({
     where: {
@@ -178,14 +193,6 @@ User.prototype.requestUser = async function ({ user }) {
 //   }
 //   return friendship;
 // };
-
-User.prototype.acceptFriendRequest = async function () {
-  const friendship = await this.sendFriendRequest();
-  friendship.accepter = this.id;
-  friendship.relationship = "accepted";
-  await friendship.save();
-  return friendship;
-};
 
 User.prototype.addToCart = async function ({ product, quantity }) {
   const cart = await this.getCart();

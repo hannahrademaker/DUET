@@ -30,14 +30,22 @@ const User = () => {
     (friend) => friend.friendship.status === "pending"
   );
 
+  //friend requests sent
+  const outbox = auth.Requester.filter(
+    (invite) => invite.friendship.status === "pending"
+  );
+  const outboxIds = outbox.map((outboxId) => outboxId.id);
   //inbox of friend request invitations
-  const inbox = auth.Accepter.map((request) => request.status === "pending");
+  const inbox = auth.Accepter.filter(
+    (request) => request.friendship.status === "pending"
+  );
+  const inboxIds = inbox.map((inboxId) => inboxId.id);
 
   const friendListIds = friendList.map((friendId) => friendId.id);
+
   const pendingFriendListIds = pendingFriendList.map(
     (pendingId) => pendingId.id
   );
-
   return (
     <div id="user-page">
       <div className="username-top">
@@ -141,21 +149,18 @@ const User = () => {
                       />
                     </Link>
                     {!pendingFriendListIds.includes(user.id) && (
-                      <button
-                        onClick={() =>
-                          dispatch(sendFriendRequest(user)) &&
-                          console.log(dispatch(sendFriendRequest(user)))
-                        }
-                      >
+                      <button onClick={() => dispatch(sendFriendRequest(user))}>
                         Send Friend Request
                       </button>
                     )}
-                    {pendingFriendListIds.includes(user.id) && (
+                    {inboxIds.includes(user.id) && (
+                      <button onClick={() => console.log("respond to request")}>
+                        Confirm
+                      </button>
+                    )}
+                    {outboxIds.includes(user.id) && (
                       <button
-                        onClick={() =>
-                          dispatch(sendFriendRequest(user)) &&
-                          console.log(dispatch(sendFriendRequest(user)))
-                        }
+                        onClick={() => dispatch(sendFriendRequest(user))}
                         disabled={true}
                       >
                         Friend Request Sent

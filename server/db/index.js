@@ -82,7 +82,7 @@ const syncAndSeed = async () => {
     }),
   ]);
 
-  const [fs1, fs2, fs3] = await Promise.all([
+  const [fs1, fs2, fs3, fs4] = await Promise.all([
     Friendship.create({
       requesterId: moe.id,
       accepterId: lucy.id,
@@ -97,6 +97,11 @@ const syncAndSeed = async () => {
       requesterId: larry.id,
       accepterId: ethyl.id,
       status: "accepted",
+    }),
+    Friendship.create({
+      requesterId: lucy.id,
+      accepterId: larry.id,
+      status: "pending",
     }),
   ]);
 
@@ -133,7 +138,7 @@ const syncAndSeed = async () => {
   // console.log(test2);
   // console.log(fs1);
   // console.log(lucy.findThisUser());
-  console.log(lucy.findFriends());
+  console.log(larry.acceptFriendRequest(lucy));
 
   // const test = () => {
   //   let friend;

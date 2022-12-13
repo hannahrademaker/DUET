@@ -15,7 +15,15 @@ app.post("/", isLoggedIn, async (req, res, next) => {
   }
 });
 
-//
+app.put("/", isLoggedIn, async (req, res, next) => {
+  try {
+    const user = req.user;
+    const acceptFriendship = user.acceptFriendRequest(req.body);
+    res.send(await acceptFriendship);
+  } catch (err) {
+    next(err);
+  }
+});
 
 app.get("/", async (req, res, next) => {
   try {

@@ -28,7 +28,7 @@ const FriendRequests = () => {
       <ul>
         {friendRequests.map((request) => {
           return (
-            <li>
+            <li key={request.id}>
               <Link to={`/users/${request.id}`}>
                 {request.username}
                 <img
