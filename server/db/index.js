@@ -151,19 +151,21 @@ const syncAndSeed = async () => {
 
   const [post1, post2, post3] = await Promise.all([
     Post.create({
-      userId: moe.id,
+      userId: justin.id,
       caption: "Looking for a friend to walk dogs with!",
       createdAt: "2021-06-01",
       body: "I love dogs and I love walking. I'm looking for a friend to walk dogs with!",
+      img: "../static/DUET/hannahavatar.png",
     }),
     Post.create({
-      userId: lucy.id,
+      userId: alex.id,
       caption: "Im new to tennis and I need a friend to play with!",
       createdAt: "2021-06-01",
       body: "I love tennis and I love playing. I'm looking for a friend to play tennis with!",
+      img: "../static/DUET/tennis.jpg",
     }),
     Post.create({
-      userId: ethyl.id,
+      userId: hannah.id,
       caption: "I love to cook and I need a friend to cook with!",
       createdAt: "2021-06-01",
       body: "I love cooking and I love eating. I'm looking for a friend to cook with!",

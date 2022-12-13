@@ -34,6 +34,10 @@ const Post = conn.define("post", {
     type: TEXT,
     allowNull: false,
   },
+  img: {
+    type: STRING,
+    allowNull: true,
+  },
   eventId: {
     type: STRING,
     allowNull: true,
