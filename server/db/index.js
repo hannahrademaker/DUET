@@ -154,8 +154,8 @@ const syncAndSeed = async () => {
       userId: justin.id,
       caption: "Looking for a friend to walk dogs with!",
       createdAt: "2021-06-01",
-      body: "I love dogs and I love walking. I'm looking for a friend to walk dogs with!",
-      img: "../static/DUET/hannahavatar.png",
+      body: "I love to hike and looking for a friend to walk our dogs with! My dog is super friendly and we love to go upsate",
+      img: "https://media.istockphoto.com/id/1143749718/photo/concept-of-healthy-lifestyle-with-dog-and-man-hiking-outdoor.jpg?s=612x612&w=0&k=20&c=ox7p2XYECBnABDoDw2g832CIAeHgD7Bqaj7fmP_BOb4=",
     }),
     Post.create({
       userId: alex.id,
@@ -166,9 +166,9 @@ const syncAndSeed = async () => {
     }),
     Post.create({
       userId: hannah.id,
-      caption: "I love to cook and I need a friend to cook with!",
+      caption: "Learning to cook instead of ordering takeout!",
       createdAt: "2021-06-01",
-      body: "I love cooking and I love eating. I'm looking for a friend to cook with!",
+      body: "Does anyone want to take a cooking class with me? I am tyring to learn to cook and would love to find people in NYC to cook with!",
     }),
   ]);
 

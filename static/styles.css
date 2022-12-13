@@ -384,3 +384,35 @@ nav {
   height: 100px;
   margin-right: 0.5em;
 }
+
+.PostInput {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  border-bottom: 1px solid #ccc;
+}
+
+.PostInput input {
+  flex-grow: 1;
+  padding: 0.5em;
+  font-size: 1em;
+  font-family: verdana;
+  border: none;
+  outline: none;
+}
+
+.PostInput button {
+  padding: 0.5em;
+  font-size: 1em;
+  /* color: white; */
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.people-you-may-know-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 25px;
+  margin-right: 0.5em;
+}

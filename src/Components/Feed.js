@@ -42,7 +42,17 @@ const Feed = () => {
 
   return (
     <div className="feed">
-      <h1>News Feed</h1>
+      <h1>Lets Meet!</h1>
+      <div className="PostInput">
+        <textarea
+          placeholder="What are you looking to do?"
+          className="PostInput-input"
+        />
+        <div>
+          <button>Add a photo</button>
+          <button>Post</button>
+        </div>
+      </div>
       <ul className="feedList">
         {posts.map((post, index) => (
           <div>
@@ -63,37 +73,5 @@ const Feed = () => {
     </div>
   );
 };
-
-//   const [posts, setPosts] = useState([]);
-
-//   // Add a new post to the list of posts
-//   const addPost = (post) => {
-//     setPosts([...posts, post]);
-//   };
-
-//   return (
-//     <div>
-//       <h1>News Feed</h1>
-//       <form
-//         onSubmit={(event) => {
-//           event.preventDefault();
-//           addPost(event.target.elements.post.value);
-//           event.target.elements.post.value = "";
-//         }}
-//       >
-//         <label>
-//           Add a post:
-//           <input type="text" name="post" />
-//         </label>
-//         <input type="submit" value="Submit" />
-//       </form>
-//       <ul>
-//         {posts.map((post, index) => (
-//           <li key={index}>{post}</li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
 
 export default Feed;
