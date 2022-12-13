@@ -162,6 +162,7 @@ nav {
   display: flex;
   flex-direction: column;
   text-align: center;
+  place-items: center;
 }
 
 .joinChatContainer h3 {
@@ -342,5 +343,6 @@ nav {
   border: 1px solid #263238;
   border-radius: 5px;
   height: 50%;
+  margin: 45px 0 0 0;
 }
 /* End Chat CSS */
