@@ -34,10 +34,10 @@ const Post = conn.define("post", {
     type: TEXT,
     allowNull: false,
   },
-  // eventId: {
-  // type: STRING,
-  // allowNull: true,
-  // },
+  eventId: {
+    type: STRING,
+    allowNull: true,
+  },
 });
 
 module.exports = Post;
