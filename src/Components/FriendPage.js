@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { sendFriendRequest } from "../store";
+import { sendFriendRequest, blockUser /*deleteFriendship*/ } from "../store";
 
 const FriendPage = () => {
   const { users, auth } = useSelector((state) => state);
@@ -28,7 +28,9 @@ const FriendPage = () => {
             }
           });
           const friendListIds = friendList.map((friendId) => friendId.id);
-
+          // <button onClick={() => dispatch(blockUser(friend))}>
+          //                 Block {friend.username}
+          //               </button>
           return (
             <div key={friend.id}>
               <div className="username-top">
@@ -117,13 +119,19 @@ const FriendPage = () => {
                     <p>
                       {friend.city}, {friend.state} {friend.zip}
                     </p>
+
+                    <button /*onClick={() => dispatch(deleteFriendship(friend))}*/
+                    >
+                      Unfriend
+                    </button>
+                    <br />
                     <button
                       className="hide-user-details-button"
                       onClick={() => {
                         setToggle(!toggle);
                       }}
                     >
-                      Hide Friend Details
+                      See {friend.username}'s About Info'
                     </button>
                   </div>
                 )}

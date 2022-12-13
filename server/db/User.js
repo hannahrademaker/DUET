@@ -85,8 +85,9 @@ const User = conn.define(
       type: INTEGER,
       defaultValue: 10036,
     },
-    requestedFrom: {
+    blockedUsers: {
       type: ARRAY(TEXT),
+      defaultValue: [],
     },
   },
   {
@@ -123,11 +124,22 @@ User.prototype.friendsRequestedUser = async function (user) {
 };
 
 User.prototype.createFriendRequest = async function (obj) {
-  let requestedFriends = await conn.models.friendship.create({
-    requesterId: this.id,
-    accepterId: obj.id,
-    status: "pending",
+  let requestedFriends = await conn.models.friendship.findOne({
+    where: {
+      requesterId: this.id,
+      accepterId: obj.id,
+      //status: "pending",
+    },
   });
+  if (!requestedFriends) {
+    requestedFriends = await conn.models.friendship.create({
+      requesterId: this.id,
+      accepterId: obj.id,
+      status: "pending",
+    });
+  } else {
+    requestedFriends.status = "pending";
+  }
   return requestedFriends;
 };
 
@@ -146,38 +158,77 @@ User.prototype.acceptFriendRequest = async function (obj) {
   return friendRequest;
 };
 
-User.prototype.findFriends = async function () {
-  let friendsRequestedAcceptedUser = await conn.models.friendship.findAll({
+User.prototype.RejectUser = async function (obj) {
+  let friendRequest = await conn.models.friendship.findOne({
     where: {
-      requesterId: this.id,
-      status: "pending",
-    },
-  });
-  let friendsRequestedUserAccepted = await conn.models.friendship.findAll({
-    where: {
+      requesterId: obj.id,
       accepterId: this.id,
       status: "pending",
     },
   });
-  let friends = await friendsRequestedAcceptedUser.concat(
-    friendsRequestedUserAccepted
-  );
-  return friends;
+  if (friendRequest) {
+    friendRequest.status = "rejected";
+    await friendRequest.save();
+  }
+  return friendRequest;
 };
 
-User.prototype.requestUser = async function ({ user }) {
-  try {
-    const currentUser = await this.findThisUser();
-    const toRequestUser = await conn.models.requester.findOne({
-      where: { id: user.id },
+User.prototype.unfriendUser = async function (obj) {
+  // console.log("this is the object before it runs ", obj);
+  // console.log("heres this", this);
+  let findThisFriend = await conn.models.friendship.findOne({
+    where: {
+      requesterId: this.id,
+      accepterId: obj.id,
+      status: "accepted",
+    },
+  });
+  if (!findThisFriend) {
+    findThisFriend = await conn.models.friendship.findOne({
+      where: {
+        requesterId: obj.id,
+        accepterId: this.id,
+        status: "accepted",
+      },
     });
-    currentUser.addUser(toRequestUser);
-    console.log(currentUser.getUser());
-    return currentUser.getUser();
-  } catch (err) {
-    return err;
   }
+
+  await findThisFriend.destroy();
+  return conn.models.friendship.findAll();
 };
+
+// User.prototype.findFriends = async function () {
+//   let friendsRequestedAcceptedUser = await conn.models.friendship.findAll({
+//     where: {
+//       requesterId: this.id,
+//       status: "pending",
+//     },
+//   });
+//   let friendsRequestedUserAccepted = await conn.models.friendship.findAll({
+//     where: {
+//       accepterId: this.id,
+//       status: "pending",
+//     },
+//   });
+//   let friends = await friendsRequestedAcceptedUser.concat(
+//     friendsRequestedUserAccepted
+//   );
+//   return friends;
+// };
+
+// User.prototype.requestUser = async function ({ user }) {
+//   try {
+//     const currentUser = await this.findThisUser();
+//     const toRequestUser = await conn.models.requester.findOne({
+//       where: { id: user.id },
+//     });
+//     currentUser.addUser(toRequestUser);
+//     console.log(currentUser.getUser());
+//     return currentUser.getUser();
+//   } catch (err) {
+//     return err;
+//   }
+// };
 
 // User.prototype.sendFriendRequest = async function ({user}) {
 //   let friendship = await conn.models.requester.findOne({

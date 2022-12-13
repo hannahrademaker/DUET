@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateAuth,
   fetchUsers,
-  friendRequest,
   fetchFriendRelationships,
-  sendFriendRequest,
   fetchFriendships,
+  acceptFriendRequest,
 } from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
@@ -28,17 +27,23 @@ const FriendRequests = () => {
       <ul>
         {friendRequests.map((request) => {
           return (
-            <li key={request.id}>
-              <Link to={`/users/${request.id}`}>
-                {request.username}
-                <img
-                  src={request.avatar}
-                  alt="Pic of User"
-                  width="200"
-                  height="200"
-                />
-              </Link>
-            </li>
+            <div id="friend-request" key={request.id}>
+              <li>
+                <Link to={`/users/${request.id}`}>
+                  {request.username}
+                  <img
+                    src={request.avatar}
+                    alt="Pic of User"
+                    width="200"
+                    height="200"
+                  />
+                </Link>
+                <button onClick={() => dispatch(acceptFriendRequest(request))}>
+                  Accept
+                </button>
+                <button>Delete</button>
+              </li>
+            </div>
           );
         })}
       </ul>

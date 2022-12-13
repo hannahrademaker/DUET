@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateAuth,
   fetchUsers,
-  friendRequest,
   fetchFriendRelationships,
   sendFriendRequest,
   acceptFriendRequest,
   fetchFriendships,
+  deleteFriendship,
 } from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
@@ -94,7 +94,7 @@ const User = () => {
               setToggle(!toggle);
             }}
           >
-            See User Info
+            See Your About Info
           </button>
         )}
         {toggle && (

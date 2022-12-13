@@ -101,7 +101,7 @@ const syncAndSeed = async () => {
     // Friendship.create({
     //   requesterId: lucy.id,
     //   accepterId: larry.id,
-    //   status: "pending",
+    //   status: "accepted",
     // }),
   ]);
 
@@ -138,7 +138,7 @@ const syncAndSeed = async () => {
   // console.log(test2);
   // console.log(fs1);
   // console.log(lucy.findThisUser());
-  //console.log(larry.acceptFriendRequest(lucy));
+  //console.log(lucy.unfriendUser(larry));
 
   // const test = () => {
   //   let friend;
