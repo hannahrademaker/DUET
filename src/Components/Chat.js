@@ -21,12 +21,12 @@ const Chat = () => {
   });
 
   const channels = [
-    { label: "All", value: "all" },
-    { label: "Music", value: "music" },
-    { label: "Sports", value: "sports" },
-    { label: "Arts & Theatre", value: "artsAndTheatre" },
-    { label: "Film", value: "film" },
-    { label: "Miscellaneous", value: "misc" },
+    { label: "All", value: "All" },
+    { label: "Music", value: "Music" },
+    { label: "Sports", value: "Sports" },
+    { label: "Arts & Theatre", value: "Arts & Theatre" },
+    { label: "Film", value: "Film" },
+    { label: "Miscellaneous", value: "Miscellaneous" },
   ];
 
   const joinRoom = () => {
