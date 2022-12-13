@@ -5,6 +5,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import onlineUsers from "../store/onlineUsers";
 import ForumIcon from "@mui/icons-material/Forum";
 import PeopleIcon from "@mui/icons-material/People";
+import dayjs from "dayjs";
 
 const ChatRoom = ({ socket, username, room }) => {
   const { onlineUsers } = useSelector((state) => state);
@@ -17,10 +18,7 @@ const ChatRoom = ({ socket, username, room }) => {
         room: room,
         author: username,
         message: currentMessage,
-        time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes(),
+        time: dayjs().format("h:mm A"),
       };
 
       await socket.emit("send_message", messageData);
