@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
+import FriendRequests from "./FriendRequests";
 
 const User = () => {
   const { auth, users, friendships } = useSelector((state) => state);
