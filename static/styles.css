@@ -142,6 +142,10 @@ nav {
   text-shadow: 2px 1px 2px #00c4cc;
 }
 
+.indvEventName {
+  padding-top: 1rem;
+}
+
 /* Begin Chat CSS */
 .ChatApp {
   width: 100%;
@@ -349,4 +353,82 @@ nav {
 
 .chat-sidebar > ul {
   list-style-type: none;
+}
+
+.feed {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.feedList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.feedItem {
+  margin: 0 0 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.feedCaption {
+  font-weight: bold;
+}
+
+.profileImg {
+  width: 30px;
+  height: 30px;
+  border-radius: 25px;
+  margin-right: 0.5em;
+}
+
+.feedImg {
+  width: 100px;
+  height: 100px;
+  margin-right: 0.5em;
+}
+
+.PostInput {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  border-bottom: 1px solid #ccc;
+}
+
+.PostInput input {
+  flex-grow: 1;
+  padding: 0.5em;
+  font-size: 1em;
+  font-family: verdana;
+  border: none;
+  outline: none;
+}
+
+.PostInput button {
+  padding: 0.5em;
+  font-size: 1em;
+  /* color: white; */
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.people-you-may-know-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 25px;
+  margin-right: 0.5em;
+}
+
+.eventImg {
+  width: 40%;
+  height: auto;
+  padding-top: 1rem;
 }

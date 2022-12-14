@@ -23,7 +23,9 @@ const Event = (props) => {
 
   return (
     <div className="indvEvent">
-      <Typography variant="h2">{event.name}</Typography>
+      <Typography className="indvEventName" variant="h2">
+        {event.name}
+      </Typography>
       <Typography variant="h4">
         {dayjs(event.dates.start.localDate).toString()}
       </Typography>
@@ -37,7 +39,7 @@ const Event = (props) => {
           " " +
           event._embedded.venues[0].postalCode}
       </Typography>
-      <img src={event.images[0].url} alt="event" />
+      <img className="eventImg" src={event.images[0].url} alt="event" />
       <Comments eventId={id} />
     </div>
   );

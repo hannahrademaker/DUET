@@ -146,10 +146,16 @@ const User = () => {
                     <Link to={`/users/${user.id}`}>
                       {user.username}
                     {user.img && (
-                      <img src={user.img} width="200" height="200" />
+                      <img
+                        className="people-you-may-know-img"
+                        src={user.img}
+                        width="200"
+                        height="200"
+                      />
                     )}
                     {!user.img && (
                       <img
+                        className="people-you-may-know-img"
                         src="../static/DUET/blankprofile.png"
                         alt="blank profile"
                         width="200"

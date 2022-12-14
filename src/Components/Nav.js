@@ -3,6 +3,7 @@ import Home from "./Home";
 import Login from "./Login";
 import Map from "./Map";
 import LoggedOut from "./LoggedOut";
+import Feed from "./Feed";
 import { useSelector, useDispatch } from "react-redux";
 import { loginWithToken } from "../store";
 import { Link, Routes, Route, useNavigate } from "react-router-dom";
@@ -92,6 +93,11 @@ const Nav = () => {
               <Button color="inherit">
                 <Link className="link" to="/user/">
                   Profile
+                </Link>
+              </Button>
+              <Button color="inherit">
+                <Link className="link" to="/feed/">
+                  Feed
                 </Link>
               </Button>
               <Button color="inherit">

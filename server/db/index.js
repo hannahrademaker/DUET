@@ -3,6 +3,7 @@ const User = require("./User");
 const Friendship = require("./Friendship");
 const Attending = require("./Attending");
 const Comment = require("./Comment");
+const Post = require("./Post");
 const path = require("path");
 const fs = require("fs");
 
@@ -42,6 +43,8 @@ User.hasMany(Attending, { onDelete: "CASCADE" });
 Attending.belongsTo(User);
 User.hasMany(Comment, { foreignKey: "userId", onDelete: "CASCADE" });
 Comment.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Post, { foreignKey: "userId", onDelete: "CASCADE" });
+Post.belongsTo(User, { foreignKey: "userId" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
@@ -161,6 +164,29 @@ const syncAndSeed = async () => {
     }),
   ]);
 
+  const [post1, post2, post3] = await Promise.all([
+    Post.create({
+      userId: justin.id,
+      caption: "Looking for a friend to walk dogs with!",
+      createdAt: "2021-06-01",
+      body: "I love to hike and looking for a friend to walk our dogs with! My dog is super friendly and we love to go upsate",
+      img: "https://media.istockphoto.com/id/1143749718/photo/concept-of-healthy-lifestyle-with-dog-and-man-hiking-outdoor.jpg?s=612x612&w=0&k=20&c=ox7p2XYECBnABDoDw2g832CIAeHgD7Bqaj7fmP_BOb4=",
+    }),
+    Post.create({
+      userId: alex.id,
+      caption: "Im new to tennis and I need a friend to play with!",
+      createdAt: "2021-06-01",
+      body: "I love tennis and I love playing. I'm looking for a friend to play tennis with!",
+      img: "../static/DUET/tennis.jpg",
+    }),
+    Post.create({
+      userId: hannah.id,
+      caption: "Learning to cook instead of ordering takeout!",
+      createdAt: "2021-06-01",
+      body: "Does anyone want to take a cooking class with me? I am tyring to learn to cook and would love to find people in NYC to cook with!",
+    }),
+  ]);
+
   const [test1, test2, test3] = await Promise.all([
     Attending.create({
       userId: moe.id,
@@ -224,6 +250,11 @@ const syncAndSeed = async () => {
       test2,
       test3,
     },
+    posts: {
+      post1,
+      post2,
+      post3,
+    },
   };
 };
 
@@ -233,4 +264,5 @@ module.exports = {
   Friendship,
   Comment,
   Attending,
+  Post,
 };

@@ -2,6 +2,7 @@ import React from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Register from "./Register";
 import Map from "./Map";
+import Feed from "./Feed";
 import Event from "./Event";
 import Nav from "./Nav";
 import Home from "./Home";
@@ -74,7 +75,7 @@ const App = () => {
           element={!!auth.id ? <PasswordUpdate /> : null}
         />
         <Route path="/register" element={<Register />} />
-
+        <Route path="/feed" element={!!auth.id ? <Feed /> : null} />
         <Route path="/" element={!!auth.id ? <Home /> : <LoggedOut />} />
         <Route path="/chat" element={!!auth.id ? <Chat /> : null} />
         <Route path="/event/:id" element={!!auth.id ? <Event /> : null} />

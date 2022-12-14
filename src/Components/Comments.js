@@ -8,6 +8,8 @@ import { fetchUsers } from "../store";
 const Comments = ({ eventId }) => {
   const { comments, users } = useSelector((state) => state);
   const [newComment, setNewComment] = useState("");
+  const [replies, setReplies] = useState([]);
+
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth);
