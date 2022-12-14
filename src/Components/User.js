@@ -61,7 +61,12 @@ const User = () => {
         </div>
         <div>
           <span>Events ()</span>
-          <span>Friends ({friendList.length})</span>
+          <span>Friends ({friendList.length}) </span>
+          <span>
+            <Link className="link" to="/user/friendrequests">
+              Friend Requests ({pendingFriendList && pendingFriendList.length})
+            </Link>
+          </span>
         </div>
       </div>
       <div>
@@ -147,6 +152,7 @@ const User = () => {
           </Button>
         </Link>
       </div>
+
       <div className="people-you-may-know-cards">
         <p>People you may know</p>
         <ul>
