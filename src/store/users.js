@@ -28,16 +28,16 @@ export const fetchUsers = () => {
   };
 };
 
-export const friendRequest = (user) => {
-  return async (dispatch) => {
-    const token = window.localStorage.getItem("token");
-    const response = await axios.put(`/api/friends/${user.id}`, user, {
-      headers: {
-        authorization: token,
-      },
-    });
-    dispatch({ type: "UPDATE_USER", user: response.data });
-  };
-};
+// export const friendRequest = (user) => {
+//   return async (dispatch) => {
+//     const token = window.localStorage.getItem("token");
+//     const response = await axios.put(`/api/friends/${user.id}`, user, {
+//       headers: {
+//         authorization: token,
+//       },
+//     });
+//     dispatch({ type: "UPDATE_USER", user: response.data });
+//   };
+// };
 
 export default users;

@@ -53,6 +53,7 @@ const syncAndSeed = async () => {
   //   path.join(__dirname, "../../static/DUET/Moe_Szyslak.png")
   // );
 
+
   const [moe, lucy, larry, ethyl, hannah, anisah, alex, justin] =
     await Promise.all([
       User.create({
@@ -116,13 +117,27 @@ const syncAndSeed = async () => {
       }),
     ]);
 
-  const [fs1, fs2, fs3] = await Promise.all([
+  const [fs1, fs2, fs3, fs4] = await Promise.all([
     Friendship.create({
       requesterId: moe.id,
       accepterId: lucy.id,
+      status: "accepted",
     }),
-    Friendship.create({ requesterId: lucy.id, accepterId: ethyl.id }),
-    Friendship.create({ requesterId: larry.id, accepterId: ethyl.id }),
+    Friendship.create({
+      requesterId: lucy.id,
+      accepterId: ethyl.id,
+      status: "accepted",
+    }),
+    Friendship.create({
+      requesterId: larry.id,
+      accepterId: ethyl.id,
+      status: "accepted",
+    }),
+    // Friendship.create({
+    //   requesterId: lucy.id,
+    //   accepterId: larry.id,
+    //   status: "accepted",
+    // }),
   ]);
 
   const [comment1, comment2, comment3, comment4] = await Promise.all([
@@ -192,10 +207,9 @@ const syncAndSeed = async () => {
 
   //console.log(test1);
   // console.log(test2);
-  // console.log(ethyl.requestedFrom.includes("00"));
   // console.log(fs1);
   // console.log(lucy.findThisUser());
-  console.log(lucy.findThisUser());
+  //console.log(lucy.unfriendUser(larry));
 
   // const test = () => {
   //   let friend;

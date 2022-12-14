@@ -7,6 +7,7 @@ import Event from "./Event";
 import Nav from "./Nav";
 import Home from "./Home";
 import LoggedOut from "./LoggedOut";
+import FriendRequests from "./FriendRequests";
 import { Link, Routes, Route } from "react-router-dom";
 import { useSelector, connect } from "react-redux";
 import UserUpdate from "./UserUpdate";
@@ -78,7 +79,11 @@ const App = () => {
         <Route path="/" element={!!auth.id ? <Home /> : <LoggedOut />} />
         <Route path="/chat" element={!!auth.id ? <Chat /> : null} />
         <Route path="/event/:id" element={!!auth.id ? <Event /> : null} />
-        <Route path="/users/:id" element={<FriendPage />} />
+        <Route path="/users/:id" element={!!auth.id ? <FriendPage /> : null} />
+        <Route
+          path="/user/friendrequests"
+          element={!!auth.id ? <FriendRequests /> : null}
+        />
       </Routes>
     </ThemeProvider>
   );
