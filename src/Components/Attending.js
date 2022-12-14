@@ -27,6 +27,15 @@ const Attending = ({ eventId }) => {
   console.log(attendings);
   return (
     <div>
+      <button
+        className="Attending-button"
+        onClick={() => {
+          console.log("clicked");
+        }}
+      >
+        Im Going!
+      </button>
+
       {attendings.length === 0 ? (
         <div>Be the first DUET user to attend</div>
       ) : (
