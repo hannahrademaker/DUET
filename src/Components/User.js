@@ -23,6 +23,12 @@ const User = () => {
     dispatch(fetchUsers());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchFriendships());
+  }, []);
+
+  console.log(friendships);
+
   const friendList = auth.Accepter.concat(auth.Requester).filter(
     (friend) => friend.friendship.status === "accepted"
   );
@@ -145,23 +151,23 @@ const User = () => {
                   <li>
                     <Link to={`/users/${user.id}`}>
                       {user.username}
-                    {user.img && (
-                      <img
-                        className="people-you-may-know-img"
-                        src={user.img}
-                        width="200"
-                        height="200"
-                      />
-                    )}
-                    {!user.img && (
-                      <img
-                        className="people-you-may-know-img"
-                        src="../static/DUET/blankprofile.png"
-                        alt="blank profile"
-                        width="200"
-                        height="200"
-                      />
-                    )}
+                      {user.img && (
+                        <img
+                          className="people-you-may-know-img"
+                          src={user.img}
+                          width="200"
+                          height="200"
+                        />
+                      )}
+                      {!user.img && (
+                        <img
+                          className="people-you-may-know-img"
+                          src="../static/DUET/blankprofile.png"
+                          alt="blank profile"
+                          width="200"
+                          height="200"
+                        />
+                      )}
                     </Link>
                     {!pendingFriendListIds.includes(user.id) && (
                       <button onClick={() => dispatch(sendFriendRequest(user))}>
@@ -183,7 +189,6 @@ const User = () => {
                         Friend Request Sent
                       </button>
                     )}
-
                   </li>
                 </div>
               );

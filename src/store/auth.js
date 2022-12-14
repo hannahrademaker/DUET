@@ -11,21 +11,13 @@ const auth = (state = {}, action) => {
     state.friendships = [...state.friendships, action.friendship];
   }
   if (action.type === "FETCH_FRIENDS") {
-    state.action;
+    state.friendships = [...state.friendships];
   }
   if (action.type === "ACCEPT_REQUEST") {
-    return state.friendships.map((friendship) =>
-      friendship.requesterId === action.friendship.requesterId
-        ? action.friendship
-        : friendship
-    );
+    return action.auth;
   }
   // if (action.type === "DELETE_FRIENDSHIP") {
-  //   state.friendships = state.friendships.filter(
-  //     (friendship) =>
-  //       friendship.requsterId !== action.id ||
-  //       friendship.accepterId !== action.id
-  //   );
+  //   state = state.filter((friendship) => friendship.id !== action.frienship.id);
   // }
   return state;
 };
@@ -113,29 +105,33 @@ export const acceptFriendRequest = (friendships) => {
   };
 };
 
-// export const deleteFriendship = (id) => {
+// export const deleteFriendship = (friendship) => {
 //   return async (dispatch) => {
 //     const token = window.localStorage.getItem("token");
-//     await axios.delete(`/api/friendships`, id, {
+//     const response = await axios.delete(
+//       `/api/friendships/${friendship.id}`,
+//       friendship,
+//       {
+//         headers: {
+//           authorization: token,
+//         },
+//       }
+//     );
+//     dispatch({ type: "DELETE_FRIENDSHIP", friendship: response.data });
+//   };
+// };
+
+// export const fetchFriendRelationships = () => {
+//   return async (dispatch) => {
+//     const token = window.localStorage.getItem("token");
+//     const response = await axios.get("/api/friendships", {
 //       headers: {
 //         authorization: token,
 //       },
 //     });
-//     dispatch({ type: "DELETE_FRIENDSHIP", id });
+//     dispatch({ type: "FETCH_FRIENDS", friendships: response.data });
 //   };
 // };
-
-export const fetchFriendRelationships = () => {
-  return async (dispatch) => {
-    const token = window.localStorage.getItem("token");
-    const response = await axios.get("/api/friendships", {
-      headers: {
-        authorization: token,
-      },
-    });
-    dispatch({ type: "FETCH_FRIENDS", friendships: response.data });
-  };
-};
 
 // export const blockUser = (user) => {
 //   return async (dispatch) => {

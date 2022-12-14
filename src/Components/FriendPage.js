@@ -1,13 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { sendFriendRequest, blockUser /*deleteFriendship*/ } from "../store";
+import {
+  sendFriendRequest,
+  blockUser,
+  deleteFriendship,
+  fetchFriendships,
+} from "../store";
 
 const FriendPage = () => {
-  const { users, auth } = useSelector((state) => state);
+  const { users, auth, friendships } = useSelector((state) => state);
   const { id } = useParams();
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchFriendships());
+  }, []);
+
+  const destroyFriendship = (friend, cUser) => {
+    const [friendship] = friendships.filter((friendship) => {
+      if (friendship.ids.includes(friend) && friendship.ids.includes(cUser)) {
+        return friendship;
+      }
+    });
+    dispatch(deleteFriendship(friendship));
+  };
 
   return (
     <div id="user-page">
@@ -120,7 +138,8 @@ const FriendPage = () => {
                       {friend.city}, {friend.state} {friend.zip}
                     </p>
 
-                    <button /*onClick={() => dispatch(deleteFriendship(friend))}*/
+                    <button
+                      onClick={() => destroyFriendship(friend.id, auth.id)}
                     >
                       Unfriend
                     </button>

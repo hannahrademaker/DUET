@@ -22,7 +22,6 @@ const FriendRequests = () => {
   //   console.log(friendsreqs);
 
   return (
-    //  <hr />
     <div>
       <ul>
         {friendRequests.map((request) => {

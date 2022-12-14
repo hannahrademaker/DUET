@@ -53,7 +53,6 @@ const syncAndSeed = async () => {
   //   path.join(__dirname, "../../static/DUET/Moe_Szyslak.png")
   // );
 
-
   const [moe, lucy, larry, ethyl, hannah, anisah, alex, justin] =
     await Promise.all([
       User.create({
