@@ -27,6 +27,11 @@ const FriendPage = () => {
     dispatch(deleteFriendship(friendship));
   };
 
+  const outbox = auth.Requester.filter(
+    (invite) => invite.friendship.status === "pending"
+  );
+  const outboxIds = outbox.map((outboxId) => outboxId.id);
+
   return (
     <div id="user-page">
       {users.map((friend) => {
@@ -40,11 +45,7 @@ const FriendPage = () => {
           );
           console.log(pendingFriendList);
           let requested = false;
-          pendingFriendList.forEach((user) => {
-            if (user.friendship.status === "pending") {
-              requested = true;
-            }
-          });
+
           const friendListIds = friendList.map((friendId) => friendId.id);
           // <button onClick={() => dispatch(blockUser(friend))}>
           //                 Block {friend.username}
@@ -159,6 +160,15 @@ const FriendPage = () => {
                 <p>People you may know</p>
                 <ul>
                   {users.map((user) => {
+                    // friendships.forEach((friendship) => {
+                    //   if (
+                    //     friendship.ids.includes(auth.id) &&
+                    //     friendship.ids.includes(user.id) &&
+                    //     friendship.status === "pending"
+                    //   ) {
+                    //     requested = true;
+                    //   }
+                    // });
                     if (
                       !friendListIds.includes(user.id) &&
                       user.id !== auth.id &&
@@ -176,15 +186,20 @@ const FriendPage = () => {
                                 height="200"
                               />
                             </Link>
-                            <button
-                              onClick={() =>
-                                dispatch(sendFriendRequest(user)) &&
-                                console.log(dispatch(sendFriendRequest(user)))
-                              }
-                              disabled={requested}
-                            >
-                              Send Friend Request
-                            </button>
+                            {!outboxIds.includes(user.id) && (
+                              <button
+                                onClick={() =>
+                                  dispatch(sendFriendRequest(user))
+                                }
+                              >
+                                Send Friend Request
+                              </button>
+                            )}
+                            {outboxIds.includes(user.id) && (
+                              <button disabled={true}>
+                                Friend Request Sent
+                              </button>
+                            )}
                           </li>
                         </div>
                       );

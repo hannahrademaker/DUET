@@ -25,7 +25,7 @@ export const deleteFriendship = (friendship) => {
       `/api/friendships/${friendship.id}`,
       friendship
     );
-    dispatch({ type: "DELETE_FRIENDSHIP", friendship: response.data });
+    dispatch({ type: "DELETE_FRIENDSHIP", friendship });
   };
 };
 
