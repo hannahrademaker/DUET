@@ -107,7 +107,7 @@ function Maps({
           }}
         >
           <div>
-            <Link to={`/event/${selected.id}`}>
+            <Link className="mapLink" to={`/event/${selected.id}`}>
               <h2>{selected.name}</h2>
             </Link>
             <p>{selected._embedded.venues[0].name}</p>

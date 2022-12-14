@@ -8,12 +8,39 @@ import { createPost } from "../store/posts";
 
 const Feed = () => {
   const { posts, users } = useSelector((state) => state);
-  const [caption, setCaption] = useState("");
-  const [body, setBody] = useState("");
-  const [newPost, setNewPost] = useState("");
+  const [newPost, setNewPost] = useState({
+    caption: "",
+    body: "",
+    img: "",
+    userId: null,
+  });
+  const user = useSelector((state) => state.auth);
+
+  const onChange = (ev) => {
+    setNewPost({ ...newPost, [ev.target.name]: ev.target.value });
+  };
 
   const dispatch = useDispatch();
 
+  const onSubmit = (ev) => {
+    ev.preventDefault();
+    const createdAt = new Date();
+    const userId = user.id;
+    const post = {
+      caption: newPost.caption,
+      body: newPost.body,
+      img: newPost.img,
+      userId,
+      createdAt,
+    };
+    dispatch(createPost(post));
+    setNewPost({
+      caption: "",
+      body: "",
+      img: "",
+      userId: null,
+    });
+  };
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
@@ -43,18 +70,31 @@ const Feed = () => {
   return (
     <div className="feed">
       <h1>Lets Meet!</h1>
-      {/* <div className="PostInput">
-        <textarea
-          placeholder="What are you looking to do?"
-          className="PostInput-input"
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          name="caption"
+          placeholder="Caption"
+          value={newPost.caption}
+          onChange={onChange}
         />
-        <div>
-          <button>Add a photo</button>
-          <button className="PostInput-button" type="submit">
-            Post
-          </button>
-        </div>
-      </div> */}
+        <input
+          type="text"
+          name="body"
+          placeholder="Body"
+          value={newPost.body}
+          onChange={onChange}
+        />
+        <input
+          type="text"
+          name="img"
+          placeholder="Image URL"
+          value={newPost.img}
+          onChange={onChange}
+        />
+
+        <button type="submit">Post</button>
+      </form>
       <ul className="feedList">
         {posts.map((post, index) => (
           <div>

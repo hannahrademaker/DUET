@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
+import FriendRequests from "./FriendRequests";
 
 const User = () => {
   const { auth, users, friendships } = useSelector((state) => state);
@@ -60,7 +61,12 @@ const User = () => {
         </div>
         <div>
           <span>Events ()</span>
-          <span>Friends ({friendList.length})</span>
+          <span>Friends ({friendList.length}) </span>
+          <span>
+            <Link className="link" to="/user/friendrequests">
+              Friend Requests ({pendingFriendList && pendingFriendList.length})
+            </Link>
+          </span>
         </div>
       </div>
       <div>
@@ -74,14 +80,26 @@ const User = () => {
           {friendList.map((friend) => {
             return (
               <div key={friend.id} className="friend-card" auth={auth.id}>
+                <h5>Friends</h5>
                 <li>
                   <Link to={`/users/${friend.id}`}>{friend.username}</Link>
-                  <img
-                    src={friend.avatar}
-                    alt="Pic of User"
-                    width="200"
-                    height="200"
-                  />
+                  {friend.img ? (
+                    <img
+                      className="people-you-may-know-img"
+                      src={friend.img}
+                      alt="Pic of User"
+                      width="200"
+                      height="200"
+                    />
+                  ) : (
+                    <img
+                      className="people-you-may-know-img"
+                      src="../static/DUET/blankprofile.png"
+                      alt="Pic of User"
+                      width="200"
+                      height="200"
+                    />
+                  )}
                 </li>
               </div>
             );
@@ -134,6 +152,7 @@ const User = () => {
           </Button>
         </Link>
       </div>
+
       <div className="people-you-may-know-cards">
         <p>People you may know</p>
         <ul>
@@ -145,23 +164,23 @@ const User = () => {
                   <li>
                     <Link to={`/users/${user.id}`}>
                       {user.username}
-                    {user.img && (
-                      <img
-                        className="people-you-may-know-img"
-                        src={user.img}
-                        width="200"
-                        height="200"
-                      />
-                    )}
-                    {!user.img && (
-                      <img
-                        className="people-you-may-know-img"
-                        src="../static/DUET/blankprofile.png"
-                        alt="blank profile"
-                        width="200"
-                        height="200"
-                      />
-                    )}
+                      {user.img && (
+                        <img
+                          className="people-you-may-know-img"
+                          src={user.img}
+                          width="200"
+                          height="200"
+                        />
+                      )}
+                      {!user.img && (
+                        <img
+                          className="people-you-may-know-img"
+                          src="../static/DUET/blankprofile.png"
+                          alt="blank profile"
+                          width="200"
+                          height="200"
+                        />
+                      )}
                     </Link>
                     {!pendingFriendListIds.includes(user.id) && (
                       <button onClick={() => dispatch(sendFriendRequest(user))}>
@@ -183,7 +202,6 @@ const User = () => {
                         Friend Request Sent
                       </button>
                     )}
-
                   </li>
                 </div>
               );

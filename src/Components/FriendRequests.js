@@ -32,7 +32,7 @@ const FriendRequests = () => {
                 <Link to={`/users/${request.id}`}>
                   {request.username}
                   <img
-                    src={request.avatar}
+                    src={request.img}
                     alt="Pic of User"
                     width="200"
                     height="200"

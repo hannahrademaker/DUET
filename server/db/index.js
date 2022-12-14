@@ -53,7 +53,6 @@ const syncAndSeed = async () => {
   //   path.join(__dirname, "../../static/DUET/Moe_Szyslak.png")
   // );
 
-
   const [moe, lucy, larry, ethyl, hannah, anisah, alex, justin] =
     await Promise.all([
       User.create({
@@ -202,6 +201,11 @@ const syncAndSeed = async () => {
       userId: hannah.id,
       isAttending: true,
       eventId: "Z7r9jZ1Ad4s-N",
+    }),
+    Attending.create({
+      userId: anisah.id,
+      isAttending: true,
+      eventId: "G5diZ94NPjotW",
     }),
   ]);
 
