@@ -64,7 +64,6 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Nav />
       <Routes>
-        {/* <Route path="/map" element={!!auth.id ? <Map /> : null} /> */}
         <Route path="/user" element={!!auth.id ? <User /> : null} />
         <Route
           path="/user/update"

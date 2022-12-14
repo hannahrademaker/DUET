@@ -37,12 +37,22 @@ const FriendPage = () => {
                 <h3>{friend.username}</h3>
               </div>
               <div className="profile-page-details-top">
-                <img
-                  src={friend.avatar}
-                  alt="Pic of friend"
-                  width="200"
-                  height="200"
-                />
+                {friend.img && (
+                  <img
+                    src={friend.img}
+                    alt="Pic of friend"
+                    width="200"
+                    height="200"
+                  />
+                )}
+                {!friend.img && (
+                  <img
+                    src="../static/DUET/blankprofile.png"
+                    alt="blank profile"
+                    width="200"
+                    height="200"
+                  />
+                )}
               </div>
               <div>
                 <span>Events ()</span>
@@ -56,6 +66,7 @@ const FriendPage = () => {
               </div>
               <div className="list-6-friends">
                 <div>
+                  <h5>Friends</h5>
                   {friendList.map((friendOfFriend) => {
                     if (friendOfFriend.id !== auth.id) {
                       return (
@@ -65,12 +76,24 @@ const FriendPage = () => {
                               <Link to={`/users/${friendOfFriend.id}`}>
                                 {friendOfFriend.username}
                               </Link>
-                              <img
-                                src={friendOfFriend.avatar}
-                                alt="Pic of Friend"
-                                width="200"
-                                height="200"
-                              />
+                              {friendOfFriend.img && (
+                                <img
+                                  className="people-you-may-know-img"
+                                  src={friendOfFriend.img}
+                                  alt="Pic of Friend"
+                                  width="200"
+                                  height="200"
+                                />
+                              )}
+                              {!friendOfFriend.img && (
+                                <img
+                                  className="people-you-may-know-img"
+                                  src="../static/DUET/blankprofile.png"
+                                  alt="blank profile"
+                                  width="200"
+                                  height="200"
+                                />
+                              )}
                             </li>
                           </ul>
                         </div>
@@ -82,7 +105,8 @@ const FriendPage = () => {
                             <li>
                               <Link to={`/user`}>{auth.username}</Link>
                               <img
-                                src={auth.avatar}
+                                className="people-you-may-know-img"
+                                src={auth.img}
                                 alt="Pic of Friend"
                                 width="200"
                                 height="200"
@@ -131,47 +155,10 @@ const FriendPage = () => {
                         setToggle(!toggle);
                       }}
                     >
-                      See {friend.username}'s About Info'
+                      Hide {friend.username}'s Info'
                     </button>
                   </div>
                 )}
-              </div>
-              <div className="people-you-may-know-cards">
-                <p>People you may know</p>
-                <ul>
-                  {users.map((user) => {
-                    if (
-                      !friendListIds.includes(user.id) &&
-                      user.id !== auth.id &&
-                      user.id !== friend.id
-                    ) {
-                      return (
-                        <div key={user.id}>
-                          <li>
-                            <Link to={`/users/${user.id}`}>
-                              {user.username}
-                              <img
-                                src={user.avatar}
-                                alt="Pic of User"
-                                width="200"
-                                height="200"
-                              />
-                            </Link>
-                            <button
-                              onClick={() =>
-                                dispatch(sendFriendRequest(user)) &&
-                                console.log(dispatch(sendFriendRequest(user)))
-                              }
-                              disabled={requested}
-                            >
-                              Send Friend Request
-                            </button>
-                          </li>
-                        </div>
-                      );
-                    }
-                  })}
-                </ul>
               </div>
             </div>
           );

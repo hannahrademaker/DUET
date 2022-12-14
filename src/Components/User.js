@@ -74,14 +74,26 @@ const User = () => {
           {friendList.map((friend) => {
             return (
               <div key={friend.id} className="friend-card" auth={auth.id}>
+                <h5>Friends</h5>
                 <li>
                   <Link to={`/users/${friend.id}`}>{friend.username}</Link>
-                  <img
-                    src={friend.avatar}
-                    alt="Pic of User"
-                    width="200"
-                    height="200"
-                  />
+                  {friend.img ? (
+                    <img
+                      className="people-you-may-know-img"
+                      src={friend.img}
+                      alt="Pic of User"
+                      width="200"
+                      height="200"
+                    />
+                  ) : (
+                    <img
+                      className="people-you-may-know-img"
+                      src="../static/DUET/blankprofile.png"
+                      alt="Pic of User"
+                      width="200"
+                      height="200"
+                    />
+                  )}
                 </li>
               </div>
             );
@@ -145,23 +157,23 @@ const User = () => {
                   <li>
                     <Link to={`/users/${user.id}`}>
                       {user.username}
-                    {user.img && (
-                      <img
-                        className="people-you-may-know-img"
-                        src={user.img}
-                        width="200"
-                        height="200"
-                      />
-                    )}
-                    {!user.img && (
-                      <img
-                        className="people-you-may-know-img"
-                        src="../static/DUET/blankprofile.png"
-                        alt="blank profile"
-                        width="200"
-                        height="200"
-                      />
-                    )}
+                      {user.img && (
+                        <img
+                          className="people-you-may-know-img"
+                          src={user.img}
+                          width="200"
+                          height="200"
+                        />
+                      )}
+                      {!user.img && (
+                        <img
+                          className="people-you-may-know-img"
+                          src="../static/DUET/blankprofile.png"
+                          alt="blank profile"
+                          width="200"
+                          height="200"
+                        />
+                      )}
                     </Link>
                     {!pendingFriendListIds.includes(user.id) && (
                       <button onClick={() => dispatch(sendFriendRequest(user))}>
@@ -183,7 +195,6 @@ const User = () => {
                         Friend Request Sent
                       </button>
                     )}
-
                   </li>
                 </div>
               );
