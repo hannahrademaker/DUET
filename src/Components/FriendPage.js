@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { sendFriendRequest, blockUser /*deleteFriendship*/ } from "../store";
+import PplMayKnow from "./PplMayKnow";
 
 const FriendPage = () => {
   const { users, auth } = useSelector((state) => state);
@@ -136,47 +137,11 @@ const FriendPage = () => {
                   </div>
                 )}
               </div>
-              <div className="people-you-may-know-cards">
-                <p>People you may know</p>
-                <ul>
-                  {users.map((user) => {
-                    if (
-                      !friendListIds.includes(user.id) &&
-                      user.id !== auth.id &&
-                      user.id !== friend.id
-                    ) {
-                      return (
-                        <div key={user.id}>
-                          <li>
-                            <Link to={`/users/${user.id}`}>
-                              {user.username}
-                              <img
-                                src={user.avatar}
-                                alt="Pic of User"
-                                width="200"
-                                height="200"
-                              />
-                            </Link>
-                            <button
-                              onClick={() =>
-                                dispatch(sendFriendRequest(user)) &&
-                                console.log(dispatch(sendFriendRequest(user)))
-                              }
-                              disabled={requested}
-                            >
-                              Send Friend Request
-                            </button>
-                          </li>
-                        </div>
-                      );
-                    }
-                  })}
-                </ul>
-              </div>
             </div>
           );
         }
       })}
+      <PplMayKnow />
     </div>
   );
 };
