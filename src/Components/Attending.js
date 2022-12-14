@@ -27,7 +27,20 @@ const Attending = ({ eventId }) => {
   console.log(attendings);
   return (
     <div>
-      <h1>Whos Attending</h1>
+      <div>Whos Attending</div>
+      <div className="Attending-list">
+        {attendings.map((user) => (
+          <div className="Attending-item">
+            <div className="Attending-item-name">{user.username}</div>
+            <div className="Attending-item-image">
+              <img
+                className="profileImg"
+                src={user.img ? user.img : "../static/DUET/blankprofile.png"}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
