@@ -27,7 +27,11 @@ const Attending = ({ eventId }) => {
   console.log(attendings);
   return (
     <div>
-      <div>Whos Attending</div>
+      {attendings.length === 0 ? (
+        <div>Be the first DUET user to attend</div>
+      ) : (
+        <div>Whos Attending</div>
+      )}
       <div className="Attending-list">
         {attendings.map((user) => (
           <div className="Attending-item">
