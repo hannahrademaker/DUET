@@ -1,7 +1,12 @@
+import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import ChatRoom from "./ChatRoom";
+import FormControl from "@mui/material";
+import InputLabel from "@mui/material";
+import NativeSelect from "@mui/material";
+import MenuItem from "@mui/material";
 
 const socket = io.connect("http://localhost:3001");
 
@@ -15,6 +20,15 @@ const Chat = () => {
     setUsername(auth.username);
   });
 
+  const channels = [
+    { label: "All", value: "All" },
+    { label: "Music", value: "Music" },
+    { label: "Sports", value: "Sports" },
+    { label: "Arts & Theatre", value: "Arts & Theatre" },
+    { label: "Film", value: "Film" },
+    { label: "Miscellaneous", value: "Miscellaneous" },
+  ];
+
   const joinRoom = () => {
     if (username !== "" && room !== "") {
       socket.emit("join_room", room);
@@ -26,22 +40,18 @@ const Chat = () => {
     <div className="ChatApp">
       {!showChat ? (
         <div className="joinChatContainer">
-          <h3>Join A Chat</h3>
-          {/* <input
-            type="text"
-            placeholder="Username"
-            onChange={(event) => {
-              setUsername(event.target.value);
-            }}
-          /> */}
-          <input
-            type="text"
-            placeholder="Room ID..."
-            onChange={(event) => {
-              setRoom(event.target.value);
-            }}
-          />
-          <button onClick={joinRoom}>Join A Room</button>
+          <h3>Join Chat</h3>
+          <select onChange={(ev) => setRoom(ev.target.value)}>
+            <option value={""}>Select Channel</option>
+            {channels.map((channel) => {
+              return (
+                <option value={channel.value} key={channel.value}>
+                  {channel.label}
+                </option>
+              );
+            })}
+          </select>
+          <Button onClick={joinRoom}>Join A Room</Button>
         </div>
       ) : (
         <ChatRoom socket={socket} username={username} room={room} />

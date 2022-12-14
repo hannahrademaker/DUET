@@ -3,6 +3,7 @@ const User = require("./User");
 const Friendship = require("./Friendship");
 const Attending = require("./Attending");
 const Comment = require("./Comment");
+const Post = require("./Post");
 const path = require("path");
 const fs = require("fs");
 
@@ -42,6 +43,8 @@ User.hasMany(Attending, { onDelete: "CASCADE" });
 Attending.belongsTo(User);
 User.hasMany(Comment, { foreignKey: "userId", onDelete: "CASCADE" });
 Comment.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Post, { foreignKey: "userId", onDelete: "CASCADE" });
+Post.belongsTo(User, { foreignKey: "userId" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
@@ -50,43 +53,91 @@ const syncAndSeed = async () => {
   //   path.join(__dirname, "../../static/DUET/Moe_Szyslak.png")
   // );
 
-  const [moe, lucy, larry, ethyl] = await Promise.all([
-    User.create({
-      username: "moe",
-      password: "123",
-      firstName: "Moe",
-      lastName: "Money",
-      bio: "Hi! My name is Moe! My favorite genres of music are bubble gum pop and hardcore rap.",
-    }),
-    User.create({
-      username: "lucy",
-      password: "123",
-      firstName: "Lucy",
-      lastName: "Goosey",
-      address: "Old Town Road",
-    }),
-    User.create({
-      username: "larry",
-      password: "123",
-      firstName: "Larry",
-      lastName: "Mariah-Carey",
-    }),
-    User.create({
-      username: "ethyl",
-      password: "123",
-      firstName: "Ethyl",
-      lastName: "Bobethyl",
-      requestedFrom: ["007"],
-    }),
-  ]);
 
-  const [fs1, fs2, fs3] = await Promise.all([
+  const [moe, lucy, larry, ethyl, hannah, anisah, alex, justin] =
+    await Promise.all([
+      User.create({
+        username: "moe",
+        password: "123",
+        firstName: "Moe",
+        lastName: "Money",
+        bio: "Hi! My name is Moe! My favorite genres of music are bubble gum pop and hardcore rap.",
+      }),
+      User.create({
+        username: "lucy",
+        password: "123",
+        firstName: "Lucy",
+        lastName: "Goosey",
+        address: "Old Town Road",
+      }),
+      User.create({
+        username: "larry",
+        password: "123",
+        firstName: "Larry",
+        lastName: "Mariah-Carey",
+      }),
+      User.create({
+        username: "ethyl",
+        password: "123",
+        firstName: "Ethyl",
+        lastName: "Bobethyl",
+        requestedFrom: ["007"],
+      }),
+      User.create({
+        username: "hannah",
+        password: "123",
+        firstName: "Hannah",
+        lastName: "Rademaker",
+        bio: "Hi! My name is hannah! I love going to concerts and hanging out with friends!",
+        img: "../static/DUET/hannahavatar.png",
+      }),
+      User.create({
+        username: "anisah",
+        password: "123",
+        firstName: "Anisah",
+        lastName: "M",
+        bio: "Hi! My name is anisah! I love going to concerts and hanging out with friends!",
+        img: "../static/DUET/anisahavatar.png",
+      }),
+      User.create({
+        username: "alex",
+        password: "123",
+        firstName: "Alex",
+        lastName: "M",
+        bio: "Hi! My name is alex! I love going to concerts and hanging out with friends!",
+        img: "../static/DUET/alexavatar.png",
+      }),
+      User.create({
+        username: "justin",
+        password: "123",
+        firstName: "Justin",
+        lastName: "M",
+        bio: "Hi! My name is justin! I love going to concerts and hanging out with friends!",
+        img: "../static/DUET/justinavatar.png",
+      }),
+    ]);
+
+  const [fs1, fs2, fs3, fs4] = await Promise.all([
     Friendship.create({
       requesterId: moe.id,
       accepterId: lucy.id,
+      status: "accepted",
     }),
-    Friendship.create({ requesterId: lucy.id, accepterId: ethyl.id }),
-    Friendship.create({ requesterId: larry.id, accepterId: ethyl.id }),
+    Friendship.create({
+      requesterId: lucy.id,
+      accepterId: ethyl.id,
+      status: "accepted",
+    }),
+    Friendship.create({
+      requesterId: larry.id,
+      accepterId: ethyl.id,
+      status: "accepted",
+    }),
+    // Friendship.create({
+    //   requesterId: lucy.id,
+    //   accepterId: larry.id,
+    //   status: "accepted",
+    // }),
   ]);
 
   const [comment1, comment2, comment3, comment4] = await Promise.all([
@@ -113,17 +164,52 @@ const syncAndSeed = async () => {
     }),
   ]);
 
-  const [test1, test2] = await Promise.all([
-    Attending.create({ userId: moe.id, isAttending: true }),
-    Attending.create({ userId: lucy.id, isAttending: true }),
+  const [post1, post2, post3] = await Promise.all([
+    Post.create({
+      userId: justin.id,
+      caption: "Looking for a friend to walk dogs with!",
+      createdAt: "2021-06-01",
+      body: "I love to hike and looking for a friend to walk our dogs with! My dog is super friendly and we love to go upsate",
+      img: "https://media.istockphoto.com/id/1143749718/photo/concept-of-healthy-lifestyle-with-dog-and-man-hiking-outdoor.jpg?s=612x612&w=0&k=20&c=ox7p2XYECBnABDoDw2g832CIAeHgD7Bqaj7fmP_BOb4=",
+    }),
+    Post.create({
+      userId: alex.id,
+      caption: "Im new to tennis and I need a friend to play with!",
+      createdAt: "2021-06-01",
+      body: "I love tennis and I love playing. I'm looking for a friend to play tennis with!",
+      img: "../static/DUET/tennis.jpg",
+    }),
+    Post.create({
+      userId: hannah.id,
+      caption: "Learning to cook instead of ordering takeout!",
+      createdAt: "2021-06-01",
+      body: "Does anyone want to take a cooking class with me? I am tyring to learn to cook and would love to find people in NYC to cook with!",
+    }),
+  ]);
+
+  const [test1, test2, test3] = await Promise.all([
+    Attending.create({
+      userId: moe.id,
+      isAttending: true,
+      eventId: "Z7r9jZ1Ad4s-N",
+    }),
+    Attending.create({
+      userId: lucy.id,
+      isAttending: true,
+      eventId: "Z7r9jZ1Ad4s-N",
+    }),
+    Attending.create({
+      userId: hannah.id,
+      isAttending: true,
+      eventId: "Z7r9jZ1Ad4s-N",
+    }),
   ]);
 
   //console.log(test1);
   // console.log(test2);
-  // console.log(ethyl.requestedFrom.includes("00"));
   // console.log(fs1);
   // console.log(lucy.findThisUser());
-  // console.log(lucy.findThisUser());
+  //console.log(lucy.unfriendUser(larry));
 
   // const test = () => {
   //   let friend;
@@ -143,6 +229,10 @@ const syncAndSeed = async () => {
       lucy,
       larry,
       ethyl,
+      hannah,
+      anisah,
+      alex,
+      justin,
     },
     friendships: {
       fs1,
@@ -155,6 +245,16 @@ const syncAndSeed = async () => {
       comment3,
       comment4,
     },
+    attendings: {
+      test1,
+      test2,
+      test3,
+    },
+    posts: {
+      post1,
+      post2,
+      post3,
+    },
   };
 };
 
@@ -164,4 +264,5 @@ module.exports = {
   Friendship,
   Comment,
   Attending,
+  Post,
 };

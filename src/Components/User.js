@@ -3,37 +3,50 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateAuth,
   fetchUsers,
-  friendRequest,
-  fetchFriendships,
+  fetchFriendRelationships,
   sendFriendRequest,
+  acceptFriendRequest,
+  fetchFriendships,
+  deleteFriendship,
 } from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
 
 const User = () => {
-  const { auth, users } = useSelector((state) => state);
+  const { auth, users, friendships } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
-  const [requested, setRequested] = useState(false);
+  // const [requested, setRequested] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
 
-  const friendList = auth.Accepter.concat(auth.Requester);
+  const friendList = auth.Accepter.concat(auth.Requester).filter(
+    (friend) => friend.friendship.status === "accepted"
+  );
+
+  const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
+    (friend) => friend.friendship.status === "pending"
+  );
+
+  //friend requests sent
+  const outbox = auth.Requester.filter(
+    (invite) => invite.friendship.status === "pending"
+  );
+  const outboxIds = outbox.map((outboxId) => outboxId.id);
+  //inbox of friend request invitations
+  const inbox = auth.Accepter.filter(
+    (request) => request.friendship.status === "pending"
+  );
+  const inboxIds = inbox.map((inboxId) => inboxId.id);
 
   const friendListIds = friendList.map((friendId) => friendId.id);
 
-  // useEffect(() => {
-  //   dispatch(fetchFriendships());
-  // });
-  //console.log(friendships);
-
-  const addFriend = async (ev) => {
-    dispatch(sendFriendRequest(ev));
-  };
-
+  const pendingFriendListIds = pendingFriendList.map(
+    (pendingId) => pendingId.id
+  );
   return (
     <div id="user-page">
       <div className="username-top">
@@ -41,7 +54,9 @@ const User = () => {
       </div>
       <div>
         <div className="profile-page-details-top">
-          <img src={auth.avatar} alt="Pic of User" width="200" height="200" />
+          {auth.img && (
+            <img src={auth.img} alt="Pic of User" width="200" height="200" />
+          )}
         </div>
         <div>
           <span>Events ()</span>
@@ -81,7 +96,7 @@ const User = () => {
               setToggle(!toggle);
             }}
           >
-            See User Info
+            See Your About Info
           </button>
         )}
         {toggle && (
@@ -123,23 +138,52 @@ const User = () => {
         <p>People you may know</p>
         <ul>
           {users.map((user) => {
+            //set up a max of 6 people you may know?? or just show all?
             if (!friendListIds.includes(user.id) && user.id !== auth.id) {
               return (
                 <div key={user.id}>
                   <li>
-                    <Link to={`/users/${user.id}`}>{user.username}</Link>
-                    <img
-                      src={user.avatar}
-                      alt="Pic of User"
-                      width="200"
-                      height="200"
-                    />
-                    <button
-                      onClick={() => addFriend(user) && setRequested(true)}
-                      disabled={requested}
-                    >
-                      Send Friend Request
-                    </button>
+                    <Link to={`/users/${user.id}`}>
+                      {user.username}
+                    {user.img && (
+                      <img
+                        className="people-you-may-know-img"
+                        src={user.img}
+                        width="200"
+                        height="200"
+                      />
+                    )}
+                    {!user.img && (
+                      <img
+                        className="people-you-may-know-img"
+                        src="../static/DUET/blankprofile.png"
+                        alt="blank profile"
+                        width="200"
+                        height="200"
+                      />
+                    )}
+                    </Link>
+                    {!pendingFriendListIds.includes(user.id) && (
+                      <button onClick={() => dispatch(sendFriendRequest(user))}>
+                        Send Friend Request
+                      </button>
+                    )}
+                    {inboxIds.includes(user.id) && (
+                      <button
+                        onClick={() => dispatch(acceptFriendRequest(user))}
+                      >
+                        Confirm
+                      </button>
+                    )}
+                    {outboxIds.includes(user.id) && (
+                      <button
+                        onClick={() => dispatch(sendFriendRequest(user))}
+                        disabled={true}
+                      >
+                        Friend Request Sent
+                      </button>
+                    )}
+
                   </li>
                 </div>
               );

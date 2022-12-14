@@ -8,6 +8,8 @@ import { fetchUsers } from "../store";
 const Comments = ({ eventId }) => {
   const { comments, users } = useSelector((state) => state);
   const [newComment, setNewComment] = useState("");
+  const [replies, setReplies] = useState([]);
+
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.auth);
@@ -57,7 +59,10 @@ const Comments = ({ eventId }) => {
       <div className="Comments-list">
         {eventComments.map((comment) => (
           <div key={comment.id}>
-            <div>{getUserName(comment.userId)}</div>
+            <Link to={`/users/${comment.userId}`}>
+              {getUserName(comment.userId)}
+            </Link>
+            {/* <div>{getUserName(comment.userId)}</div> */}
             <div>{comment.caption}</div>
           </div>
         ))}

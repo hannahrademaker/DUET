@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { sendFriendRequest, blockUser /*deleteFriendship*/ } from "../store";
 
 const FriendPage = () => {
   const { users, auth } = useSelector((state) => state);
@@ -12,14 +13,24 @@ const FriendPage = () => {
     <div id="user-page">
       {users.map((friend) => {
         if (friend.id === id) {
-          // console.log(auth.accepter.includes(friend));
-          // let friendList = friend.requester.filter((mutual) => {
-          //   console.log(mutual.accepter.friendship.status);
-          // });
-          //friendList = friendList.concat(friend.accepter);
-          let friendList = friend.Requester.concat(friend.Accepter);
+          console.log(friend);
+          let friendList = friend.Accepter.concat(friend.Requester).filter(
+            (friend) => friend.friendship.status === "accepted"
+          );
+          let pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
+            (friend) => friend.friendship.status === "pending"
+          );
+          console.log(pendingFriendList);
+          let requested = false;
+          pendingFriendList.forEach((user) => {
+            if (user.friendship.status === "pending") {
+              requested = true;
+            }
+          });
           const friendListIds = friendList.map((friendId) => friendId.id);
-
+          // <button onClick={() => dispatch(blockUser(friend))}>
+          //                 Block {friend.username}
+          //               </button>
           return (
             <div key={friend.id}>
               <div className="username-top">
@@ -36,6 +47,12 @@ const FriendPage = () => {
               <div>
                 <span>Events ()</span>
                 <span>Friends ({friendList.length})</span>
+              </div>
+              <div>
+                <h4>
+                  {friend.firstName} {friend.lastName}
+                </h4>
+                <p>{friend.bio}</p>
               </div>
               <div className="list-6-friends">
                 <div>
@@ -102,32 +119,53 @@ const FriendPage = () => {
                     <p>
                       {friend.city}, {friend.state} {friend.zip}
                     </p>
+
+                    <button /*onClick={() => dispatch(deleteFriendship(friend))}*/
+                    >
+                      Unfriend
+                    </button>
+                    <br />
                     <button
                       className="hide-user-details-button"
                       onClick={() => {
                         setToggle(!toggle);
                       }}
                     >
-                      Hide Friend Details
+                      See {friend.username}'s About Info'
                     </button>
                   </div>
                 )}
               </div>
               <div className="people-you-may-know-cards">
-                <p>People {`${friend.username}`} may know</p>
+                <p>People you may know</p>
                 <ul>
-                  {users.map((user, i) => {
+                  {users.map((user) => {
                     if (
                       !friendListIds.includes(user.id) &&
-                      user.id !== friend.id &&
-                      user.id !== auth.id
+                      user.id !== auth.id &&
+                      user.id !== friend.id
                     ) {
                       return (
                         <div key={user.id}>
                           <li>
                             <Link to={`/users/${user.id}`}>
                               {user.username}
+                              <img
+                                src={user.avatar}
+                                alt="Pic of User"
+                                width="200"
+                                height="200"
+                              />
                             </Link>
+                            <button
+                              onClick={() =>
+                                dispatch(sendFriendRequest(user)) &&
+                                console.log(dispatch(sendFriendRequest(user)))
+                              }
+                              disabled={requested}
+                            >
+                              Send Friend Request
+                            </button>
                           </li>
                         </div>
                       );

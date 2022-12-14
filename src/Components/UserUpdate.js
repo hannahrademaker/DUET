@@ -175,10 +175,10 @@ const UserUpdate = () => {
           style={{ textTransform: "none" }}
           disabled={!data}
         >
-          Upload Avatar
+          Edit Profile Photo
         </Button>
       </form>
-      {data ? <h6>Avatar Preview</h6> : null}
+      {data ? <h6>Profile Image Preview</h6> : null}
       <img src={data} className={data ? "avatar-preview" : null} />
     </div>
   );
