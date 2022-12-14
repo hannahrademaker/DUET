@@ -22,9 +22,6 @@ const Attending = ({ eventId }) => {
     }
   });
 
-  console.log("attendings", attendings);
-
-  console.log(attendings);
   return (
     <div>
       <button
