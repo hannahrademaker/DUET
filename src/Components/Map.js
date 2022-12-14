@@ -8,6 +8,7 @@ import {
 import mapStyles from "../Helpers/mapStyles";
 import { useSelector } from "react-redux";
 // import { ContentCutOutlined } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const libraries = ["places"];
 const options = {
@@ -106,7 +107,9 @@ function Maps({
           }}
         >
           <div>
-            <h2>{selected.name}</h2>
+            <Link to={`/event/${selected.id}`}>
+              <h2>{selected.name}</h2>
+            </Link>
             <p>{selected._embedded.venues[0].name}</p>
           </div>
         </InfoWindow>

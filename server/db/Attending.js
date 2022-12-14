@@ -16,7 +16,7 @@ const Attending = conn.define("attending", {
   },
   eventId: {
     type: STRING,
-    // allowNull: false,
+    allowNull: true,
   },
   isAttending: {
     type: BOOLEAN,

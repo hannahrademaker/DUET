@@ -50,37 +50,69 @@ const syncAndSeed = async () => {
   //   path.join(__dirname, "../../static/DUET/Moe_Szyslak.png")
   // );
 
-  const [moe, lucy, larry, ethyl] = await Promise.all([
-    User.create({
-      username: "moe",
-      password: "123",
-      firstName: "Moe",
-      lastName: "Money",
-      bio: "Hi! My name is Moe! My favorite genres of music are bubble gum pop and hardcore rap.",
-    }),
-    User.create({
-      username: "lucy",
-      password: "123",
-      firstName: "Lucy",
-      lastName: "Goosey",
-      address: "Old Town Road",
-      bio: "I love the oldies!",
-    }),
-    User.create({
-      username: "larry",
-      password: "123",
-      firstName: "Larry",
-      lastName: "Mariah-Carey",
-      bio: "Native New Yorker and lover of K-pop.",
-    }),
-    User.create({
-      username: "ethyl",
-      password: "123",
-      firstName: "Ethyl",
-      lastName: "Bobethyl",
-      bio: "Metal head and musicals, baby.",
-    }),
-  ]);
+
+  const [moe, lucy, larry, ethyl, hannah, anisah, alex, justin] =
+    await Promise.all([
+      User.create({
+        username: "moe",
+        password: "123",
+        firstName: "Moe",
+        lastName: "Money",
+        bio: "Hi! My name is Moe! My favorite genres of music are bubble gum pop and hardcore rap.",
+      }),
+      User.create({
+        username: "lucy",
+        password: "123",
+        firstName: "Lucy",
+        lastName: "Goosey",
+        address: "Old Town Road",
+      }),
+      User.create({
+        username: "larry",
+        password: "123",
+        firstName: "Larry",
+        lastName: "Mariah-Carey",
+      }),
+      User.create({
+        username: "ethyl",
+        password: "123",
+        firstName: "Ethyl",
+        lastName: "Bobethyl",
+        requestedFrom: ["007"],
+      }),
+      User.create({
+        username: "hannah",
+        password: "123",
+        firstName: "Hannah",
+        lastName: "Rademaker",
+        bio: "Hi! My name is hannah! I love going to concerts and hanging out with friends!",
+        img: "../static/DUET/hannahavatar.png",
+      }),
+      User.create({
+        username: "anisah",
+        password: "123",
+        firstName: "Anisah",
+        lastName: "M",
+        bio: "Hi! My name is anisah! I love going to concerts and hanging out with friends!",
+        img: "../static/DUET/anisahavatar.png",
+      }),
+      User.create({
+        username: "alex",
+        password: "123",
+        firstName: "Alex",
+        lastName: "M",
+        bio: "Hi! My name is alex! I love going to concerts and hanging out with friends!",
+        img: "../static/DUET/alexavatar.png",
+      }),
+      User.create({
+        username: "justin",
+        password: "123",
+        firstName: "Justin",
+        lastName: "M",
+        bio: "Hi! My name is justin! I love going to concerts and hanging out with friends!",
+        img: "../static/DUET/justinavatar.png",
+      }),
+    ]);
 
   const [fs1, fs2, fs3, fs4] = await Promise.all([
     Friendship.create({
@@ -129,9 +161,22 @@ const syncAndSeed = async () => {
     }),
   ]);
 
-  const [test1, test2] = await Promise.all([
-    Attending.create({ userId: moe.id, isAttending: true }),
-    Attending.create({ userId: lucy.id, isAttending: true }),
+  const [test1, test2, test3] = await Promise.all([
+    Attending.create({
+      userId: moe.id,
+      isAttending: true,
+      eventId: "Z7r9jZ1Ad4s-N",
+    }),
+    Attending.create({
+      userId: lucy.id,
+      isAttending: true,
+      eventId: "Z7r9jZ1Ad4s-N",
+    }),
+    Attending.create({
+      userId: hannah.id,
+      isAttending: true,
+      eventId: "Z7r9jZ1Ad4s-N",
+    }),
   ]);
 
   //console.log(test1);
@@ -158,6 +203,10 @@ const syncAndSeed = async () => {
       lucy,
       larry,
       ethyl,
+      hannah,
+      anisah,
+      alex,
+      justin,
     },
     friendships: {
       fs1,
@@ -169,6 +218,11 @@ const syncAndSeed = async () => {
       comment2,
       comment3,
       comment4,
+    },
+    attendings: {
+      test1,
+      test2,
+      test3,
     },
   };
 };

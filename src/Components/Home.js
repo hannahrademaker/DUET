@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { logout, fetchTicketMasterEvents } from "../store";
 import { filterEvents, fetchEvents } from "../Helpers/TicketMaster";
-import axios from "axios";
 import Events from "./Events";
 import Map from "./Map";
 
 const Home = () => {
-  const { auth, users } = useSelector((state) => state);
-  const dispatch = useDispatch();
-
   const [userLocation, setUserLocation] = useState(null);
   const [events, setEvents] = useState([]);
   const [filter, setFilter] = useState("");
