@@ -105,7 +105,6 @@ const User = conn.define(
 User.prototype.findThisUser = async function () {
   try {
     const currentUser = await User.findByPk(this.id);
-    console.log(currentUser);
     return currentUser;
   } catch (err) {
     return err;
