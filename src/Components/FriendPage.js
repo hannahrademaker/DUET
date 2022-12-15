@@ -165,7 +165,7 @@ const FriendPage = () => {
           );
         }
       })}
-      <PplMayKnow />
+      {/* <PplMayKnow /> */}
     </div>
   );
 };

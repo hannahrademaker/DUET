@@ -23,6 +23,9 @@ const User = () => {
     dispatch(fetchUsers());
   }, []);
 
+  const signedInUser = useSelector((state) => state.auth);
+  console.log("signedInUser", signedInUser);
+
   const friendList = auth.Accepter.concat(auth.Requester).filter(
     (friend) => friend.friendship.status === "accepted"
   );
@@ -136,7 +139,7 @@ const User = () => {
           </Button>
         </Link>
       </div>
-      <PplMayKnow />
+      <div>{auth.id && <PplMayKnow auth={auth.id} />}</div>
     </div>
   );
 };
