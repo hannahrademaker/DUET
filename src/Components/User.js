@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  updateAuth,
-  fetchUsers,
-  fetchFriendRelationships,
-  fetchFriendships,
-  deleteFriendship,
-} from "../store";
+import { fetchUsers } from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
@@ -18,13 +12,11 @@ const User = () => {
   const { auth, users, friendships } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
+  const user = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
-
-  const signedInUser = useSelector((state) => state.auth);
-  console.log("signedInUser", signedInUser);
 
   const friendList = auth.Accepter.concat(auth.Requester).filter(
     (friend) => friend.friendship.status === "accepted"
@@ -60,7 +52,8 @@ const User = () => {
           {auth.firstName} {auth.lastName}
         </h4>
         <p>{auth.bio}</p>
-        <UserEvents userId={auth.id} />
+        <div>My Events</div>
+        <UserEvents userId={user.id} />
       </div>
       <div className="list-6-friends">
         <div>
