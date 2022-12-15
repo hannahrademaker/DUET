@@ -7,18 +7,6 @@ const Post = require("./Post");
 const path = require("path");
 const fs = require("fs");
 
-const getImage = (path) => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(path, "base64", (err, data) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data);
-      }
-    });
-  });
-};
-
 User.belongsToMany(User, {
   as: "Requester",
   through: Friendship,
@@ -48,10 +36,6 @@ Post.belongsTo(User, { foreignKey: "userId" });
 
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
-
-  // const avatar = await getImage(
-  //   path.join(__dirname, "../../static/DUET/Moe_Szyslak.png")
-  // );
 
   const [moe, lucy, larry, ethyl, hannah, anisah, alex, justin] =
     await Promise.all([
@@ -132,11 +116,11 @@ const syncAndSeed = async () => {
       accepterId: ethyl.id,
       status: "accepted",
     }),
-    // Friendship.create({
-    //   requesterId: lucy.id,
-    //   accepterId: larry.id,
-    //   status: "accepted",
-    // }),
+    Friendship.create({
+      requesterId: lucy.id,
+      accepterId: larry.id,
+      status: "pending",
+    }),
   ]);
 
   const [comment1, comment2, comment3, comment4] = await Promise.all([
@@ -209,24 +193,6 @@ const syncAndSeed = async () => {
     }),
   ]);
 
-  //console.log(test1);
-  // console.log(test2);
-  // console.log(fs1);
-  // console.log(lucy.findThisUser());
-  //console.log(lucy.unfriendUser(larry));
-
-  // const test = () => {
-  //   let friend;
-  //   if (lucy.id === friendship.requesterId) {
-  //     friend = friendship.accepterId;
-  //   } else {
-  //     friend = friendship.requesterId;
-  //   }
-  //   return friend;
-  // };
-
-  // console.log(test(lucy));
-  //console.log(User_Friendships)
   return {
     users: {
       moe,

@@ -12,12 +12,12 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
 import PplMayKnow from "./PplMayKnow";
 import FriendRequests from "./FriendRequests";
+import UserEvents from "./UserEvents";
 
 const User = () => {
   const { auth, users, friendships } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
-  // const [requested, setRequested] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -25,6 +25,10 @@ const User = () => {
 
   const friendList = auth.Accepter.concat(auth.Requester).filter(
     (friend) => friend.friendship.status === "accepted"
+  );
+
+  const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
+    (friend) => friend.friendship.status === "pending"
   );
 
   return (
@@ -53,6 +57,7 @@ const User = () => {
           {auth.firstName} {auth.lastName}
         </h4>
         <p>{auth.bio}</p>
+        <UserEvents userId={auth.id} />
       </div>
       <div className="list-6-friends">
         <div>
