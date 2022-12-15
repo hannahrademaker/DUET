@@ -45,6 +45,10 @@ const Feed = () => {
     dispatch(fetchUsers());
   }, []);
 
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, []);
+
   const getUserName = (userId) => {
     if (userId === null) return "Anonymous";
     else {
@@ -62,10 +66,6 @@ const Feed = () => {
       return profileImg;
     }
   };
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, []);
 
   return (
     <div className="feed">
