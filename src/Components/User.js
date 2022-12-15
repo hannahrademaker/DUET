@@ -12,6 +12,7 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
 import PplMayKnow from "./PplMayKnow";
 import FriendRequests from "./FriendRequests";
+import UserEvents from "./UserEvents";
 
 const User = () => {
   const { auth, users, friendships } = useSelector((state) => state);
@@ -29,20 +30,6 @@ const User = () => {
   const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
     (friend) => friend.friendship.status === "pending"
   );
-
-  const onChange = (ev) => {
-    dispatch(
-      updateAuth({
-        ...auth,
-        [ev.target.name]: ev.target.value,
-      })
-    );
-  };
-
-  const onSubmit = (ev) => {
-    ev.preventDefault();
-    dispatch(updateAuth(auth));
-  };
 
   return (
     <div id="user-page">
@@ -70,6 +57,7 @@ const User = () => {
           {auth.firstName} {auth.lastName}
         </h4>
         <p>{auth.bio}</p>
+        <UserEvents userId={auth.id} />
       </div>
       <div className="list-6-friends">
         <div>
