@@ -4,7 +4,6 @@ import { fetchUsers } from "../store";
 
 const Attending = ({ eventId }) => {
   const { users } = useSelector((state) => state);
-  const { attending } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {

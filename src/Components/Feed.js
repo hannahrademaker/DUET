@@ -55,7 +55,7 @@ const Feed = () => {
   };
 
   const getProfileImg = (userId) => {
-    if (userId === null) return "";
+    if (!userId) return "";
     else {
       const theUser = users.find((user) => user.id === userId);
       const profileImg = theUser.img;

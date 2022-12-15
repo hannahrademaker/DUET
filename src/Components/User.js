@@ -18,7 +18,6 @@ const User = () => {
   const { auth, users, friendships } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
-  // const [requested, setRequested] = useState(false);
 
   useEffect(() => {
     dispatch(fetchUsers());
