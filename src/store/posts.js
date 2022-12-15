@@ -9,7 +9,7 @@ const posts = (state = [], action) => {
     return action.posts;
   }
   if (action.type === CREATE_POST) {
-    return [...state, action.post];
+    return [action.post, ...state];
   }
   if (action.type === DELETE_POST) {
     return state.filter((post) => post.id !== action.id);
