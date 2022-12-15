@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { sendFriendRequest, blockUser /*deleteFriendship*/ } from "../store";
+import PplMayKnow from "./PplMayKnow";
 
 const FriendPage = () => {
   const { users, auth } = useSelector((state) => state);
@@ -164,6 +165,7 @@ const FriendPage = () => {
           );
         }
       })}
+      <PplMayKnow />
     </div>
   );
 };

@@ -13,27 +13,39 @@ const UserUpdate = () => {
   const [el, setEl] = useState(null);
   const [data, setData] = useState("");
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [addressDetails, setAddressDetails] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zip, setZip] = useState("");
+  const [inputs, setInputs] = useState({
+    firstName: auth.firstName,
+    lastName: auth.lastName,
+    email: auth.email,
+    address: auth.address,
+    addressDetails: auth.addressDetails,
+    city: auth.city,
+    state: auth.state,
+    zip: auth.zip,
+  });
+
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [address, setAddress] = useState("");
+  // const [addressDetails, setAddressDetails] = useState("");
+  // const [city, setCity] = useState("");
+  // const [state, setState] = useState("");
+  // const [zip, setZip] = useState("");
 
   const update = async (ev) => {
     ev.preventDefault();
-    const updated = {
-      firstName,
-      lastName,
-      email,
-      address,
-      addressDetails,
-      city,
-      state,
-      zip,
-    };
+    const updated = { id: auth.id, ...inputs };
+    // const updated = {
+    //   firstName,
+    //   lastName,
+    //   email,
+    //   address,
+    //   addressDetails,
+    //   city,
+    //   state,
+    //   zip,
+    // };
     try {
       dispatch(updateAuth(updated));
       navigate("/user/");
@@ -54,6 +66,13 @@ const UserUpdate = () => {
       });
     }
   }, [el]);
+
+  const onChange = (ev) => {
+    setInputs({
+      ...inputs,
+      [ev.target.name]: ev.target.value,
+    });
+  };
 
   const save = async (ev) => {
     ev.preventDefault();
@@ -83,8 +102,8 @@ const UserUpdate = () => {
           variant="standard"
           placeholder="First Name"
           name="firstName"
-          value={firstName}
-          onChange={(ev) => setFirstName(ev.target.value)}
+          value={inputs.firstName}
+          onChange={onChange}
         />
 
         <TextField
@@ -93,8 +112,8 @@ const UserUpdate = () => {
           variant="standard"
           placeholder="Last Name"
           name="lastName"
-          value={lastName}
-          onChange={(ev) => setLastName(ev.target.value)}
+          value={inputs.lastName}
+          onChange={onChange}
         />
 
         <TextField
@@ -104,8 +123,8 @@ const UserUpdate = () => {
           placeholder="Email"
           type="email"
           name="email"
-          value={email}
-          onChange={(ev) => setEmail(ev.target.value)}
+          value={inputs.email}
+          onChange={onChange}
         />
 
         <TextField
@@ -114,8 +133,8 @@ const UserUpdate = () => {
           variant="standard"
           placeholder="Address"
           name="address"
-          value={address}
-          onChange={(ev) => setAddress(ev.target.value)}
+          value={inputs.address}
+          onChange={onChange}
         />
 
         <TextField
@@ -124,8 +143,8 @@ const UserUpdate = () => {
           variant="standard"
           placeholder="Apartment"
           name="addressDetails"
-          value={addressDetails}
-          onChange={(ev) => setAddressDetails(ev.target.value)}
+          value={inputs.addressDetails}
+          onChange={onChange}
         />
 
         <TextField
@@ -134,8 +153,8 @@ const UserUpdate = () => {
           variant="standard"
           placeholder="City"
           name="city"
-          value={city}
-          onChange={(ev) => setCity(ev.target.value)}
+          value={inputs.city}
+          onChange={onChange}
         />
 
         <TextField
@@ -144,8 +163,8 @@ const UserUpdate = () => {
           variant="standard"
           placeholder="State"
           name="state"
-          value={state}
-          onChange={(ev) => setState(ev.target.value)}
+          value={inputs.state}
+          onChange={onChange}
         />
 
         <TextField
@@ -154,8 +173,8 @@ const UserUpdate = () => {
           variant="standard"
           placeholder="Zip"
           name="zip"
-          value={zip}
-          onChange={(ev) => setZip(ev.target.value)}
+          value={inputs.zip}
+          onChange={onChange}
         />
 
         <Button

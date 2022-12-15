@@ -69,7 +69,7 @@ nav {
 
 .MuiCard-root {
   margin: 0.5em;
-  background-color: #00c4cc;
+  justify-content: space-around;
 }
 
 .MuiCard-root:hover {
@@ -148,6 +148,14 @@ nav {
 
 .indvEventName {
   padding-top: 1rem;
+}
+
+.register{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  width: 50vw;
 }
 
 /* Begin Chat CSS */
@@ -422,11 +430,34 @@ nav {
   cursor: pointer;
 }
 
+/*.people-you-may-know-cards{*/
+/*  display: flex;*/
+/*  flex-wrap: wrap;*/
+/*  flex-direction: column;*/
+/*}*/
+
 .people-you-may-know-img {
-  width: 60px;
-  height: 60px;
+  max-height: 100px;
+  max-width: 100px;
   border-radius: 25px;
   margin-right: 0.5em;
+}
+
+.ppl-may-know{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 200;
+  height: 250;
+}
+
+.may-know-list > .MuiCard-root {
+  display: inline-block;
+}
+
+.ppl-may-know-link{
+  text-decoration: none;
+  color: inherit;
 }
 
 .eventImg {
