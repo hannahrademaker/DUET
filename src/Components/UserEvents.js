@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { fetchEvent } from "../Helpers/TicketMaster";
 
-function UserEvents(props) {
-  const { userId } = props;
+function UserEvents({ userId }) {
   const [events, setEvents] = useState([]);
+  const user = useSelector((state) => state.auth);
+  const eventIds = user.attendings.map((item) => item.eventId);
 
   useEffect(() => {
-    async function fetchData() {
-      // Assuming you have a function called getEventsForUser that takes a userId and
-      // returns a list of events that the user is attending
-      const events = await getEventsForUser(userId);
-      setEvents(events);
-    }
-    fetchData();
-  }, [userId]);
+    eventIds.forEach((event) => {
+      fetchEvent(event)
+        .then((response) => response.json())
+        .then((data) => setEvents((events) => [...events, data]));
+    });
+  }, []);
+
+  console.log(events);
+  console.log(eventIds);
 
   return (
-    <ul>
-      {events.map((event) => (
-        <li key={event.id}>{event.name}</li>
-      ))}
-    </ul>
+    <div>
+      {events.map((event) => {
+        return (
+          <div>
+            <h3>{event.name}</h3>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
