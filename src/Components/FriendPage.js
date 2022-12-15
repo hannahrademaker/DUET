@@ -65,9 +65,6 @@ const FriendPage = () => {
                 </h4>
                 <p>{friend.bio}</p>
               </div>
-              <div>
-                <UserEvents id={friend.id} />
-              </div>
 
               <div className="list-6-friends">
                 <div>
