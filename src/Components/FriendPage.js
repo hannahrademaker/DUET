@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { sendFriendRequest, blockUser /*deleteFriendship*/ } from "../store";
-import PplMayKnow from "./PplMayKnow";
+import UserEvents from "./UserEvents";
 
 const FriendPage = () => {
   const { users, auth } = useSelector((state) => state);
@@ -65,6 +65,10 @@ const FriendPage = () => {
                 </h4>
                 <p>{friend.bio}</p>
               </div>
+              <div>
+                <UserEvents id={friend.id} />
+              </div>
+
               <div className="list-6-friends">
                 <div>
                   <h5>Friends</h5>
