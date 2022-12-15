@@ -116,11 +116,11 @@ const syncAndSeed = async () => {
       accepterId: ethyl.id,
       status: "accepted",
     }),
-    // Friendship.create({
-    //   requesterId: lucy.id,
-    //   accepterId: larry.id,
-    //   status: "accepted",
-    // }),
+    Friendship.create({
+      requesterId: lucy.id,
+      accepterId: larry.id,
+      status: "pending",
+    }),
   ]);
 
   const [comment1, comment2, comment3, comment4] = await Promise.all([

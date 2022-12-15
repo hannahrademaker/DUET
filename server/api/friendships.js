@@ -5,6 +5,15 @@ const { isLoggedIn } = require("./middleware");
 
 module.exports = app;
 
+app.get("/", async (req, res, next) => {
+  try {
+    const friendships = await Friendship.findAll();
+    res.send(friendships);
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.post("/", isLoggedIn, async (req, res, next) => {
   try {
     const user = req.user;
@@ -48,12 +57,3 @@ app.put("/", isLoggedIn, async (req, res, next) => {
 //     next(err);
 //   }
 // });
-
-app.get("/", async (req, res, next) => {
-  try {
-    const friendships = await Friendship.findAll();
-    res.send(friendships);
-  } catch (err) {
-    next(err);
-  }
-});
