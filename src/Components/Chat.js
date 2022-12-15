@@ -3,10 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import ChatRoom from "./ChatRoom";
-import FormControl from "@mui/material";
-import InputLabel from "@mui/material";
-import NativeSelect from "@mui/material";
-import MenuItem from "@mui/material";
 import { Grid } from "@mui/material";
 import onlineUsers from "../store/onlineUsers";
 import ForumIcon from "@mui/icons-material/Forum";
@@ -17,7 +13,7 @@ const socket = io.connect("http://localhost:3001");
 const Chat = () => {
   const { auth } = useSelector((state) => state);
   const [username, setUsername] = useState("");
-  const [room, setRoom] = useState("All");
+  const [room, setRoom] = useState("Join a Channel");
   const [showChat, setShowChat] = useState(false);
   const { onlineUsers } = useSelector((state) => state);
 
@@ -35,14 +31,10 @@ const Chat = () => {
   ];
 
   const joinRoom = () => {
-    if (username !== "" && room !== "") {
+    if (username !== "") {
       socket.emit("join_room", room);
     }
   };
-
-  // const leaveRoom = () => {
-  //   socket.emit("leave_room", room);
-  // };
 
   return (
     <div className="ChatApp">
@@ -60,12 +52,14 @@ const Chat = () => {
                     <button
                       value={channel.value}
                       onClick={() => {
+                        console.log(room);
                         setRoom(channel.value);
-                        joinRoom();
+                        console.log(channel.value);
                       }}
                     >
                       {channel.label}
                     </button>
+                    <button onClick={joinRoom}>Join</button>
                   </li>
                 );
               })}
