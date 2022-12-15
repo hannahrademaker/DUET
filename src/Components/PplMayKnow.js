@@ -35,13 +35,15 @@ const PplMayKnow = () => {
 
   return (
     <div className="people-you-may-know-cards">
-      <p>People you may know</p>
+      <Typography variant="h4" component="h1">
+        People you may know
+      </Typography>
       <ul className="may-know-list">
         {users.map((user) => {
           //set up a max of 6 people you may know?? or just show all?
           if (!friendListIds.includes(user.id) && user.id !== auth.id) {
             return (
-              <Card sx={{ maxWidth: 200 }} key={user.id}>
+              <Card key={user.id} className="ppl-may-know">
                 <Link className="ppl-may-know-link" to={`/users/${user.id}`}>
                   <Typography
                     variant="h6"

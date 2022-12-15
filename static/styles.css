@@ -439,6 +439,18 @@ nav {
   margin-right: 0.5em;
 }
 
+.ppl-may-know{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 200;
+  height: 250;
+}
+
+.may-know-list > .MuiCard-root {
+  display: inline-block;
+}
+
 .ppl-may-know-link{
   text-decoration: none;
   color: inherit;
