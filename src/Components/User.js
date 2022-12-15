@@ -26,6 +26,24 @@ const User = () => {
     (friend) => friend.friendship.status === "accepted"
   );
 
+  const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
+    (friend) => friend.friendship.status === "pending"
+  );
+
+  const onChange = (ev) => {
+    dispatch(
+      updateAuth({
+        ...auth,
+        [ev.target.name]: ev.target.value,
+      })
+    );
+  };
+
+  const onSubmit = (ev) => {
+    ev.preventDefault();
+    dispatch(updateAuth(auth));
+  };
+
   return (
     <div id="user-page">
       <div className="username-top">
