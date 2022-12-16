@@ -34,7 +34,7 @@ app.delete("/:id", async (req, res, next) => {
   }
 });
 
-app.get("/", isLoggedIn, async (req, res, next) => {
+app.get("/", async (req, res, next) => {
   try {
     const friendships = await Friendship.findAll();
     res.send(friendships);

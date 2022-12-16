@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  updateAuth,
-  fetchUsers,
-  fetchFriendRelationships,
-  fetchFriendships,
-  acceptFriendRequest,
-} from "../store";
+import { fetchUsers, acceptFriendRequest } from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
 
 const FriendRequests = () => {
-  const { auth } = useSelector((state) => state);
+  const { auth, friendships } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const friendRequests = auth.Accepter.filter(
     (request) => request.friendship.status === "pending"
   );
-  //   const friendsreqs = auth.Accepter;
-  //   console.log(friendsreqs);
+  const weFriends = (user) => {
+    let friendship = friendships.find(
+      (friendship) =>
+        friendship.requesterId === user.id && friendship.accepterId === auth.id
+    );
+    friendship.status = "accepted";
+    dispatch(acceptFriendRequest(friendship));
+  };
 
   return (
     <div>
@@ -37,9 +37,7 @@ const FriendRequests = () => {
                     height="200"
                   />
                 </Link>
-                <button onClick={() => dispatch(acceptFriendRequest(request))}>
-                  Accept
-                </button>
+                <button onClick={() => weFriends(request)}>Accept</button>
                 <button>Delete</button>
               </li>
             </div>
