@@ -1,34 +1,80 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { sendFriendRequest, blockUser /*deleteFriendship*/ } from "../store";
+import {
+  sendFriendRequest,
+  deleteFriendship,
+  fetchFriendships,
+} from "../store";
 import UserEvents from "./UserEvents";
 
 const FriendPage = () => {
-  const { users, auth } = useSelector((state) => state);
+  const { users, auth, friendships } = useSelector((state) => state);
   const { id } = useParams();
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchFriendships());
+  }, []);
+
+  const destroyFriendship = (friend) => {
+    let friendship = friendships.find(
+      (friendship) =>
+        friendship.ids.includes(friend.id) && friendship.ids.includes(auth.id)
+    );
+    dispatch(deleteFriendship(friendship));
+  };
+  const sentRequests = friendships.filter((friendship) => {
+    if (friendship.requesterId === auth.id && friendship.status === "pending") {
+      return friendship;
+    }
+  });
+  const sentRequestsIds = sentRequests.map((user) => user.accepterId);
+  // const outbox = auth.Requester.filter(
+  //   (invite) => invite.friendship.status === "pending"
+  // );
+  // const outboxIds = outbox.map((outboxId) => outboxId.id);
 
   return (
     <div id="user-page">
       {users.map((friend) => {
         if (friend.id === id) {
-          console.log(friend);
-          let friendList = friend.Accepter.concat(friend.Requester).filter(
-            (friend) => friend.friendship.status === "accepted"
-          );
-          let pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
-            (friend) => friend.friendship.status === "pending"
-          );
-          console.log(pendingFriendList);
-          let requested = false;
-          pendingFriendList.forEach((user) => {
-            if (user.friendship.status === "pending") {
-              requested = true;
+          const confirmedFriends = friendships.filter((friendship) => {
+            if (
+              friendship.status === "accepted" &&
+              friendship.ids.includes(friend.id)
+            ) {
+              return friendship;
             }
           });
-          const friendListIds = friendList.map((friendId) => friendId.id);
+
+          const friendsOfFriends = users.reduce((acc, user) => {
+            for (let i = 0; i < confirmedFriends.length; i++) {
+              if (
+                confirmedFriends[i].ids.includes(user.id) &&
+                user.id !== friend.id
+              ) {
+                acc.push(user);
+              }
+            }
+            return acc;
+          }, []);
+
+          // let friendList = friend.Accepter.concat(friend.Requester).filter(
+          //   (friend) => friend.friendship.status === "accepted"
+          // );
+          //console.log(friendList);
+          // let pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
+          //   (friend) => friend.friendship.status === "pending"
+          // );
+          // //console.log(pendingFriendList);
+          // let requested = false;
+          const friendsIds = friendsOfFriends.map(
+            (myFriendsId) => myFriendsId.id
+          );
+
+          //const friendListIds = friendList.map((friendId) => friendId.id);
           // <button onClick={() => dispatch(blockUser(friend))}>
           //                 Block {friend.username}
           //               </button>
@@ -57,7 +103,7 @@ const FriendPage = () => {
               </div>
               <div>
                 <span>Events ()</span>
-                <span>Friends ({friendList.length})</span>
+                <span>Friends ({friendsOfFriends.length})</span>
               </div>
               <div>
                 <h4>
@@ -69,7 +115,7 @@ const FriendPage = () => {
               <div className="list-6-friends">
                 <div>
                   <h5>Friends</h5>
-                  {friendList.map((friendOfFriend) => {
+                  {friendsOfFriends.map((friendOfFriend) => {
                     if (friendOfFriend.id !== auth.id) {
                       return (
                         <div key={friendOfFriend.id} className="friend-card">
@@ -146,8 +192,7 @@ const FriendPage = () => {
                       {friend.city}, {friend.state} {friend.zip}
                     </p>
 
-                    <button /*onClick={() => dispatch(deleteFriendship(friend))}*/
-                    >
+                    <button onClick={() => destroyFriendship(friend)}>
                       Unfriend
                     </button>
                     <br />
@@ -161,6 +206,48 @@ const FriendPage = () => {
                     </button>
                   </div>
                 )}
+              </div>
+              <div className="people-you-may-know-cards">
+                <p>People you may know</p>
+                <ul>
+                  {users.map((user) => {
+                    if (
+                      !friendsIds.includes(user.id) &&
+                      user.id !== auth.id &&
+                      user.id !== friend.id
+                    ) {
+                      return (
+                        <div key={user.id}>
+                          <li>
+                            <Link to={`/users/${user.id}`}>
+                              {user.username}
+                              <img
+                                src={user.avatar}
+                                alt="Pic of User"
+                                width="200"
+                                height="200"
+                              />
+                            </Link>
+                            {!sentRequestsIds.includes(user.id) && (
+                              <button
+                                onClick={() =>
+                                  dispatch(sendFriendRequest(user))
+                                }
+                              >
+                                Send Friend Request
+                              </button>
+                            )}
+                            {sentRequestsIds.includes(user.id) && (
+                              <button disabled={true}>
+                                Friend Request Sent
+                              </button>
+                            )}
+                          </li>
+                        </div>
+                      );
+                    }
+                  })}
+                </ul>
               </div>
             </div>
           );

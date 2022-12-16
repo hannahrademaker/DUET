@@ -16,9 +16,9 @@ app.get("/", async (req, res, next) => {
 
 app.put("/", isLoggedIn, async (req, res, next) => {
   try {
-    const user = req.user;
-    const acceptFriendship = user.acceptFriendRequest(req.body);
-    res.send(await acceptFriendship);
+    const friendship = await Friendship.findByPk(req.body.id);
+    friendship.update(req.body);
+    res.send(friendship);
   } catch (err) {
     next(err);
   }
@@ -26,44 +26,19 @@ app.put("/", isLoggedIn, async (req, res, next) => {
 
 app.post("/", isLoggedIn, async (req, res, next) => {
   try {
-    const user = req.user;
-    const createFriendship = user.createFriendRequest(req.body);
-    res.send(await createFriendship);
+    let newFriendship = await Friendship.create(req.body);
+    res.send(newFriendship);
   } catch (err) {
     next(err);
   }
 });
 
-// app.put("/", isLoggedIn, async (req, res, next) => {
-//   try {
-//     const user = req.user;
-//     const acceptFriendship = user.acceptFriendRequest(req.body);
-//     res.send(await acceptFriendship);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-// // app.delete("/", isLoggedIn, async (req, res, next) => {
-// //   try {
-// //     const user = req.user;
-// //     const deleteFriendship = await user.unfriendUser(req.body);
-// //     res.send(deleteFriendship);
-// //     //const friendship = await Friendship.findByPk(req.params.id);
-// //     // if (friendship) {
-// //     //   if (
-// //     //     friendship.requesterId === user.id ||
-// //     //     friendship.accepterId === user.id
-// //     //   ) {
-// //     //     await friendship.destroy();
-// //     //     res.sendStatus(204);
-// //     //   } else {
-// //     //     res.sendStatus(403);
-// //     //   }
-// //     // } else {
-// //     //   res.sendStatus(404);
-// //     // }
-// //   } catch (err) {
-// //     next(err);
-// //   }
-// // });
+app.delete("/:id", async (req, res, next) => {
+  try {
+    const friendship = await Friendship.findByPk(req.params.id);
+    await friendship.destroy();
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});

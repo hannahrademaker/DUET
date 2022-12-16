@@ -36,21 +36,19 @@ const User = conn.define(
     // avatar: {
     //   type: TEXT,
     //   defaultValue: "",
-    //   // type: TEXT,
-    //   // defaultValue: "",
-    //   // get: function () {
-    //   //   const prefixPNG = "data:image/png;base64,";
-    //   //   const prefixJPG = "data:image/jpeg;base64,";
-    //   //   const data = this.getDataValue("avatar") || "";
-    //   //   if (data.startsWith(prefixPNG)) {
-    //   //     return data;
-    //   //   } else if (data.startsWith(prefixJPG)) {
-    //   //     return data;
-    //   //   } else if (!data) {
-    //   //     return null;
-    //   //   }
-    //   //   return `${prefixPNG}${data}`;
-    //   // },
+    //   get: function () {
+    //     const prefixPNG = "data:image/png;base64,";
+    //     const prefixJPG = "data:image/jpeg;base64,";
+    //     const data = this.getDataValue("avatar") || "";
+    //     if (data.startsWith(prefixPNG)) {
+    //       return data;
+    //     } else if (data.startsWith(prefixJPG)) {
+    //       return data;
+    //     } else if (!data) {
+    //       return null;
+    //     }
+    //     return `${prefixPNG}${data}`;
+    //   },
     // },
     img: {
       type: TEXT,
@@ -111,6 +109,27 @@ User.prototype.findThisUser = async function () {
   }
 };
 
+User.prototype.findMyFriendships = async function () {
+  try {
+    let myFriends = await conn.models.friendship.findAll({
+      where: {
+        requesterId: this.id,
+        status: "accepted",
+      },
+    });
+    let myOtherFriends = await conn.models.friendship.findAll({
+      where: {
+        accepterId: this.id,
+        status: "accepted",
+      },
+    });
+    myFriends = myFriends.concat(myOtherFriends);
+    return myFriends;
+  } catch (err) {
+    return err;
+  }
+};
+
 User.prototype.friendsRequestedUser = async function (user) {
   try {
     // let thisUser = await this.models.getRequester({
@@ -130,23 +149,25 @@ User.prototype.friendsRequestedUser = async function (user) {
 };
 
 User.prototype.createFriendRequest = async function (obj) {
-  let requestedFriends = await conn.models.friendship.findOne({
-    where: {
-      requesterId: this.id,
-      accepterId: obj.id,
-      //status: "pending",
-    },
+  // let requestedFriends = await conn.models.friendship.findOne({
+  //   where: {
+  //     requesterId: this.id,
+  //     accepterId: obj.id,
+  //     //status: "pending",
+  //   },
+  // });
+  //if (!requestedFriends) {
+  let requestedFriends = await conn.models.friendship.create({
+    requesterId: this.id,
+    accepterId: obj.id,
+    status: "pending",
   });
-  if (!requestedFriends) {
-    requestedFriends = await conn.models.friendship.create({
-      requesterId: this.id,
-      accepterId: obj.id,
-      status: "pending",
-    });
-  } else {
-    requestedFriends.status = "pending";
-  }
-  return requestedFriends;
+  // } else {
+  //   requestedFriends.status = "pending";
+  //   this.Requester.push(obj);
+  // }
+  this.Requester.push(obj);
+  return this.findMyFriendships();
 };
 
 User.prototype.acceptFriendRequest = async function (obj) {
@@ -161,7 +182,7 @@ User.prototype.acceptFriendRequest = async function (obj) {
     friendRequest.status = "accepted";
     await friendRequest.save();
   }
-  return friendRequest;
+  return this.findMyFriendships();
 };
 
 User.prototype.RejectUser = async function (obj) {
@@ -200,7 +221,7 @@ User.prototype.unfriendUser = async function (obj) {
   }
 
   await findThisFriend.destroy();
-  return conn.models.friendship.findAll();
+  return this.findMyFriendships();
 };
 
 // User.prototype.findFriends = async function () {

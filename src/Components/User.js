@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../store";
+import {
+  fetchUsers,
+  sendFriendRequest,
+  acceptFriendRequest,
+  fetchFriendships,
+  deleteFriendship,
+} from "../store";
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
@@ -19,13 +25,82 @@ const User = () => {
     dispatch(fetchUsers());
   }, []);
 
-  const friendList = auth.Accepter.concat(auth.Requester).filter(
-    (friend) => friend.friendship.status === "accepted"
-  );
+  useEffect(() => {
+    dispatch(fetchFriendships());
+  }, []);
+
+  // const friendList = auth.Accepter.concat(auth.Requester).filter(
+  //   (friend) => friend.friendship.status === "accepted"
+  // );
+  const confirmedFriends = friendships.filter((friendship) => {
+    if (friendship.status === "accepted" && friendship.ids.includes(auth.id)) {
+      return friendship;
+    }
+  });
+
+  const myFriends = users.reduce((acc, user) => {
+    for (let i = 0; i < confirmedFriends.length; i++) {
+      if (confirmedFriends[i].ids.includes(user.id) && user.id !== auth.id) {
+        acc.push(user);
+      }
+    }
+    return acc;
+  }, []);
+
+  const myFriendsIds = myFriends.map((myFriendsId) => myFriendsId.id);
+
+  const sentRequests = friendships.filter((friendship) => {
+    if (friendship.requesterId === auth.id && friendship.status === "pending") {
+      return friendship;
+    }
+  });
+  const sentRequestsIds = sentRequests.map((user) => user.accepterId);
 
   const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
     (friend) => friend.friendship.status === "pending"
   );
+
+  //friend requests sent
+  // const outbox = auth.Requester.filter(
+  //   (invite) => invite.friendship.status === "pending"
+  // );
+  //const outboxIds = outbox.map((outboxId) => outboxId.id);
+  //inbox of friend request invitations
+  const inbox = auth.Accepter.filter(
+    (request) => request.friendship.status === "pending"
+  );
+  const inboxIds = inbox.map((inboxId) => inboxId.id);
+
+  //const friendListIds = friendList.map((friendId) => friendId.id);
+
+  // const pendingFriendListIds = pendingFriendList.map(
+  //   (pendingId) => pendingId.id
+  // );
+
+  const sendFR = (user, auth) => {
+    let friendship = {
+      accepterId: user.id,
+      requesterId: auth.id,
+    };
+    dispatch(sendFriendRequest(friendship));
+  };
+
+  const weFriends = (user) => {
+    let friendship = friendships.find(
+      (friendship) =>
+        friendship.requesterId === user.id && friendship.accepterId === auth.id
+    );
+    friendship.status = "accepted";
+    dispatch(acceptFriendRequest(friendship));
+  };
+
+  const destroyFriendship = (friend) => {
+    const friendship = friendships.find(
+      (friendship) =>
+        friendship.ids.includes(friend.id) && friendship.ids.includes(auth.id)
+    );
+    dispatch(deleteFriendship(friendship));
+  };
 
   return (
     <div className="user-page">
@@ -37,8 +112,10 @@ const User = () => {
           {auth.img && <img src={auth.img} alt="Pic of User" />}
         </div>
         <div>
+          <span>Events ()</span>
           <span>Events ({auth.attendings.length})</span>
-          <span>Friends ({friendList.length}) </span>
+          <span>Friends ({myFriends.length})</span>
+
           <span>
             <Link className="link" to="/user/friendrequests">
               Friend Requests ({pendingFriendList && pendingFriendList.length})
@@ -52,7 +129,7 @@ const User = () => {
       </div>
       <div className="list-6-friends">
         <div>
-          {friendList.map((friend) => {
+          {myFriends.map((friend) => {
             return (
               <div key={friend.id} className="friend-card" auth={auth.id}>
                 <h5>Friends</h5>
@@ -75,6 +152,7 @@ const User = () => {
                       height="200"
                     />
                   )}
+                  <button onClick={() => destroyFriendship(friend)}>X</button>
                 </li>
               </div>
             );

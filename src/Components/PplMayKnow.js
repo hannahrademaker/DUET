@@ -12,6 +12,44 @@ const PplMayKnow = () => {
     (friend) => friend.friendship.status === "accepted"
   );
 
+  const confirmedFriends = friendships.filter((friendship) => {
+    if (friendship.status === "accepted" && friendship.ids.includes(auth.id)) {
+      return friendship;
+    }
+  });
+  const myFriends = users.reduce((acc, user) => {
+    for (let i = 0; i < confirmedFriends.length; i++) {
+      if (confirmedFriends[i].ids.includes(user.id) && user.id !== auth.id) {
+        acc.push(user);
+      }
+    }
+    return acc;
+  }, []);
+
+  const myFriendsIds = myFriends.map((myFriendsId) => myFriendsId.id);
+  const sentRequests = friendships.filter((friendship) => {
+    if (friendship.requesterId === auth.id && friendship.status === "pending") {
+      return friendship;
+    }
+  });
+  const sentRequestsIds = sentRequests.map((user) => user.accepterId);
+
+  const sendFR = (user, auth) => {
+    let friendship = {
+      accepterId: user.id,
+      requesterId: auth.id,
+    };
+    dispatch(sendFriendRequest(friendship));
+  };
+
+  const weFriends = (user) => {
+    let friendship = friendships.find(
+      (friendship) =>
+        friendship.requesterId === user.id && friendship.accepterId === auth.id
+    );
+    friendship.status = "accepted";
+    dispatch(acceptFriendRequest(friendship));
+  };
   //friend requests sent
   const outbox = auth.Requester.filter(
     (invite) => invite.friendship.status === "pending"
@@ -41,7 +79,7 @@ const PplMayKnow = () => {
       <ul className="may-know-list">
         {users.map((user) => {
           //set up a max of 6 people you may know?? or just show all?
-          if (!friendListIds.includes(user.id) && user.id !== auth.id) {
+          if (!myFriendsIds.includes(user.id) && user.id !== auth.id) {
             return (
               <Card key={user.id} className="ppl-may-know">
                 <Link className="ppl-may-know-link" to={`/users/${user.id}`}>
@@ -63,23 +101,16 @@ const PplMayKnow = () => {
                   )}
                 </Link>
                 <CardActions>
-                  {!pendingFriendListIds.includes(user.id) && (
-                    <Button onClick={() => dispatch(sendFriendRequest(user))}>
+                  {!sentRequestsIds.includes(user.id) && (
+                    <Button onClick={() => sendFR(user, auth)}>
                       Send Friend Request
                     </Button>
                   )}
                   {inboxIds.includes(user.id) && (
-                    <Button onClick={() => dispatch(acceptFriendRequest(user))}>
-                      Confirm
-                    </Button>
+                    <Button onClick={() => weFriends(user)}>Confirm</Button>
                   )}
-                  {outboxIds.includes(user.id) && (
-                    <Button
-                      onClick={() => dispatch(sendFriendRequest(user))}
-                      disabled={true}
-                    >
-                      Friend Request Sent
-                    </Button>
+                  {sentRequestsIds.includes(user.id) && (
+                    <Button disabled={true}>Friend Request Sent</Button>
                   )}
                 </CardActions>
               </Card>
