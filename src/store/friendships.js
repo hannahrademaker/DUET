@@ -50,7 +50,7 @@ export const sendFriendRequest = (friendship) => {
 export const deleteFriendship = (friendship) => {
   return async (dispatch) => {
     const token = window.localStorage.getItem("token");
-    await axios.delete(`/api/friendships/${friendship.id}`, friendship, {
+    await axios.delete(`/api/friendships/${friendship.id}`, {
       headers: {
         authorization: token,
       },
