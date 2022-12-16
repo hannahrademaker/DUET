@@ -5,6 +5,14 @@ const { isLoggedIn } = require("./middleware");
 
 module.exports = app;
 
+app.get("/", isLoggedIn, async (req, res, next) => {
+  try {
+    res.send(await Attending.findAll());
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.post("/", isLoggedIn, async (req, res, next) => {
   try {
     res.send(await Attending.create(req.body));

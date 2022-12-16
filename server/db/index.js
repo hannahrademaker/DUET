@@ -170,7 +170,7 @@ const syncAndSeed = async () => {
     }),
   ]);
 
-  const [test1, test2, test3] = await Promise.all([
+  const [test1, test2, test3, test4] = await Promise.all([
     Attending.create({
       userId: moe.id,
       isAttending: true,
@@ -208,6 +208,7 @@ const syncAndSeed = async () => {
       fs1,
       fs2,
       fs3,
+      fs4,
     },
     comments: {
       comment1,
@@ -219,6 +220,7 @@ const syncAndSeed = async () => {
       test1,
       test2,
       test3,
+      test4,
     },
     posts: {
       post1,

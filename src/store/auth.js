@@ -3,14 +3,6 @@ const auth = (state = {}, action) => {
   if (action.type === "SET_AUTH") {
     return action.auth;
   }
-  if (action.type === "CREATE_ATTENDING") {
-    state.attendings = [...state.attendings, action.attending];
-  }
-  if (action.type === "UPDATE_ATTENDING") {
-    state.attendings = state.attendings.map((a) =>
-      a.id === action.attending.id ? action.attending : a
-    );
-  }
   return state;
 };
 
@@ -58,30 +50,6 @@ export const register = (credentials) => {
     const response = await axios.post("/api/auth/register", credentials);
     window.localStorage.setItem("token", response.data);
     dispatch(loginWithToken());
-  };
-};
-
-export const attendingEvent = (attending) => {
-  return async (dispatch) => {
-    const token = window.localStorage.getItem("token");
-    const response = await axios.post("/api/events", attending, {
-      headers: {
-        authorization: token,
-      },
-    });
-    dispatch({ type: "CREATE_ATTENDING", attending: response.data });
-  };
-};
-
-export const updateAttending = (attending) => {
-  return async (dispatch) => {
-    const token = window.localStorage.getItem("token");
-    const response = await axios.put(`/api/events/${attending.id}`, attending, {
-      headers: {
-        authorization: token,
-      },
-    });
-    dispatch({ type: "UPDATE_ATTENDING", attending: response.data });
   };
 };
 

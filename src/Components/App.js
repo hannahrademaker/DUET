@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Link, Routes, Route } from "react-router-dom";
+import { useSelector, connect, useDispatch } from "react-redux";
 import Register from "./Register";
 import Map from "./Map";
 import Feed from "./Feed";
@@ -8,14 +10,12 @@ import Nav from "./Nav";
 import Home from "./Home";
 import LoggedOut from "./LoggedOut";
 import FriendRequests from "./FriendRequests";
-import { Link, Routes, Route } from "react-router-dom";
-import { useSelector, connect } from "react-redux";
-import UserUpdate from "./UserUpdate";
 import User from "./User";
-import PasswordUpdate from "./PasswordUpdate";
 import Chat from "./Chat";
-import { fetchOnlineUsers } from "../store";
 import FriendPage from "./FriendPage";
+import UserUpdate from "./UserUpdate";
+import PasswordUpdate from "./PasswordUpdate";
+import { fetchOnlineUsers, fetchAttending } from "../store";
 
 const theme = createTheme({
   palette: {
@@ -58,7 +58,14 @@ class Socket extends React.Component {
 }
 
 const App = () => {
-  const { auth, onlineUsers } = useSelector((state) => state);
+  const { auth, onlineUsers, attending } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (auth.id) {
+      dispatch(fetchAttending());
+    }
+  }, [auth]);
 
   return (
     <ThemeProvider theme={theme}>
