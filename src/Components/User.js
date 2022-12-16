@@ -7,9 +7,10 @@ import { Button } from "@mui/material/";
 import PplMayKnow from "./PplMayKnow";
 import FriendRequests from "./FriendRequests";
 import UserEvents from "./UserEvents";
+import { Typography } from "@mui/material";
 
 const User = () => {
-  const { auth, users, friendships } = useSelector((state) => state);
+  const { auth, users, friendships, attending } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
   const user = useSelector((state) => state.auth);
@@ -27,18 +28,16 @@ const User = () => {
   );
 
   return (
-    <div id="user-page">
+    <div className="user-page">
       <div className="username-top">
-        <h3>{auth.username}</h3>
+        <Typography variant="h1">{auth.username}</Typography>
       </div>
       <div>
         <div className="profile-page-details-top">
-          {auth.img && (
-            <img src={auth.img} alt="Pic of User" width="200" height="200" />
-          )}
+          {auth.img && <img src={auth.img} alt="Pic of User" />}
         </div>
         <div>
-          <span>Events ()</span>
+          <span>Events ({auth.attendings.length})</span>
           <span>Friends ({friendList.length}) </span>
           <span>
             <Link className="link" to="/user/friendrequests">
@@ -48,11 +47,7 @@ const User = () => {
         </div>
       </div>
       <div>
-        <h4>
-          {auth.firstName} {auth.lastName}
-        </h4>
         <p>{auth.bio}</p>
-        <div>My Events</div>
         <UserEvents userId={user.id} />
       </div>
       <div className="list-6-friends">

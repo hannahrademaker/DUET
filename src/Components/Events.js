@@ -26,11 +26,12 @@ const Events = ({
   setFilter,
   setRadius,
 }) => {
-  const { auth } = useSelector((state) => state);
+  const { auth, attending } = useSelector((state) => state);
   const dispatch = useDispatch();
+  const attend = attending.filter((att) => att.userId === auth.id);
 
-  const attending = (e) => {
-    const event = auth.attendings.find((ev) => ev.eventId === e.id);
+  const isAttending = (e) => {
+    const event = attend.find((ev) => ev.eventId === e.id);
     if (event) {
       event.isAttending = true;
       event.isInterested = false;
@@ -41,8 +42,8 @@ const Events = ({
     }
   };
 
-  const interested = (e) => {
-    const event = auth.attendings.find((ev) => ev.eventId === e.id);
+  const isInterested = (e) => {
+    const event = attend.find((ev) => ev.eventId === e.id);
     if (event) {
       event.isInterested = true;
       event.isAttending = false;
@@ -97,11 +98,11 @@ const Events = ({
               <CardActions>
                 <IconButton
                   aria-label="attending"
-                  onClick={() => attending(event)}
+                  onClick={() => isAttending(event)}
                 >
                   <AddCircleIcon
                     color={
-                      auth.attendings.find(
+                      attend.find(
                         (e) => e.eventId === event.id && e.isAttending === true
                       )
                         ? "secondary"
@@ -111,11 +112,11 @@ const Events = ({
                 </IconButton>
                 <IconButton
                   aria-label="interested-in-attending"
-                  onClick={() => interested(event)}
+                  onClick={() => isInterested(event)}
                 >
                   <FavoriteIcon
                     color={
-                      auth.attendings.find(
+                      attend.find(
                         (e) => e.eventId === event.id && e.isInterested === true
                       )
                         ? "secondary"
