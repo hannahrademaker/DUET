@@ -20,9 +20,11 @@ const Attending = conn.define("attending", {
   },
   isAttending: {
     type: BOOLEAN,
+    defaultValue: false,
   },
   isInterested: {
     type: BOOLEAN,
+    defaultValue: false,
   },
   decided: {
     type: VIRTUAL,

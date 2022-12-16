@@ -6,6 +6,7 @@ const API_KEY = "fmAEcxmSvwqhltBAynkfzAyvdJLNg28X";
 import Comments from "./Comments";
 import { fetchEvent } from "../Helpers/TicketMaster";
 import { useSelector } from "react-redux";
+import Attending from "./Attending";
 
 const Event = (props) => {
   const [event, setEvent] = useState(null);
@@ -16,6 +17,8 @@ const Event = (props) => {
       .then((response) => response.json())
       .then((data) => setEvent(data));
   }, []);
+
+  console.log(event);
 
   if (!event) {
     return <div />;
@@ -39,6 +42,7 @@ const Event = (props) => {
           " " +
           event._embedded.venues[0].postalCode}
       </Typography>
+      <Attending eventId={id} />
       <img className="eventImg" src={event.images[0].url} alt="event" />
       <Comments eventId={id} />
     </div>

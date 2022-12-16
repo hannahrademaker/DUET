@@ -20,3 +20,12 @@ export const fetchEvent = (id) => {
     `https://app.ticketmaster.com/discovery/v2/events/${id}?apikey=${API_KEY}`
   );
 };
+
+export const fetchUserEvents = (user) => {
+  const eventIds = user.attendings.map((item) => item.eventId);
+  const events = eventIds.map((event) => {
+    return fetch(
+      `https://app.ticketmaster.com/discovery/v2/events/${event}?apikey=${API_KEY}`
+    );
+  });
+};

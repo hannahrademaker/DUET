@@ -6,6 +6,7 @@ import {
   deleteFriendship,
   fetchFriendships,
 } from "../store";
+import UserEvents from "./UserEvents";
 
 const FriendPage = () => {
   const { users, auth, friendships } = useSelector((state) => state);
@@ -83,12 +84,22 @@ const FriendPage = () => {
                 <h3>{friend.username}</h3>
               </div>
               <div className="profile-page-details-top">
-                <img
-                  src={friend.avatar}
-                  alt="Pic of friend"
-                  width="200"
-                  height="200"
-                />
+                {friend.img && (
+                  <img
+                    src={friend.img}
+                    alt="Pic of friend"
+                    width="200"
+                    height="200"
+                  />
+                )}
+                {!friend.img && (
+                  <img
+                    src="../static/DUET/blankprofile.png"
+                    alt="blank profile"
+                    width="200"
+                    height="200"
+                  />
+                )}
               </div>
               <div>
                 <span>Events ()</span>
@@ -100,8 +111,10 @@ const FriendPage = () => {
                 </h4>
                 <p>{friend.bio}</p>
               </div>
+
               <div className="list-6-friends">
                 <div>
+                  <h5>Friends</h5>
                   {friendsOfFriends.map((friendOfFriend) => {
                     if (friendOfFriend.id !== auth.id) {
                       return (
@@ -111,12 +124,24 @@ const FriendPage = () => {
                               <Link to={`/users/${friendOfFriend.id}`}>
                                 {friendOfFriend.username}
                               </Link>
-                              <img
-                                src={friendOfFriend.avatar}
-                                alt="Pic of Friend"
-                                width="200"
-                                height="200"
-                              />
+                              {friendOfFriend.img && (
+                                <img
+                                  className="people-you-may-know-img"
+                                  src={friendOfFriend.img}
+                                  alt="Pic of Friend"
+                                  width="200"
+                                  height="200"
+                                />
+                              )}
+                              {!friendOfFriend.img && (
+                                <img
+                                  className="people-you-may-know-img"
+                                  src="../static/DUET/blankprofile.png"
+                                  alt="blank profile"
+                                  width="200"
+                                  height="200"
+                                />
+                              )}
                             </li>
                           </ul>
                         </div>
@@ -128,7 +153,8 @@ const FriendPage = () => {
                             <li>
                               <Link to={`/user`}>{auth.username}</Link>
                               <img
-                                src={auth.avatar}
+                                className="people-you-may-know-img"
+                                src={auth.img}
                                 alt="Pic of Friend"
                                 width="200"
                                 height="200"
@@ -176,7 +202,7 @@ const FriendPage = () => {
                         setToggle(!toggle);
                       }}
                     >
-                      See {friend.username}'s About Info'
+                      Hide {friend.username}'s Info'
                     </button>
                   </div>
                 )}
@@ -227,6 +253,7 @@ const FriendPage = () => {
           );
         }
       })}
+      {/* <PplMayKnow /> */}
     </div>
   );
 };

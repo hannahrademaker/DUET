@@ -10,12 +10,16 @@ import {
 import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
+import PplMayKnow from "./PplMayKnow";
+import FriendRequests from "./FriendRequests";
+import UserEvents from "./UserEvents";
+import { Typography } from "@mui/material";
 
 const User = () => {
-  const { auth, users, friendships } = useSelector((state) => state);
+  const { auth, users, friendships, attending } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
-  // const [status, setStatus] = useState("pending");
+  const user = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -52,9 +56,9 @@ const User = () => {
   });
   const sentRequestsIds = sentRequests.map((user) => user.accepterId);
 
-  // const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
-  //   (friend) => friend.friendship.status === "pending"
-  // );
+  const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
+    (friend) => friend.friendship.status === "pending"
+  );
 
   //friend requests sent
   // const outbox = auth.Requester.filter(
@@ -99,40 +103,55 @@ const User = () => {
   };
 
   return (
-    <div id="user-page">
+    <div className="user-page">
       <div className="username-top">
-        <h3>{auth.username}</h3>
+        <Typography variant="h1">{auth.username}</Typography>
       </div>
       <div>
         <div className="profile-page-details-top">
-          {auth.img && (
-            <img src={auth.img} alt="Pic of User" width="200" height="200" />
-          )}
+          {auth.img && <img src={auth.img} alt="Pic of User" />}
         </div>
         <div>
           <span>Events ()</span>
+          <span>Events ({auth.attendings.length})</span>
           <span>Friends ({myFriends.length})</span>
+
+          <span>
+            <Link className="link" to="/user/friendrequests">
+              Friend Requests ({pendingFriendList && pendingFriendList.length})
+            </Link>
+          </span>
         </div>
       </div>
       <div>
-        <h4>
-          {auth.firstName} {auth.lastName}
-        </h4>
         <p>{auth.bio}</p>
+        <UserEvents userId={user.id} />
       </div>
       <div className="list-6-friends">
         <div>
           {myFriends.map((friend) => {
             return (
-              <div key={friend.id} className="friend-card">
+              <div key={friend.id} className="friend-card" auth={auth.id}>
+                <h5>Friends</h5>
                 <li>
                   <Link to={`/users/${friend.id}`}>{friend.username}</Link>
-                  <img
-                    src={friend.avatar}
-                    alt="Pic of User"
-                    width="200"
-                    height="200"
-                  />
+                  {friend.img ? (
+                    <img
+                      className="people-you-may-know-img"
+                      src={friend.img}
+                      alt="Pic of User"
+                      width="200"
+                      height="200"
+                    />
+                  ) : (
+                    <img
+                      className="people-you-may-know-img"
+                      src="../static/DUET/blankprofile.png"
+                      alt="Pic of User"
+                      width="200"
+                      height="200"
+                    />
+                  )}
                   <button onClick={() => destroyFriendship(friend)}>X</button>
                 </li>
               </div>
@@ -186,54 +205,7 @@ const User = () => {
           </Button>
         </Link>
       </div>
-      <div className="people-you-may-know-cards">
-        <p>People you may know</p>
-        <ul>
-          {users.map((user) => {
-            //set up a max of 6 people you may know?? or just show all?
-            if (!myFriendsIds.includes(user.id) && user.id !== auth.id) {
-              return (
-                <div key={user.id}>
-                  <li>
-                    <Link to={`/users/${user.id}`}>
-                      {user.username}
-                      {user.img && (
-                        <img
-                          className="people-you-may-know-img"
-                          src={user.img}
-                          width="200"
-                          height="200"
-                        />
-                      )}
-                      {!user.img && (
-                        <img
-                          className="people-you-may-know-img"
-                          src="../static/DUET/blankprofile.png"
-                          alt="blank profile"
-                          width="200"
-                          height="200"
-                        />
-                      )}
-                    </Link>
-                    {!sentRequestsIds.includes(user.id) &&
-                      !inboxIds.includes(user.id) && (
-                        <button onClick={() => sendFR(user, auth)}>
-                          Send Friend Request
-                        </button>
-                      )}
-                    {inboxIds.includes(user.id) && (
-                      <button onClick={() => weFriends(user)}>Confirm</button>
-                    )}
-                    {sentRequestsIds.includes(user.id) && (
-                      <button disabled={true}>Friend Request Sent</button>
-                    )}
-                  </li>
-                </div>
-              );
-            }
-          })}
-        </ul>
-      </div>
+      <div>{auth.id && <PplMayKnow auth={auth.id} />}</div>
     </div>
   );
 };

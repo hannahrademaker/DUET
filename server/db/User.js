@@ -33,22 +33,27 @@ const User = conn.define(
       allowNull: false,
       defaultValue: false,
     },
-    avatar: {
+    // avatar: {
+    //   type: TEXT,
+    //   defaultValue: "",
+    //   get: function () {
+    //     const prefixPNG = "data:image/png;base64,";
+    //     const prefixJPG = "data:image/jpeg;base64,";
+    //     const data = this.getDataValue("avatar") || "";
+    //     if (data.startsWith(prefixPNG)) {
+    //       return data;
+    //     } else if (data.startsWith(prefixJPG)) {
+    //       return data;
+    //     } else if (!data) {
+    //       return null;
+    //     }
+    //     return `${prefixPNG}${data}`;
+    //   },
+    // },
+    img: {
       type: TEXT,
       defaultValue: "",
-      get: function () {
-        const prefixPNG = "data:image/png;base64,";
-        const prefixJPG = "data:image/jpeg;base64,";
-        const data = this.getDataValue("avatar") || "";
-        if (data.startsWith(prefixPNG)) {
-          return data;
-        } else if (data.startsWith(prefixJPG)) {
-          return data;
-        } else if (!data) {
-          return null;
-        }
-        return `${prefixPNG}${data}`;
-      },
+      allowNull: true,
     },
     bio: {
       type: TEXT,
@@ -98,7 +103,6 @@ const User = conn.define(
 User.prototype.findThisUser = async function () {
   try {
     const currentUser = await User.findByPk(this.id);
-    console.log(currentUser);
     return currentUser;
   } catch (err) {
     return err;

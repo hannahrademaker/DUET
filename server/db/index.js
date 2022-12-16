@@ -7,18 +7,6 @@ const Post = require("./Post");
 const path = require("path");
 const fs = require("fs");
 
-const getImage = (path) => {
-  return new Promise((resolve, reject) => {
-    fs.readFile(path, "base64", (err, data) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(data);
-      }
-    });
-  });
-};
-
 User.belongsToMany(User, {
   as: "Requester",
   through: Friendship,
@@ -116,29 +104,6 @@ const syncAndSeed = async () => {
       }),
     ]);
 
-  // const [fs1, fs2, fs3, fs4] = await Promise.all([
-  //   conn.models.friendship.create({
-  //     requesterId: moe.id,
-  //     accepterId: lucy.id,
-  //     status: "accepted",
-  //   }),
-  //   conn.models.friendship.create({
-  //     requesterId: lucy.id,
-  //     accepterId: ethyl.id,
-  //     status: "accepted",
-  //   }),
-  //   conn.models.friendship.create({
-  //     requesterId: larry.id,
-  //     accepterId: ethyl.id,
-  //     status: "accepted",
-  //   }),
-  //   // Friendship.create({
-  //   //   requesterId: lucy.id,
-  //   //   accepterId: larry.id,
-  //   //   status: "accepted",
-  //   // }),
-  // ]);
-
   const [fs1, fs2, fs3, fs4] = await Promise.all([
     conn.models.friendship.create({
       requesterId: moe.id,
@@ -155,11 +120,11 @@ const syncAndSeed = async () => {
       accepterId: ethyl.id,
       status: "accepted",
     }),
-    // Friendship.create({
-    //   requesterId: lucy.id,
-    //   accepterId: larry.id,
-    //   status: "accepted",
-    // }),
+    Friendship.create({
+      requesterId: lucy.id,
+      accepterId: larry.id,
+      status: "pending",
+    }),
   ]);
 
   const [comment1, comment2, comment3, comment4] = await Promise.all([
@@ -209,7 +174,7 @@ const syncAndSeed = async () => {
     }),
   ]);
 
-  const [test1, test2, test3] = await Promise.all([
+  const [test1, test2, test3, test4] = await Promise.all([
     Attending.create({
       userId: moe.id,
       isAttending: true,
@@ -224,6 +189,11 @@ const syncAndSeed = async () => {
       userId: hannah.id,
       isAttending: true,
       eventId: "Z7r9jZ1Ad4s-N",
+    }),
+    Attending.create({
+      userId: anisah.id,
+      isAttending: true,
+      eventId: "G5diZ94NPjotW",
     }),
   ]);
 
@@ -260,6 +230,7 @@ const syncAndSeed = async () => {
       fs1,
       fs2,
       fs3,
+      fs4,
     },
     comments: {
       comment1,
@@ -271,6 +242,7 @@ const syncAndSeed = async () => {
       test1,
       test2,
       test3,
+      test4,
     },
     posts: {
       post1,

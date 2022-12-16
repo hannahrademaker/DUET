@@ -12,7 +12,7 @@ import {
   CardActions,
   IconButton,
 } from "@mui/material";
-import { attendingEvent } from "../store";
+import { attendingEvent, updateAttending } from "../store";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link } from "react-router-dom";
@@ -26,16 +26,32 @@ const Events = ({
   setFilter,
   setRadius,
 }) => {
-  const { auth } = useSelector((state) => state);
+  const { auth, attending } = useSelector((state) => state);
   const dispatch = useDispatch();
-  const attending = (e) => {
-    const letsGo = { userId: auth.id, eventId: e.id, isAttending: true };
-    console.log(letsGo);
-    dispatch(attendingEvent(letsGo));
+  const attend = attending.filter((att) => att.userId === auth.id);
+
+  const isAttending = (e) => {
+    const event = attend.find((ev) => ev.eventId === e.id);
+    if (event) {
+      event.isAttending = true;
+      event.isInterested = false;
+      dispatch(updateAttending(event));
+    } else {
+      const letsGo = { userId: auth.id, eventId: e.id, isAttending: true };
+      dispatch(attendingEvent(letsGo));
+    }
   };
 
-  const interested = (e) => {
-    console.log(e.name);
+  const isInterested = (e) => {
+    const event = attend.find((ev) => ev.eventId === e.id);
+    if (event) {
+      event.isInterested = true;
+      event.isAttending = false;
+      dispatch(updateAttending(event));
+    } else {
+      const letsGo = { userId: auth.id, eventId: e.id, isInterested: true };
+      dispatch(attendingEvent(letsGo));
+    }
   };
 
   return (
@@ -82,15 +98,31 @@ const Events = ({
               <CardActions>
                 <IconButton
                   aria-label="attending"
-                  onClick={() => attending(event)}
+                  onClick={() => isAttending(event)}
                 >
-                  <AddCircleIcon color="secondary" />
+                  <AddCircleIcon
+                    color={
+                      attend.find(
+                        (e) => e.eventId === event.id && e.isAttending === true
+                      )
+                        ? "secondary"
+                        : undefined
+                    }
+                  />
                 </IconButton>
                 <IconButton
                   aria-label="interested-in-attending"
-                  onClick={() => interested(event)}
+                  onClick={() => isInterested(event)}
                 >
-                  <FavoriteIcon color="secondary" />
+                  <FavoriteIcon
+                    color={
+                      attend.find(
+                        (e) => e.eventId === event.id && e.isInterested === true
+                      )
+                        ? "secondary"
+                        : undefined
+                    }
+                  />
                 </IconButton>
               </CardActions>
             </Card>

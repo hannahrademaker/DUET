@@ -7,6 +7,8 @@ import onlineUsers from "./onlineUsers";
 import comments from "./comments";
 import friendships from "./friendships";
 import posts from "./posts";
+import attending from "./attending";
+
 const reducer = combineReducers({
   auth,
   users,
@@ -14,6 +16,7 @@ const reducer = combineReducers({
   comments,
   friendships,
   posts,
+  attending,
 });
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
@@ -26,3 +29,4 @@ export * from "./onlineUsers";
 export * from "./comments";
 export * from "./friendships";
 export * from "./posts";
+export * from "./attending";

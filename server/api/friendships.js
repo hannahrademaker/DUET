@@ -5,10 +5,10 @@ const { isLoggedIn } = require("./middleware");
 
 module.exports = app;
 
-app.post("/", isLoggedIn, async (req, res, next) => {
+app.get("/", async (req, res, next) => {
   try {
-    let newFriendship = await Friendship.create(req.body);
-    res.send(newFriendship);
+    const friendships = await Friendship.findAll();
+    res.send(friendships);
   } catch (err) {
     next(err);
   }
@@ -24,20 +24,20 @@ app.put("/", isLoggedIn, async (req, res, next) => {
   }
 });
 
-app.delete("/:id", async (req, res, next) => {
+app.post("/", isLoggedIn, async (req, res, next) => {
   try {
-    const friendship = await Friendship.findByPk(req.params.id);
-    await friendship.destroy();
-    res.sendStatus(204);
+    let newFriendship = await Friendship.create(req.body);
+    res.send(newFriendship);
   } catch (err) {
     next(err);
   }
 });
 
-app.get("/", async (req, res, next) => {
+app.delete("/:id", async (req, res, next) => {
   try {
-    const friendships = await Friendship.findAll();
-    res.send(friendships);
+    const friendship = await Friendship.findByPk(req.params.id);
+    await friendship.destroy();
+    res.sendStatus(204);
   } catch (err) {
     next(err);
   }
