@@ -105,10 +105,12 @@ nav {
   color: #12163f;
   text-align: center;
   text-shadow: 2px 1px 2px #e43397, 0 0 1em #00c4cc, 0 0 0.5em #00c4cc;
+  margin: 0 100px;
 }
 
 .background {
-  height: 75rem;
+  max-width: 100vw;
+  height: 100vh;
   background-size: cover;
   align-items: center;
 }

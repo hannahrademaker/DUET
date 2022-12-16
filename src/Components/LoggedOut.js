@@ -28,7 +28,7 @@ const LoggedOut = () => {
         }}
       >
         <h1 className="welcome">
-          You don't have to fly Solo, find your
+          You don't have to fly Solo, <br /> find your
           <span className="duet"> DUET</span>!
         </h1>
         <p className="welcomeP">
