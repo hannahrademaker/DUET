@@ -49,16 +49,13 @@ export const sendFriendRequest = (friendship) => {
 
 export const deleteFriendship = (friendship) => {
   return async (dispatch) => {
-    //const token = window.localStorage.getItem("token");
-    const response = await axios.delete(
-      `/api/friendships`,
-      friendship /*, {
+    const token = window.localStorage.getItem("token");
+    await axios.delete(`/api/friendships/${friendship.id}`, friendship, {
       headers: {
         authorization: token,
       },
-    }*/
-    );
-    dispatch({ type: "DELETE_FRIENDSHIP", friendship: response.data });
+    });
+    dispatch({ type: "DELETE_FRIENDSHIP", friendship });
   };
 };
 

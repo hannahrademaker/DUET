@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  updateAuth,
   fetchUsers,
-  fetchFriendRelationships,
   sendFriendRequest,
   acceptFriendRequest,
   fetchFriendships,
@@ -92,10 +90,10 @@ const User = () => {
     dispatch(acceptFriendRequest(friendship));
   };
 
-  const destroyFriendship = (friend, cUser) => {
+  const destroyFriendship = (friend) => {
     const friendship = friendships.find(
       (friendship) =>
-        friendship.ids.includes(friend.id) && friendship.ids.includes(cUser.id)
+        friendship.ids.includes(friend.id) && friendship.ids.includes(auth.id)
     );
     dispatch(deleteFriendship(friendship));
   };
@@ -135,9 +133,7 @@ const User = () => {
                     width="200"
                     height="200"
                   />
-                  <button onClick={() => destroyFriendship(friend, auth)}>
-                    X
-                  </button>
+                  <button onClick={() => destroyFriendship(friend)}>X</button>
                 </li>
               </div>
             );
@@ -226,15 +222,7 @@ const User = () => {
                         </button>
                       )}
                     {inboxIds.includes(user.id) && (
-                      <button
-                        onClick={() =>
-                          /*dispatch(acceptFriendRequest(user))*/ weFriends(
-                            user
-                          )
-                        }
-                      >
-                        Confirm
-                      </button>
+                      <button onClick={() => weFriends(user)}>Confirm</button>
                     )}
                     {sentRequestsIds.includes(user.id) && (
                       <button disabled={true}>Friend Request Sent</button>

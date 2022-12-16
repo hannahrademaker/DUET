@@ -231,7 +231,7 @@ const syncAndSeed = async () => {
   // console.log(test2);
   // console.log(fs1);
   // console.log(lucy.findThisUser());
-  console.log(lucy.findMyFriendships());
+  //console.log(lucy.findMyFriendships());
 
   // const test = () => {
   //   let friend;

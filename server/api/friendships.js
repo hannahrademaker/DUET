@@ -24,15 +24,17 @@ app.put("/", isLoggedIn, async (req, res, next) => {
   }
 });
 
-app.delete("/", async (req, res, next) => {
+app.delete("/:id", async (req, res, next) => {
   try {
-    console.log(req.params);
+    const friendship = await Friendship.findByPk(req.params.id);
+    await friendship.destroy();
+    res.sendStatus(204);
   } catch (err) {
     next(err);
   }
 });
 
-app.get("/", async (req, res, next) => {
+app.get("/", isLoggedIn, async (req, res, next) => {
   try {
     const friendships = await Friendship.findAll();
     res.send(friendships);
