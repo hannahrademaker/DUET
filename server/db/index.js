@@ -38,8 +38,8 @@ User.hasMany(Friendship, {
 });
 User.hasMany(Friendship, { foreignKey: "accepterId", onDelete: "CASCADE" });
 User.hasMany(Attending, { onDelete: "CASCADE" });
-//Friendship.belongsTo(User);
-//Friendship.belongsTo(User);
+// Friendship.belongsTo(User);
+// Friendship.belongsTo(User);
 Attending.belongsTo(User);
 User.hasMany(Comment, { foreignKey: "userId", onDelete: "CASCADE" });
 Comment.belongsTo(User, { foreignKey: "userId" });
@@ -116,18 +116,41 @@ const syncAndSeed = async () => {
       }),
     ]);
 
+  // const [fs1, fs2, fs3, fs4] = await Promise.all([
+  //   conn.models.friendship.create({
+  //     requesterId: moe.id,
+  //     accepterId: lucy.id,
+  //     status: "accepted",
+  //   }),
+  //   conn.models.friendship.create({
+  //     requesterId: lucy.id,
+  //     accepterId: ethyl.id,
+  //     status: "accepted",
+  //   }),
+  //   conn.models.friendship.create({
+  //     requesterId: larry.id,
+  //     accepterId: ethyl.id,
+  //     status: "accepted",
+  //   }),
+  //   // Friendship.create({
+  //   //   requesterId: lucy.id,
+  //   //   accepterId: larry.id,
+  //   //   status: "accepted",
+  //   // }),
+  // ]);
+
   const [fs1, fs2, fs3, fs4] = await Promise.all([
-    Friendship.create({
+    conn.models.friendship.create({
       requesterId: moe.id,
       accepterId: lucy.id,
       status: "accepted",
     }),
-    Friendship.create({
+    conn.models.friendship.create({
       requesterId: lucy.id,
       accepterId: ethyl.id,
       status: "accepted",
     }),
-    Friendship.create({
+    conn.models.friendship.create({
       requesterId: larry.id,
       accepterId: ethyl.id,
       status: "accepted",
@@ -208,7 +231,7 @@ const syncAndSeed = async () => {
   // console.log(test2);
   // console.log(fs1);
   // console.log(lucy.findThisUser());
-  //console.log(lucy.unfriendUser(larry));
+  console.log(lucy.findMyFriendships());
 
   // const test = () => {
   //   let friend;

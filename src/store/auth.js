@@ -6,16 +6,18 @@ const auth = (state = {}, action) => {
   if (action.type === "UPDATE_ATTENDING") {
     state.attendings = [...state.attendings, action.attending];
   }
-  if (action.type === "FRIEND_REQUEST") {
-    //return { ...state, friendships: [...state.friendships, action.friendship] };
-    state.friendships = [...state.friendships, action.friendship];
-  }
-  if (action.type === "FETCH_FRIENDS") {
-    state.friendships = [...state.friendships];
-  }
-  if (action.type === "ACCEPT_REQUEST") {
-    return action.auth;
-  }
+  // if (action.type === "FRIEND_REQUEST") {
+  //   //return { ...state, friendships: [...state.friendships, action.friendship] };
+  //   state.friendships = [...state.friendships, action.friendship];
+  // }
+  // if (action.type === "FETCH_FRIENDS") {
+  //   state.friendships = [...state.friendships];
+  // }
+  // if (action.type === "ACCEPT_REQUEST") {
+  //   state.friendships = state.friendships.map((friendship) =>
+  //     friendship.id === action.friendship.id ? action.friendship : friendship
+  //   );
+  // }
   // if (action.type === "DELETE_FRIENDSHIP") {
   //   state = state.filter((friendship) => friendship.id !== action.frienship.id);
   // }
@@ -81,29 +83,33 @@ export const attendingEvent = (attending) => {
   };
 };
 
-export const sendFriendRequest = (friendships) => {
-  return async (dispatch) => {
-    const token = window.localStorage.getItem("token");
-    const response = await axios.post("/api/friendships", friendships, {
-      headers: {
-        authorization: token,
-      },
-    });
-    dispatch({ type: "FRIEND_REQUEST", friendships: response.data });
-  };
-};
+// export const sendFriendRequest = (friendships) => {
+//   return async (dispatch) => {
+//     const token = window.localStorage.getItem("token");
+//     const response = await axios.post("/api/friendships", friendships, {
+//       headers: {
+//         authorization: token,
+//       },
+//     });
+//     dispatch({ type: "FRIEND_REQUEST", friendships: response.data });
+//   };
+// };
 
-export const acceptFriendRequest = (friendships) => {
-  return async (dispatch) => {
-    const token = window.localStorage.getItem("token");
-    const response = await axios.put(`/api/friendships/`, friendships, {
-      headers: {
-        authorization: token,
-      },
-    });
-    dispatch({ type: "ACCEPT_REQUEST", friendships: response.data });
-  };
-};
+// export const acceptFriendRequest = (friendship) => {
+//   return async (dispatch) => {
+//     const token = window.localStorage.getItem("token");
+//     const response = await axios.put(
+//       `/api/friendships/${friendship.id}`,
+//       friendship,
+//       {
+//         headers: {
+//           authorization: token,
+//         },
+//       }
+//     );
+//     dispatch({ type: "ACCEPT_REQUEST", friendships: response.data });
+//   };
+//};
 
 // export const deleteFriendship = (friendship) => {
 //   return async (dispatch) => {

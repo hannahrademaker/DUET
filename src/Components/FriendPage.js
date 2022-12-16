@@ -19,11 +19,10 @@ const FriendPage = () => {
   }, []);
 
   const destroyFriendship = (friend, cUser) => {
-    const [friendship] = friendships.filter((friendship) => {
-      if (friendship.ids.includes(friend) && friendship.ids.includes(cUser)) {
-        return friendship;
-      }
-    });
+    let friendship = friendships.find(
+      (friendship) =>
+        friendship.ids.includes(friend.id) && friendship.ids.includes(cUser.id)
+    );
     dispatch(deleteFriendship(friendship));
   };
 
@@ -36,7 +35,6 @@ const FriendPage = () => {
     <div id="user-page">
       {users.map((friend) => {
         if (friend.id === id) {
-          console.log(friend);
           let friendList = friend.Accepter.concat(friend.Requester).filter(
             (friend) => friend.friendship.status === "accepted"
           );
@@ -139,9 +137,7 @@ const FriendPage = () => {
                       {friend.city}, {friend.state} {friend.zip}
                     </p>
 
-                    <button
-                      onClick={() => destroyFriendship(friend.id, auth.id)}
-                    >
+                    <button onClick={() => destroyFriendship(friend, auth)}>
                       Unfriend
                     </button>
                     <br />
