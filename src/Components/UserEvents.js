@@ -18,13 +18,22 @@ const UserEvents = ({ userId }) => {
   const attend = attending.filter((att) => att.userId === auth.id);
   const eventIds = attend.map((item) => item.eventId);
 
+  // useEffect(() => {
+  //   eventIds.forEach((event) => {
+  //     fetchEvent(event)
+  //       .then((response) => response.json())
+  //       .then((data) => setEvents((events) => [...events, data]));
+  //   });
+  // }, [eventIds]);
+
   useEffect(() => {
-    eventIds.forEach((event) => {
-      fetchEvent(event)
-        .then((response) => response.json())
-        .then((data) => setEvents((events) => [...events, data]));
-    });
-  }, []);
+    Promise.all(
+      eventIds.map(async (indvevent) => {
+        const response = await fetchEvent(indvevent);
+        return await response.json();
+      })
+    ).then((data) => setEvents(data));
+  }, [eventIds]);
 
   return (
     <div>
