@@ -21,6 +21,10 @@ const Chat = () => {
     setUsername(auth.username);
   });
 
+  useEffect(() => {
+    joinRoom();
+  }, [room]);
+
   const channels = [
     { label: "All", value: "All" },
     { label: "Music", value: "Music" },
@@ -52,14 +56,11 @@ const Chat = () => {
                     <button
                       value={channel.value}
                       onClick={() => {
-                        console.log(room);
                         setRoom(channel.value);
-                        console.log(channel.value);
                       }}
                     >
                       {channel.label}
                     </button>
-                    <button onClick={joinRoom}>Join</button>
                   </li>
                 );
               })}
