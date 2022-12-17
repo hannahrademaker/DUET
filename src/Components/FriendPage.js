@@ -59,7 +59,6 @@ const FriendPage = () => {
   //   (friend) => friend.friendship.status === "pending"
   // );
   //console.log(pendingFriendList);
-  let requested = false;
   const friendsIds = friendsOfFriends.map((myFriendsId) => myFriendsId.id);
 
   // const friendListIds = friendList.map((friendId) => friendId.id);
