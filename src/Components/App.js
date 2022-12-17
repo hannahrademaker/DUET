@@ -15,7 +15,12 @@ import Chat from "./Chat";
 import FriendPage from "./FriendPage";
 import UserUpdate from "./UserUpdate";
 import PasswordUpdate from "./PasswordUpdate";
-import { fetchOnlineUsers, fetchAttending } from "../store";
+import {
+  fetchOnlineUsers,
+  fetchAttending,
+  fetchUsers,
+  fetchFriendships,
+} from "../store";
 
 const theme = createTheme({
   palette: {
@@ -64,6 +69,8 @@ const App = () => {
   useEffect(() => {
     if (auth.id) {
       dispatch(fetchAttending());
+      dispatch(fetchUsers());
+      dispatch(fetchFriendships());
     }
   }, [auth]);
 

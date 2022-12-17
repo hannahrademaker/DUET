@@ -68,7 +68,6 @@ const syncAndSeed = async () => {
         password: "123",
         firstName: "Ethyl",
         lastName: "Bobethyl",
-        requestedFrom: ["007"],
       }),
       User.create({
         username: "hannah",

@@ -20,13 +20,13 @@ const User = () => {
   const [toggle, setToggle] = useState(false);
   const user = useSelector((state) => state.auth);
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchUsers());
+  // }, []);
 
-  useEffect(() => {
-    dispatch(fetchFriendships());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchFriendships());
+  // }, []);
 
   // const friendList = auth.Accepter.concat(auth.Requester).filter(
   //   (friend) => friend.friendship.status === "accepted"
@@ -73,7 +73,7 @@ const User = () => {
   // const pendingFriendListIds = pendingFriendList.map(
   //   (pendingId) => pendingId.id
   // );
-
+  //        <UserEvents userId={auth.id} />
   const sendFR = (user, auth) => {
     let friendship = {
       accepterId: user.id,
@@ -112,7 +112,6 @@ const User = () => {
       </div>
       <div>
         <p>{auth.bio}</p>
-        <UserEvents userId={user.id} />
       </div>
       <div className="toggle-user-details">
         {!toggle && (
@@ -161,7 +160,7 @@ const User = () => {
         </Link>
       </div>
       <UserFriends />
-      <div>{auth.id && <PplMayKnow auth={auth.id} />}</div>
+      <div>{auth.id && <PplMayKnow />}</div>
     </div>
   );
 };
