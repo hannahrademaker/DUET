@@ -4,6 +4,14 @@ import { Link } from "react-router-dom";
 import { fetchComments } from "../store";
 import { createComment } from "../store";
 import { fetchUsers } from "../store";
+import {
+  TextField,
+  Button,
+  Card,
+  CardHeader,
+  Avatar,
+  CardContent,
+} from "@mui/material";
 
 const Comments = ({ eventId }) => {
   const { comments, users } = useSelector((state) => state);
@@ -28,6 +36,17 @@ const Comments = ({ eventId }) => {
       const theUser = users.find((user) => user.id === userId);
       const userName = theUser.username;
       return userName;
+    }
+  };
+
+  const getUserImg = (userId) => {
+    if (userId === null) return "../static/DUET/blankprofile.png";
+    else {
+      const theUser = users.find((user) => user.id === userId);
+      const userImg = theUser.img
+        ? theUser.img
+        : "../static/DUET/blankprofile.png";
+      return userImg;
     }
   };
 
@@ -58,26 +77,29 @@ const Comments = ({ eventId }) => {
       <h1>Comments</h1>
       <div className="Comments-list">
         {eventComments.map((comment) => (
-          <div key={comment.id}>
-            <Link to={`/users/${comment.userId}`}>
-              {getUserName(comment.userId)}
-            </Link>
+          <Card key={comment.id} href={`/#/users/${comment.userId}`}>
+            <CardHeader
+              avatar={<Avatar src={getUserImg(comment.userId)} />}
+              title={getUserName(comment.userId)}
+            />
             {/* <div>{getUserName(comment.userId)}</div> */}
-            <div>{comment.caption}</div>
-          </div>
+            <CardContent>
+              <div>{comment.caption}</div>
+            </CardContent>
+          </Card>
         ))}
       </div>
-      <form onSubmit={handleSubmit}>
-        <label className="commentsLabel">
-          Comment:
-          <input
-            className="commmentInput"
-            type="text"
-            value={newComment}
-            onChange={handleChange}
-          />
-        </label>
-        <input className="commentsSubmit" type="submit" value="Submit" />
+      <form style={{ width: "500px", margin: "5% 0" }} onSubmit={handleSubmit}>
+        <TextField
+          placeholder="Type your comment!"
+          multiline
+          rows={2}
+          value={newComment}
+          onChange={handleChange}
+        />
+        <Button type="submit" variant="contained" value="Submit">
+          Post!
+        </Button>
       </form>
     </div>
   );

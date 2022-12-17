@@ -22,20 +22,6 @@ const Attending = conn.define("attending", {
     type: BOOLEAN,
     defaultValue: false,
   },
-  isInterested: {
-    type: BOOLEAN,
-    defaultValue: false,
-  },
-  decided: {
-    type: VIRTUAL,
-    get: function () {
-      if (this.isAttending === true) {
-        this.isInterested = false;
-      } else if (this.isInterested === true) {
-        this.isAttending = false;
-      }
-    },
-  },
 });
 
 module.exports = Attending;

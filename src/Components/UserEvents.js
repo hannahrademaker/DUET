@@ -55,10 +55,7 @@ const UserEvents = ({ userId }) => {
                     <Typography
                       sx={{ textShadow: "none", textTransform: "none" }}
                     >
-                      {attend.find((att) => att.eventId === event.id)
-                        .isAttending
-                        ? "I'm attending this event!"
-                        : "I'm interested in going to this event !"}
+                      {event._embedded.venues[0].name}
                     </Typography>
                   }
                 />

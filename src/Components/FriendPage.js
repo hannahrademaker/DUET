@@ -207,48 +207,6 @@ const FriendPage = () => {
                   </div>
                 )}
               </div>
-              <div className="people-you-may-know-cards">
-                <p>People you may know</p>
-                <ul>
-                  {users.map((user) => {
-                    if (
-                      !friendsIds.includes(user.id) &&
-                      user.id !== auth.id &&
-                      user.id !== friend.id
-                    ) {
-                      return (
-                        <div key={user.id}>
-                          <li>
-                            <Link to={`/users/${user.id}`}>
-                              {user.username}
-                              <img
-                                src={user.avatar}
-                                alt="Pic of User"
-                                width="200"
-                                height="200"
-                              />
-                            </Link>
-                            {!sentRequestsIds.includes(user.id) && (
-                              <button
-                                onClick={() =>
-                                  dispatch(sendFriendRequest(user))
-                                }
-                              >
-                                Send Friend Request
-                              </button>
-                            )}
-                            {sentRequestsIds.includes(user.id) && (
-                              <button disabled={true}>
-                                Friend Request Sent
-                              </button>
-                            )}
-                          </li>
-                        </div>
-                      );
-                    }
-                  })}
-                </ul>
-              </div>
             </div>
           );
         }

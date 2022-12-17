@@ -480,7 +480,22 @@ nav {
   line-height: 1;
 }
 
-.profile-page-details-top img {
-  max-height: 400px;
-  max-width: 400px;
+.username-top{
+  display: flex;
+  justify-content: center;
+  margin: 5% 0;
+}
+
+.username-top img {
+  max-height: 200px;
+  max-width: 200px;
+  border-radius: 40px
+}
+
+.list-6-friends {
+  margin: 5% 0;
+}
+
+.list-6-friends > .MuiCard-root{
+  display: inline-block;
 }

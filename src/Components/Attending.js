@@ -1,6 +1,7 @@
 import React, { Component, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../store";
+import { AvatarGroup, Avatar } from "@mui/material";
 
 const Attending = ({ eventId }) => {
   const { users } = useSelector((state) => state);
@@ -37,19 +38,15 @@ const Attending = ({ eventId }) => {
       ) : (
         <div>Whos Attending</div>
       )}
-      <div className="Attending-list">
+      <AvatarGroup className="Attending-list" max={5}>
         {attendings.map((user) => (
-          <div className="Attending-item">
-            <div className="Attending-item-name">{user.username}</div>
-            <div className="Attending-item-image">
-              <img
-                className="profileImg"
-                src={user.img ? user.img : "../static/DUET/blankprofile.png"}
-              />
-            </div>
-          </div>
+          <Avatar
+            className="profileImg"
+            alt="Whos Attending Image"
+            src={user.img ? user.img : "../static/DUET/blankprofile.png"}
+          />
         ))}
-      </div>
+      </AvatarGroup>
     </div>
   );
 };
