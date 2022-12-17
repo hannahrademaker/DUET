@@ -54,9 +54,6 @@ const FriendPage = () => {
     return acc;
   }, []);
 
-  console.log(myFriends);
-  console.log(friendsOfFriends);
-
   const mutualFriends = myFriends.reduce((acc, buddy) => {
     for (let i = 0; i < friendsOfFriends.length; i++) {
       if (buddy === friendsOfFriends[i] && !acc.includes(buddy)) {
@@ -65,15 +62,7 @@ const FriendPage = () => {
     }
     return acc;
   }, []);
-  console.log(mutualFriends);
-  // let friendList = friend.Accepter.concat(friend.Requester).filter(
-  //   (friend) => friend.friendship.status === "accepted"
-  // );
-  // console.log(friendList);
-  // let pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
-  //   (friend) => friend.friendship.status === "pending"
-  // );
-  //console.log(pendingFriendList);
+
   const friendsIds = friendsOfFriends.map((myFriendsId) => myFriendsId.id);
 
   // const friendListIds = friendList.map((friendId) => friendId.id);
