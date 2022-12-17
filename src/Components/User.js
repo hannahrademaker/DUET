@@ -106,7 +106,6 @@ const User = () => {
           <span>Events ()</span>
           <span>Events ({auth.attendings.length})</span>
           <span>Friends ({myFriends.length})</span>
-
           <span>
             <Link className="link" to="/user/friendrequests">
               Friend Requests ({inboxReqs && inboxReqs.length})

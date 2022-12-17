@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  sendFriendRequest,
-  deleteFriendship,
-  fetchFriendships,
-  fetchUsers,
-} from "../store";
-import UserEvents from "./UserEvents";
+import { deleteFriendship } from "../store";
+import FriendOfFriend from "./FriendOfFriend";
+import { Typography } from "@mui/material";
 
 const FriendPage = () => {
   const { id } = useParams();
@@ -24,16 +20,7 @@ const FriendPage = () => {
     );
     dispatch(deleteFriendship(friendship));
   };
-  const sentRequests = friendships.filter((friendship) => {
-    if (friendship.requesterId === auth.id && friendship.status === "pending") {
-      return friendship;
-    }
-  });
-  const sentRequestsIds = sentRequests.map((user) => user.accepterId);
-  // const outbox = auth.Requester.filter(
-  //   (invite) => invite.friendship.status === "pending"
-  // );
-  // const outboxIds = outbox.map((outboxId) => outboxId.id);
+
   const confirmedFriends = friendships.filter((friendship) => {
     if (
       friendship.status === "accepted" &&
@@ -42,6 +29,7 @@ const FriendPage = () => {
       return friendship;
     }
   });
+
   const friendsOfFriends = users.reduce((acc, user) => {
     for (let i = 0; i < confirmedFriends.length; i++) {
       if (confirmedFriends[i].ids.includes(user.id) && user.id !== friend.id) {
@@ -65,27 +53,17 @@ const FriendPage = () => {
   if (!friend) return null;
   if (friend)
     return (
-      <div>
+      <div className="user-page">
         <div className="username-top">
-          <h3>{friend.username}</h3>
-        </div>
-        <div className="profile-page-details-top">
           {friend.img && (
             <img
-              src={friend.img}
+              src={friend.img ? friend.img : "../static/DUET/blankprofile.png"}
               alt="Pic of friend"
               width="200"
               height="200"
             />
           )}
-          {!friend.img && (
-            <img
-              src="../static/DUET/blankprofile.png"
-              alt="blank profile"
-              width="200"
-              height="200"
-            />
-          )}
+          <Typography variant="h1">{friend.username}</Typography>
         </div>
         <div>
           <span>Events ()</span>
@@ -96,62 +74,6 @@ const FriendPage = () => {
             {friend.firstName} {friend.lastName}
           </h4>
           <p>{friend.bio}</p>
-        </div>
-
-        <div className="list-6-friends">
-          <div>
-            <h5>Friends</h5>
-            {friendsOfFriends.map((friendOfFriend) => {
-              if (friendOfFriend.id !== auth.id) {
-                return (
-                  <div key={friendOfFriend.id} className="friend-card">
-                    <ul>
-                      <li>
-                        <Link to={`/users/${friendOfFriend.id}`}>
-                          {friendOfFriend.username}
-                        </Link>
-                        {friendOfFriend.img && (
-                          <img
-                            className="people-you-may-know-img"
-                            src={friendOfFriend.img}
-                            alt="Pic of Friend"
-                            width="200"
-                            height="200"
-                          />
-                        )}
-                        {!friendOfFriend.img && (
-                          <img
-                            className="people-you-may-know-img"
-                            src="../static/DUET/blankprofile.png"
-                            alt="blank profile"
-                            width="200"
-                            height="200"
-                          />
-                        )}
-                      </li>
-                    </ul>
-                  </div>
-                );
-              } else if (friendOfFriend.id === auth.id) {
-                return (
-                  <div key={auth.id} className="friend-card">
-                    <ul>
-                      <li>
-                        <Link to={`/user`}>{auth.username}</Link>
-                        <img
-                          className="people-you-may-know-img"
-                          src={auth.img}
-                          alt="Pic of Friend"
-                          width="200"
-                          height="200"
-                        />
-                      </li>
-                    </ul>
-                  </div>
-                );
-              }
-            })}
-          </div>
         </div>
         <div className="toggle-user-details">
           {!toggle && (
@@ -193,6 +115,7 @@ const FriendPage = () => {
             </div>
           )}
         </div>
+        <FriendOfFriend id={id} />
       </div>
     );
 };

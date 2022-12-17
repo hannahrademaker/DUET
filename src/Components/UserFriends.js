@@ -42,21 +42,27 @@ const UserFriends = () => {
             return (
               <Card
                 sx={{ width: 200 }}
-                href={`/#/users/${friend.id}`}
                 key={friend.id}
                 className="friend-card"
                 auth={auth.id}
               >
-                <Typography variant="h5">{friend.username}</Typography>
-                <img
-                  className="friend-img"
-                  src={
-                    friend.img ? friend.img : "../static/DUET/blankprofile.png"
-                  }
-                  alt="Pic of User"
-                  width="100"
-                  height="100"
-                />
+                <Link
+                  to={`/users/${friend.id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <Typography variant="h5">{friend.username}</Typography>
+                  <img
+                    className="friend-img"
+                    src={
+                      friend.img
+                        ? friend.img
+                        : "../static/DUET/blankprofile.png"
+                    }
+                    alt="Pic of User"
+                    width="100"
+                    height="100"
+                  />
+                </Link>
                 <CardActions sx={{ justifyContent: "center" }}>
                   <Button
                     size="small"
