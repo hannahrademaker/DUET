@@ -25,6 +25,9 @@ const Event = (props) => {
 
   return (
     <div className="indvEvent">
+      <a href={event.url} target="_blank" rel="noopener noreferrer">
+        Buy Tickets
+      </a>
       <Typography className="indvEventName" variant="h2">
         {event.name}
       </Typography>
