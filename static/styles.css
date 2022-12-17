@@ -1,5 +1,6 @@
 body {
   font-family: verdana;
+  margin: 0;
 }
 
 form {
@@ -262,7 +263,7 @@ nav {
   width: auto;
   height: auto;
   min-height: 40px;
-  max-width: 120px;
+  max-width: 400px;
   background-color: #43a047;
   border-radius: 5px;
   color: white;

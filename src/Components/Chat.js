@@ -41,6 +41,17 @@ const Chat = () => {
     }
   };
 
+  const roomName = (a, b) => {
+    const list = [a, b].sort();
+    return (
+      list[0].slice(0, 1).toUpperCase(0, 1) +
+      list[0].slice(1) +
+      ", " +
+      list[1].slice(0, 1).toUpperCase(0, 1) +
+      list[1].slice(1)
+    );
+  };
+
   return (
     <div className="ChatApp">
       <Grid container spacing={0}>
@@ -90,6 +101,8 @@ const Chat = () => {
                         <Button
                           variant="text"
                           style={{ justifyContent: "flex-start" }}
+                          value={roomName(username, user.username)}
+                          onClick={(ev) => setRoom(event.target.value)}
                         >
                           {user.username}
                         </Button>
