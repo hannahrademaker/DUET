@@ -133,13 +133,6 @@ const User = () => {
               <h4>Email address</h4>
               <p>{auth.email}</p>
             </div>
-            <h4>Address</h4>
-            <p>
-              {auth.address} {auth.addressDetails}
-            </p>
-            <p>
-              {auth.city}, {auth.state} {auth.zip}
-            </p>
             <button
               className="hide-user-details-button"
               onClick={() => {

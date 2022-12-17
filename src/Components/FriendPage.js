@@ -22,14 +22,20 @@ const FriendPage = () => {
   };
 
   const confirmedFriends = friendships.filter((friendship) => {
-    if (
-      friendship.status === "accepted" &&
-      friendship.ids.includes(friend.id)
-    ) {
+    if (friendship.status === "accepted" && friendship.ids.includes(auth.id)) {
       return friendship;
     }
   });
 
+  const myFriends = users.reduce((acc, user) => {
+    for (let i = 0; i < confirmedFriends.length; i++) {
+      if (confirmedFriends[i].ids.includes(user.id) && user.id !== auth.id) {
+        acc.push(user);
+      }
+    }
+    return acc;
+  }, []);
+  console.log(myFriends);
   const friendsOfFriends = users.reduce((acc, user) => {
     for (let i = 0; i < confirmedFriends.length; i++) {
       if (confirmedFriends[i].ids.includes(user.id) && user.id !== friend.id) {
@@ -75,47 +81,41 @@ const FriendPage = () => {
           </h4>
           <p>{friend.bio}</p>
         </div>
-        <div className="toggle-user-details">
-          {!toggle && (
-            <button
-              className="see-user-details-button"
-              onClick={() => {
-                setToggle(!toggle);
-              }}
-            >
-              See Friend Info
-            </button>
-          )}
-          {toggle && (
-            <div className="user-details">
-              <div>
-                <h4>Email address</h4>
-                <p>{friend.email}</p>
-              </div>
-              <h4>Address</h4>
-              <p>
-                {friend.address} {friend.addressDetails}
-              </p>
-              <p>
-                {friend.city}, {friend.state} {friend.zip}
-              </p>
-
-              <button onClick={() => destroyFriendship(friend)}>
-                Unfriend
-              </button>
-              <br />
+        {myFriends.includes(friend) && (
+          <div className="toggle-user-details">
+            {!toggle && (
               <button
-                className="hide-user-details-button"
+                className="see-user-details-button"
                 onClick={() => {
                   setToggle(!toggle);
                 }}
               >
-                Hide {friend.username}'s Info'
+                See Friend Info
               </button>
-            </div>
-          )}
-        </div>
-        <FriendOfFriend id={id} />
+            )}
+            {toggle && (
+              <div className="user-details">
+                <div>
+                  <h4>Email address</h4>
+                  <p>{friend.email}</p>
+                </div>
+                <button onClick={() => destroyFriendship(friend)}>
+                  Unfriend
+                </button>
+                <br />
+                <button
+                  className="hide-user-details-button"
+                  onClick={() => {
+                    setToggle(!toggle);
+                  }}
+                >
+                  Hide {friend.username}'s Info'
+                </button>
+              </div>
+            )}
+            <FriendOfFriend id={id} />
+          </div>
+        )}
       </div>
     );
 };
