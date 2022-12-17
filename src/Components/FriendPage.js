@@ -47,14 +47,25 @@ const FriendPage = () => {
 
   const friendsOfFriends = users.reduce((acc, user) => {
     for (let i = 0; i < confirmedFOF.length; i++) {
-      if (confirmedFriends[i].ids.includes(user.id) && user.id !== friend.id) {
+      if (confirmedFOF[i].ids.includes(user.id) && user.id !== friend.id) {
         acc.push(user);
       }
     }
     return acc;
   }, []);
+
   console.log(myFriends);
   console.log(friendsOfFriends);
+
+  const mutualFriends = myFriends.reduce((acc, buddy) => {
+    for (let i = 0; i < friendsOfFriends.length; i++) {
+      if (buddy === friendsOfFriends[i] && !acc.includes(buddy)) {
+        acc.push(buddy);
+      }
+    }
+    return acc;
+  }, []);
+  console.log(mutualFriends);
   // let friendList = friend.Accepter.concat(friend.Requester).filter(
   //   (friend) => friend.friendship.status === "accepted"
   // );
