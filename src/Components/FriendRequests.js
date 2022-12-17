@@ -37,8 +37,10 @@ const FriendRequests = () => {
                     height="200"
                   />
                 </Link>
-                <button onClick={() => weFriends(request)}>Accept</button>
-                <button>Delete</button>
+                <Button variant="contained" onClick={() => weFriends(request)}>
+                  Accept
+                </Button>
+                <Button variant="outlined">Decline</Button>
               </li>
             </div>
           );

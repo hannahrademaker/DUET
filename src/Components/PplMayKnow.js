@@ -73,9 +73,7 @@ const PplMayKnow = () => {
 
   return (
     <div className="people-you-may-know-cards">
-      <Typography variant="h4" component="h1">
-        People you may know
-      </Typography>
+      <Typography variant="h5">People you may know</Typography>
       <ul className="may-know-list">
         {users.map((user) => {
           //set up a max of 6 people you may know?? or just show all?

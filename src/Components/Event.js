@@ -18,7 +18,7 @@ const Event = (props) => {
       .then((data) => setEvent(data));
   }, []);
 
-  console.log(event);
+  // console.log(event);
 
   if (!event) {
     return <div />;
