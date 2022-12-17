@@ -39,6 +39,17 @@ const FriendPage = () => {
     return acc;
   }, []);
 
+  // let friendList = friend.Accepter.concat(friend.Requester).filter(
+  //   (friend) => friend.friendship.status === "accepted"
+  // );
+  // console.log(friendList);
+  // let pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
+  //   (friend) => friend.friendship.status === "pending"
+  // );
+  //console.log(pendingFriendList);
+  const friendsIds = friendsOfFriends.map((myFriendsId) => myFriendsId.id);
+
+  // const friendListIds = friendList.map((friendId) => friendId.id);
   if (!friend) return null;
   if (friend)
     return (

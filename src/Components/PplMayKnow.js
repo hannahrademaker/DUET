@@ -27,12 +27,21 @@ const PplMayKnow = () => {
   }, []);
 
   const myFriendsIds = myFriends.map((myFriendsId) => myFriendsId.id);
+
   const sentRequests = friendships.filter((friendship) => {
     if (friendship.requesterId === auth.id && friendship.status === "pending") {
       return friendship;
     }
   });
   const sentRequestsIds = sentRequests.map((user) => user.accepterId);
+
+  const inboxReqs = friendships.filter((pending) => {
+    if (pending.status === "pending" && pending.accepterId === auth.id) {
+      return pending;
+    }
+  });
+
+  const receivedReqIds = inboxReqs.map((user) => user.requesterId);
 
   const sendFR = (user, auth) => {
     let friendship = {
@@ -51,25 +60,8 @@ const PplMayKnow = () => {
     dispatch(acceptFriendRequest(friendship));
   };
   //friend requests sent
-  const outbox = auth.Requester.filter(
-    (invite) => invite.friendship.status === "pending"
-  );
-  const outboxIds = outbox.map((outboxId) => outboxId.id);
-  //inbox of friend request invitations
-  const inbox = auth.Accepter.filter(
-    (request) => request.friendship.status === "pending"
-  );
-  const inboxIds = inbox.map((inboxId) => inboxId.id);
 
-  const friendListIds = friendList.map((friendId) => friendId.id);
-
-  const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
-    (friend) => friend.friendship.status === "pending"
-  );
-
-  const pendingFriendListIds = pendingFriendList.map(
-    (pendingId) => pendingId.id
-  );
+  //const friendListIds = friendList.map((friendId) => friendId.id);
 
   return (
     <div className="people-you-may-know-cards">
@@ -99,13 +91,14 @@ const PplMayKnow = () => {
                   )}
                 </Link>
                 <CardActions>
-                  {!sentRequestsIds.includes(user.id) && (
-                    <Button onClick={() => sendFR(user, auth)}>
-                      Send Friend Request
-                    </Button>
-                  )}
-                  {inboxIds.includes(user.id) && (
-                    <Button onClick={() => weFriends(user)}>Confirm</Button>
+                  {!sentRequestsIds.includes(user.id) &&
+                    !receivedReqIds.includes(user.id) && (
+                      <Button onClick={() => sendFR(user, auth)}>
+                        Send Friend Request
+                      </Button>
+                    )}
+                  {receivedReqIds.includes(user.id) && (
+                    <Button onClick={() => weFriends(user)}>Accept</Button>
                   )}
                   {sentRequestsIds.includes(user.id) && (
                     <Button disabled={true}>Friend Request Sent</Button>

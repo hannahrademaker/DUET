@@ -53,9 +53,9 @@ const User = () => {
   });
   const sentRequestsIds = sentRequests.map((user) => user.accepterId);
 
-  const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
-    (friend) => friend.friendship.status === "pending"
-  );
+  // const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
+  //   (friend) => friend.friendship.status === "pending"
+  // );
 
   //friend requests sent
   // const outbox = auth.Requester.filter(
@@ -63,11 +63,15 @@ const User = () => {
   // );
   //const outboxIds = outbox.map((outboxId) => outboxId.id);
   //inbox of friend request invitations
-  const inbox = auth.Accepter.filter(
-    (request) => request.friendship.status === "pending"
-  );
-  const inboxIds = inbox.map((inboxId) => inboxId.id);
-
+  // const inbox = auth.Accepter.filter(
+  //   (request) => request.friendship.status === "pending"
+  // );
+  // const inboxIds = inbox.map((inboxId) => inboxId.id);
+  const inboxReqs = friendships.filter((pending) => {
+    if (pending.status === "pending" && pending.accepterId === auth.id) {
+      return pending;
+    }
+  });
   //const friendListIds = friendList.map((friendId) => friendId.id);
 
   // const pendingFriendListIds = pendingFriendList.map(
@@ -104,7 +108,7 @@ const User = () => {
           <span>Friends ({myFriends.length})</span>
           <span>
             <Link className="link" to="/user/friendrequests">
-              Friend Requests ({pendingFriendList && pendingFriendList.length})
+              Friend Requests ({inboxReqs && inboxReqs.length})
             </Link>
           </span>
         </div>
