@@ -152,7 +152,7 @@ nav {
   padding-top: 1rem;
 }
 
-.register{
+.register {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -176,18 +176,18 @@ nav {
 }
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"); */
 
-.joinChatContainer {
+/* .joinChatContainer {
   display: flex;
   flex-direction: column;
   text-align: center;
   place-items: center;
-}
-
+} */
+/* 
 .joinChatContainer h3 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-}
-.joinChatContainer input {
+} */
+/* .joinChatContainer input {
   width: 210px;
   height: 40px;
   margin: 7px;
@@ -195,9 +195,9 @@ nav {
   border-radius: 5px;
   padding: 5px;
   font-size: 16px;
-}
+} */
 
-.joinChatContainer button {
+/* .joinChatContainer button {
   width: auto;
   height: 50px;
   margin: 7px;
@@ -208,11 +208,7 @@ nav {
   background: #43a047;
   color: #fff;
   cursor: pointer;
-}
-
-.joinChatContainer button:hover {
-  background: #2e7d32;
-}
+} */
 
 .chat-window {
   width: 100%;
@@ -225,11 +221,11 @@ nav {
   margin: 0;
 }
 .chat-window .chat-header {
-  height: 50px;
-  border-radius: 6px;
+  /* height: 50px; */
+  /* border-radius: 6px; */
+  text-align: center;
   background: #263238;
   position: relative;
-  cursor: pointer;
 }
 .chat-window .chat-header p {
   display: block;
@@ -242,9 +238,8 @@ nav {
 .chat-window .chat-body {
   height: 600px;
   width: auto;
-  border: 1px solid #263238;
-  background: #fff;
-
+  /* border: 1px solid #263238; */
+  background: #12163f;
   position: relative;
 }
 .chat-window .chat-body .message-container {
@@ -328,8 +323,8 @@ nav {
 .chat-window .chat-footer input {
   height: 100%;
   flex: 95%;
-  border: 0;
-  padding: 0 0.7em;
+  border: 1px;
+  padding: 0 0.5em;
   font-size: 1em;
   border-right: 1px dotted #607d8b;
 
@@ -338,13 +333,14 @@ nav {
 }
 
 .chat-window .chat-footer button {
-  border: 0;
+  border: 1px;
   display: grid;
   place-items: center;
   cursor: pointer;
   flex: 5%;
   height: 100%;
-  background: transparent;
+
+  background-color: #263238;
   outline: none;
   font-size: 25px;
   color: lightgray;
@@ -358,14 +354,15 @@ nav {
 }
 
 .chat-sidebar {
+  padding-top: 1rem;
   border: 1px solid #263238;
-  height: 700px;
+  height: 665px;
 }
-/* End Chat CSS */
-
 .chat-sidebar > ul {
   list-style-type: none;
+  padding: 1rem;
 }
+/* End Chat CSS */
 
 .feed {
   width: 500px;
@@ -445,7 +442,7 @@ nav {
   margin-right: 0.5em;
 }
 
-.ppl-may-know{
+.ppl-may-know {
   display: flex;
   align-items: center;
   text-align: center;
@@ -454,14 +451,14 @@ nav {
 }
 
 .ppl-may-know .MuiButton-root {
-  font-size: 10px
+  font-size: 10px;
 }
 
 .may-know-list > .MuiCard-root {
   display: inline-block;
 }
 
-.ppl-may-know-link{
+.ppl-may-know-link {
   text-decoration: none;
   color: inherit;
 }

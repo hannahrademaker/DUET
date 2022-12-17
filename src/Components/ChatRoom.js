@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
 import dayjs from "dayjs";
+import { Typography } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 
 const ChatRoom = ({ socket, username, room }) => {
   const [currentMessage, setCurrentMessage] = useState("");
@@ -30,11 +32,10 @@ const ChatRoom = ({ socket, username, room }) => {
 
   return (
     <div>
-      {" "}
       <div className="chat-header">
-        <center>
-          <p>{room}</p>
-        </center>
+        <Typography variant="h6" component="h1" style={{ color: "#00c4cc" }}>
+          {room}
+        </Typography>
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
@@ -71,7 +72,9 @@ const ChatRoom = ({ socket, username, room }) => {
             event.key === "Enter" && sendMessage();
           }}
         />
-        <button onClick={sendMessage}>&#9658;</button>
+        <button onClick={sendMessage}>
+          <SendIcon />
+        </button>
       </div>
     </div>
   );
