@@ -15,27 +15,17 @@ import { Link } from "react-router-dom";
 const UserEvents = ({ userId }) => {
   const [events, setEvents] = useState([]);
   const { auth, attending } = useSelector((state) => state);
-  const attend = attending.filter((att) => att.userId === auth.id);
-  const eventIds = attend.map((item) => item.eventId);
-
-  // useEffect(() => {
-  //   eventIds.forEach((event) => {
-  //     fetchEvent(event)
-  //       .then((response) => response.json())
-  //       .then((data) => setEvents((events) => [...events, data]));
-  //   });
-  // }, [eventIds]);
 
   useEffect(() => {
-    if (eventIds.length > 0) {
-      Promise.all(
-        eventIds.map(async (indvevent) => {
-          const response = await fetchEvent(indvevent);
-          return await response.json();
-        })
-      ).then((data) => setEvents(data));
-    }
-  }, [eventIds]);
+    const attend = attending.filter((att) => att.userId === auth.id);
+    const eventIds = attend.map((item) => item.eventId);
+    Promise.all(
+      eventIds.map(async (indvEvent) => {
+        const res = await fetchEvent(indvEvent);
+        return await res.json();
+      })
+    ).then((data) => setEvents(data));
+  }, [auth, attending]);
 
   return (
     <div>

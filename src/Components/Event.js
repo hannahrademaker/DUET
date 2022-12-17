@@ -16,9 +16,8 @@ const Event = (props) => {
     fetchEvent(id)
       .then((response) => response.json())
       .then((data) => setEvent(data));
+    console.log(event);
   }, []);
-
-  // console.log(event);
 
   if (!event) {
     return <div />;

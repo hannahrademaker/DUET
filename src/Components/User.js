@@ -73,7 +73,6 @@ const User = () => {
   // const pendingFriendListIds = pendingFriendList.map(
   //   (pendingId) => pendingId.id
   // );
-  //        <UserEvents userId={auth.id} />
   const sendFR = (user, auth) => {
     let friendship = {
       accepterId: user.id,
@@ -159,6 +158,7 @@ const User = () => {
         </Link>
       </div>
       <UserFriends />
+      <UserEvents userId={auth.id} />
       <div>{auth.id && <PplMayKnow />}</div>
     </div>
   );
