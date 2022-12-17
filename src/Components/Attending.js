@@ -38,7 +38,11 @@ const Attending = ({ eventId }) => {
       ) : (
         <div>Whos Attending</div>
       )}
-      <AvatarGroup className="Attending-list" max={5}>
+      <AvatarGroup
+        className="Attending-list"
+        max={5}
+        sx={{ justifyContent: "center" }}
+      >
         {attendings.map((user) => (
           <Avatar
             className="profileImg"

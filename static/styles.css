@@ -96,6 +96,7 @@ nav {
   line-height: 1;
   margin-left: 10rem;
   margin-right: 10rem;
+  margin-top: 0;
 }
 
 .duet {
@@ -478,7 +479,7 @@ nav {
   line-height: 1;
 }
 
-.username-top{
+.username-top {
   display: flex;
   justify-content: center;
   margin: 5% 0;
@@ -487,13 +488,13 @@ nav {
 .username-top img {
   max-height: 200px;
   max-width: 200px;
-  border-radius: 40px
+  border-radius: 40px;
 }
 
 .list-6-friends {
   margin: 5% 0;
 }
 
-.list-6-friends > .MuiCard-root{
+.list-6-friends > .MuiCard-root {
   display: inline-block;
 }
