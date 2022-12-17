@@ -7,6 +7,7 @@ import { Grid } from "@mui/material";
 import onlineUsers from "../store/onlineUsers";
 import ForumIcon from "@mui/icons-material/Forum";
 import PeopleIcon from "@mui/icons-material/People";
+import { Typography } from "@mui/material";
 
 const socket = io.connect("http://localhost:3001");
 
@@ -43,44 +44,63 @@ const Chat = () => {
   return (
     <div className="ChatApp">
       <Grid container spacing={0}>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <div className="chat-sidebar">
-            <h3>
+            <Typography
+              variant="h6"
+              component="h1"
+              style={{ textAlign: "left", paddingLeft: "1rem" }}
+            >
               <ForumIcon />
-              Channels
-            </h3>
+              &nbsp; Channels
+            </Typography>
             <ul>
               {channels.map((channel) => {
                 return (
                   <li key={channel.value}>
-                    <button
+                    <Button
+                      variant="text"
+                      style={{ justifyContent: "flex-start" }}
                       value={channel.value}
                       onClick={() => {
                         setRoom(channel.value);
                       }}
                     >
                       {channel.label}
-                    </button>
+                    </Button>
                   </li>
                 );
               })}
             </ul>
 
-            <h3>
+            <Typography
+              variant="h6"
+              component="h1"
+              style={{ textAlign: "left", paddingLeft: "1rem" }}
+            >
               <PeopleIcon />
-              Online Users{" "}
+              &nbsp; Online Users{" "}
               {onlineUsers.length ? `(${onlineUsers.length})` : null}
-            </h3>
+            </Typography>
             <ul>
               {onlineUsers.length
                 ? onlineUsers.map((user) => {
-                    return <li key={user.id}>{user.username}</li>;
+                    return (
+                      <li key={user.id}>
+                        <Button
+                          variant="text"
+                          style={{ justifyContent: "flex-start" }}
+                        >
+                          {user.username}
+                        </Button>
+                      </li>
+                    );
                   })
                 : null}
             </ul>
           </div>
         </Grid>
-        <Grid item xs={9} className="chat-window">
+        <Grid item xs={10} className="chat-window">
           <ChatRoom socket={socket} username={username} room={room} />
         </Grid>
       </Grid>
