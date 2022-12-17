@@ -54,7 +54,7 @@ const Chat = () => {
 
   return (
     <div className="ChatApp">
-      <Grid container spacing={0}>
+      <Grid container spacing={0} sx={{ width: 1 }}>
         <Grid item xs={2}>
           <div className="chat-sidebar">
             <Typography
