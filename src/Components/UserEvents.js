@@ -27,12 +27,14 @@ const UserEvents = ({ userId }) => {
   // }, [eventIds]);
 
   useEffect(() => {
-    Promise.all(
-      eventIds.map(async (indvevent) => {
-        const response = await fetchEvent(indvevent);
-        return await response.json();
-      })
-    ).then((data) => setEvents(data));
+    if (eventIds.length > 0) {
+      Promise.all(
+        eventIds.map(async (indvevent) => {
+          const response = await fetchEvent(indvevent);
+          return await response.json();
+        })
+      ).then((data) => setEvents(data));
+    }
   }, [eventIds]);
 
   return (
