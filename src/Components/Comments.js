@@ -16,7 +16,6 @@ import {
 const Comments = ({ eventId }) => {
   const { comments, users } = useSelector((state) => state);
   const [newComment, setNewComment] = useState("");
-  const [replies, setReplies] = useState([]);
 
   const dispatch = useDispatch();
 

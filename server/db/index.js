@@ -151,7 +151,30 @@ const syncAndSeed = async () => {
     }),
   ]);
 
-  const [comment1, comment2, comment3, comment4] = await Promise.all([
+  const [post1, post2, post3] = await Promise.all([
+    Post.create({
+      userId: justin.id,
+      caption: "Looking for a friend to walk dogs with!",
+      createdAt: "2021-06-01",
+      body: "I love to hike and looking for a friend to walk our dogs with! My dog is super friendly and we love to go upsate",
+      img: "https://media.istockphoto.com/id/1143749718/photo/concept-of-healthy-lifestyle-with-dog-and-man-hiking-outdoor.jpg?s=612x612&w=0&k=20&c=ox7p2XYECBnABDoDw2g832CIAeHgD7Bqaj7fmP_BOb4=",
+    }),
+    Post.create({
+      userId: alex.id,
+      caption: "Im new to tennis and I need a friend to play with!",
+      createdAt: "2021-06-01",
+      body: "I love tennis and I love playing. I'm looking for a friend to play tennis with!",
+      img: "../static/DUET/tennis.jpg",
+    }),
+    Post.create({
+      userId: hannah.id,
+      caption: "Learning to cook instead of ordering takeout!",
+      createdAt: "2021-06-01",
+      body: "Does anyone want to take a cooking class with me? I am tyring to learn to cook and would love to find people in NYC to cook with!",
+    }),
+  ]);
+
+  const [comment1, comment2, comment3, comment4, comment5] = await Promise.all([
     Comment.create({
       userId: moe.id,
       caption: "I love the Nets! Who wants to hang out and watch the game?",
@@ -173,28 +196,10 @@ const syncAndSeed = async () => {
         "Hey guys, I'm going to this event! None of my friends like Shinia Twain, who wants to join me?",
       eventId: "G5diZ94NPjotW",
     }),
-  ]);
-
-  const [post1, post2, post3] = await Promise.all([
-    Post.create({
-      userId: justin.id,
-      caption: "Looking for a friend to walk dogs with!",
-      createdAt: "2021-06-01",
-      body: "I love to hike and looking for a friend to walk our dogs with! My dog is super friendly and we love to go upsate",
-      img: "https://media.istockphoto.com/id/1143749718/photo/concept-of-healthy-lifestyle-with-dog-and-man-hiking-outdoor.jpg?s=612x612&w=0&k=20&c=ox7p2XYECBnABDoDw2g832CIAeHgD7Bqaj7fmP_BOb4=",
-    }),
-    Post.create({
-      userId: alex.id,
-      caption: "Im new to tennis and I need a friend to play with!",
-      createdAt: "2021-06-01",
-      body: "I love tennis and I love playing. I'm looking for a friend to play tennis with!",
-      img: "../static/DUET/tennis.jpg",
-    }),
-    Post.create({
-      userId: hannah.id,
-      caption: "Learning to cook instead of ordering takeout!",
-      createdAt: "2021-06-01",
-      body: "Does anyone want to take a cooking class with me? I am tyring to learn to cook and would love to find people in NYC to cook with!",
+    Comment.create({
+      userId: moe.id,
+      caption: "Justin I have a dog! Lets walk them together!",
+      postId: post1.id,
     }),
   ]);
 

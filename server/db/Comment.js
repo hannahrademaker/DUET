@@ -38,6 +38,10 @@ const Comment = conn.define("comment", {
     type: STRING,
     allowNull: true,
   },
+  postId: {
+    type: UUID,
+    allowNull: true,
+  },
 });
 
 module.exports = Comment;
