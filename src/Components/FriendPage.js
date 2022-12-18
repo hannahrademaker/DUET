@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteFriendship } from "../store";
 import FriendOfFriend from "./FriendOfFriend";
 import { Typography } from "@mui/material";
+import UserEvents from "./UserEvents";
 
 const FriendPage = () => {
   const { id } = useParams();
@@ -114,6 +115,7 @@ const FriendPage = () => {
               </div>
             )}
             <FriendOfFriend id={id} />
+            <UserEvents userId={id} />
           </div>
         )}
       </div>

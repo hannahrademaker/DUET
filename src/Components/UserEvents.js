@@ -14,10 +14,11 @@ import { Link } from "react-router-dom";
 
 const UserEvents = ({ userId }) => {
   const [events, setEvents] = useState([]);
-  const { auth, attending } = useSelector((state) => state);
+  const { auth, attending, users } = useSelector((state) => state);
 
   useEffect(() => {
-    const attend = attending.filter((att) => att.userId === auth.id);
+    const user = users.find((user) => user.id === userId);
+    const attend = attending.filter((att) => att.userId === user.id);
     const eventIds = attend.map((item) => item.eventId);
     Promise.all(
       eventIds.map(async (indvEvent) => {
@@ -29,7 +30,7 @@ const UserEvents = ({ userId }) => {
 
   return (
     <div>
-      <Typography variant="h3">My Events</Typography>
+      <Typography variant="h3">Events</Typography>
       <List sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}>
         {events.map((event) => {
           return (
