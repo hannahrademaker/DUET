@@ -16,11 +16,7 @@ const Feed = () => {
     img: "",
     userId: null,
   });
-  const [newComment, setNewComment] = useState({
-    caption: "",
-    userId: null,
-    postId: null,
-  });
+  const [newComment, setNewComment] = useState("");
   const user = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -43,9 +39,12 @@ const Feed = () => {
       userId,
     };
     dispatch(createComment(comment));
-    setNewComment("");
+    setNewComment({
+      caption: "",
+      postId: null,
+      userId: null,
+    });
   };
-
   const onChangeComment = (ev) => {
     setNewComment(ev.target.value);
   };
@@ -142,6 +141,9 @@ const Feed = () => {
                 if (comment.postId === post.id) {
                   return (
                     <li className="commentItem" key={comment.id}>
+                      <Link to={`/users/${comment.userId}`}>
+                        {getUserName(comment.userId)}
+                      </Link>
                       {comment.caption}
                     </li>
                   );
