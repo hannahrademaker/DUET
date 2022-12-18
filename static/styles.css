@@ -290,6 +290,7 @@ nav {
 #you .message-meta {
   justify-content: flex-end;
   margin-right: 5px;
+  color: white;
 }
 
 #other {
@@ -304,6 +305,7 @@ nav {
 #other .message-meta {
   justify-content: flex-start;
   margin-left: 5px;
+  color: white;
 }
 
 .message-meta #author {
@@ -330,9 +332,15 @@ nav {
   padding: 0 0.5em;
   font-size: 1em;
   border-right: 1px dotted #607d8b;
-  background-color: #ca88ff;
+  background-color: #263238;
   outline: none;
   font-family: "Open Sans", sans-serif;
+}
+
+.chat-window .chat-footer input,
+select,
+textarea {
+  color: white;
 }
 
 .chat-window .chat-footer button {
