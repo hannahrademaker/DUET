@@ -5,22 +5,49 @@ import { useDispatch } from "react-redux";
 import { fetchUsers } from "../store";
 import { Link } from "react-router-dom";
 import { createPost } from "../store/posts";
+import { fetchComments } from "../store/comments";
+import { createComment } from "../store/comments";
 
 const Feed = () => {
-  const { posts, users } = useSelector((state) => state);
+  const { posts, users, comments } = useSelector((state) => state);
   const [newPost, setNewPost] = useState({
     caption: "",
     body: "",
     img: "",
     userId: null,
   });
+  const [newComment, setNewComment] = useState("");
   const user = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchComments());
+  }, []);
+
+  const postComments = comments.filter((comment) => comment.postId !== null);
 
   const onChange = (ev) => {
     setNewPost({ ...newPost, [ev.target.name]: ev.target.value });
   };
 
-  const dispatch = useDispatch();
+  const handleCommentSubmit = (event, postId) => {
+    event.preventDefault();
+    const userId = user.id;
+    const comment = {
+      caption: newComment,
+      postId,
+      userId,
+    };
+    dispatch(createComment(comment));
+    setNewComment({
+      caption: "",
+      postId: null,
+      userId: null,
+    });
+  };
+  const onChangeComment = (ev) => {
+    setNewComment(ev.target.value);
+  };
 
   const onSubmit = (ev) => {
     ev.preventDefault();
@@ -109,6 +136,33 @@ const Feed = () => {
             <li className="feedItem" key={post.body}>
               {post.body}
             </li>
+            <ul className="commentList">
+              {postComments.map((comment) => {
+                if (comment.postId === post.id) {
+                  return (
+                    <li className="commentItem" key={comment.id}>
+                      <Link to={`/users/${comment.userId}`}>
+                        {getUserName(comment.userId)}
+                      </Link>
+                      {comment.caption}
+                    </li>
+                  );
+                }
+              })}
+            </ul>
+            <form
+              onSubmit={(event) => handleCommentSubmit(event, post.id)}
+              className="commentForm"
+            >
+              <input
+                type="text"
+                name="caption"
+                placeholder="Comment"
+                value={newComment.caption}
+                onChange={onChangeComment}
+              />
+              <button type="submit">Comment</button>
+            </form>
           </div>
         ))}
       </ul>
