@@ -36,24 +36,34 @@ const FriendPage = () => {
     }
     return acc;
   }, []);
-  console.log(myFriends);
+
+  const confirmedFOF = friendships.filter((friendship) => {
+    if (
+      friendship.status === "accepted" &&
+      friendship.ids.includes(friend.id)
+    ) {
+      return friendship;
+    }
+  });
+
   const friendsOfFriends = users.reduce((acc, user) => {
-    for (let i = 0; i < confirmedFriends.length; i++) {
-      if (confirmedFriends[i].ids.includes(user.id) && user.id !== friend.id) {
+    for (let i = 0; i < confirmedFOF.length; i++) {
+      if (confirmedFOF[i].ids.includes(user.id) && user.id !== friend.id) {
         acc.push(user);
       }
     }
     return acc;
   }, []);
 
-  // let friendList = friend.Accepter.concat(friend.Requester).filter(
-  //   (friend) => friend.friendship.status === "accepted"
-  // );
-  // console.log(friendList);
-  // let pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
-  //   (friend) => friend.friendship.status === "pending"
-  // );
-  //console.log(pendingFriendList);
+  const mutualFriends = myFriends.reduce((acc, buddy) => {
+    for (let i = 0; i < friendsOfFriends.length; i++) {
+      if (buddy === friendsOfFriends[i] && !acc.includes(buddy)) {
+        acc.push(buddy);
+      }
+    }
+    return acc;
+  }, []);
+
   const friendsIds = friendsOfFriends.map((myFriendsId) => myFriendsId.id);
 
   // const friendListIds = friendList.map((friendId) => friendId.id);

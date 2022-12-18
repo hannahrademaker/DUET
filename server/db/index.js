@@ -34,6 +34,18 @@ Comment.belongsTo(User, { foreignKey: "userId" });
 User.hasMany(Post, { foreignKey: "userId", onDelete: "CASCADE" });
 Post.belongsTo(User, { foreignKey: "userId" });
 
+const getImage = (path) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, "base64", (err, data) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(data);
+      }
+    });
+  });
+};
+
 const syncAndSeed = async () => {
   await conn.sync({ force: true });
 
@@ -75,7 +87,10 @@ const syncAndSeed = async () => {
         firstName: "Hannah",
         lastName: "Rademaker",
         bio: "Hi! My name is hannah! I love going to concerts and hanging out with friends!",
-        img: "../static/DUET/hannahavatar.png",
+        img: await getImage(
+          path.join(__dirname, `../../static/DUET/hannahavatar.png`)
+        ),
+        // img: "../static/DUET/hannahavatar.png",
       }),
       User.create({
         username: "anisah",
@@ -83,7 +98,10 @@ const syncAndSeed = async () => {
         firstName: "Anisah",
         lastName: "M",
         bio: "Hi! My name is anisah! I love going to concerts and hanging out with friends!",
-        img: "../static/DUET/anisahavatar.png",
+        img: await getImage(
+          path.join(__dirname, `../../static/DUET/anisahavatar.png`)
+        ),
+        // img: "../static/DUET/anisahavatar.png",
       }),
       User.create({
         username: "alex",
@@ -91,7 +109,11 @@ const syncAndSeed = async () => {
         firstName: "Alex",
         lastName: "M",
         bio: "Hi! My name is alex! I love going to concerts and hanging out with friends!",
-        img: "../static/DUET/alexavatar.png",
+        img: await getImage(
+          path.join(__dirname, `../../static/DUET/alexavatar.png`)
+        ),
+
+        // img: "../static/DUET/alexavatar.png",
       }),
       User.create({
         username: "justin",
@@ -99,7 +121,10 @@ const syncAndSeed = async () => {
         firstName: "Justin",
         lastName: "M",
         bio: "Hi! My name is justin! I love going to concerts and hanging out with friends!",
-        img: "../static/DUET/justinavatar.png",
+        img: await getImage(
+          path.join(__dirname, `../../static/DUET/justinavatar.jpg`)
+        ),
+        // img: "../static/DUET/justinavatar.png",
       }),
     ]);
 

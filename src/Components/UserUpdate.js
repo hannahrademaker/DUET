@@ -76,20 +76,20 @@ const UserUpdate = () => {
 
   const save = async (ev) => {
     ev.preventDefault();
-    await dispatch(updateAuth({ avatar: data }));
+    await dispatch(updateAuth({ img: data }));
     el.value = "";
     setData("");
   };
 
   return (
-    <div className="account-update">
+    <div className="user-update">
       <div className="profile-head">
         <h3>Profile</h3>
         <Link to="/user/password">
           <Button
             type="submit"
             variant="contained"
-            style={{ textTransform: "none" }}
+            style={{ textTransform: "none", width: "100%" }}
           >
             Change Password
           </Button>
@@ -99,7 +99,7 @@ const UserUpdate = () => {
         <TextField
           id="standard-firstName-input"
           autoComplete="firstName"
-          variant="standard"
+          variant="filled"
           placeholder="First Name"
           name="firstName"
           value={inputs.firstName}
@@ -109,7 +109,7 @@ const UserUpdate = () => {
         <TextField
           id="standard-lastName-input"
           autoComplete="lastName"
-          variant="standard"
+          variant="filled"
           placeholder="Last Name"
           name="lastName"
           value={inputs.lastName}
@@ -119,7 +119,7 @@ const UserUpdate = () => {
         <TextField
           id="standard-email-input"
           autoComplete="email"
-          variant="standard"
+          variant="filled"
           placeholder="Email"
           type="email"
           name="email"
@@ -130,7 +130,7 @@ const UserUpdate = () => {
         <TextField
           id="standard-address-input"
           autoComplete="address"
-          variant="standard"
+          variant="filled"
           placeholder="Address"
           name="address"
           value={inputs.address}
@@ -140,7 +140,7 @@ const UserUpdate = () => {
         <TextField
           id="standard-addressDetails-input"
           autoComplete="addressDetails"
-          variant="standard"
+          vvariant="filled"
           placeholder="Apartment"
           name="addressDetails"
           value={inputs.addressDetails}
@@ -150,7 +150,7 @@ const UserUpdate = () => {
         <TextField
           id="standard-city-input"
           autoComplete="city"
-          variant="standard"
+          variant="filled"
           placeholder="City"
           name="city"
           value={inputs.city}
@@ -160,7 +160,7 @@ const UserUpdate = () => {
         <TextField
           id="standard-state-input"
           autoComplete="state"
-          variant="standard"
+          variant="filled"
           placeholder="State"
           name="state"
           value={inputs.state}
@@ -170,7 +170,7 @@ const UserUpdate = () => {
         <TextField
           id="standard-zip-input"
           autoComplete="zip"
-          variant="standard"
+          variant="filled"
           placeholder="Zip"
           name="zip"
           value={inputs.zip}
@@ -194,7 +194,7 @@ const UserUpdate = () => {
           style={{ textTransform: "none" }}
           disabled={!data}
         >
-          Edit Profile Photo
+          Update Profile Photo
         </Button>
       </form>
       {data ? <h6>Profile Image Preview</h6> : null}
