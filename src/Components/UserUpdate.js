@@ -76,7 +76,7 @@ const UserUpdate = () => {
 
   const save = async (ev) => {
     ev.preventDefault();
-    await dispatch(updateAuth({ avatar: data }));
+    await dispatch(updateAuth({ img: data }));
     el.value = "";
     setData("");
   };
@@ -194,7 +194,7 @@ const UserUpdate = () => {
           style={{ textTransform: "none" }}
           disabled={!data}
         >
-          Edit Profile Photo
+          Update Profile Photo
         </Button>
       </form>
       {data ? <h6>Profile Image Preview</h6> : null}
