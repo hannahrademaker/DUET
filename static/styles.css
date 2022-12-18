@@ -508,3 +508,11 @@ textarea {
 .list-6-friends > .MuiCard-root {
   display: inline-block;
 }
+
+.user-update {
+  width: 25%;
+
+  align-items: center;
+  text-align: center;
+  margin: auto;
+}
