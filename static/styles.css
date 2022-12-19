@@ -500,3 +500,9 @@ nav {
 .list-6-friends > .MuiCard-root {
   display: inline-block;
 }
+
+@media (max-width: 500px) {
+  .welcome{
+    background-color: #ff3b33;
+  }
+}
