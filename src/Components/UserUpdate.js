@@ -24,28 +24,9 @@ const UserUpdate = () => {
     zip: auth.zip,
   });
 
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [addressDetails, setAddressDetails] = useState("");
-  // const [city, setCity] = useState("");
-  // const [state, setState] = useState("");
-  // const [zip, setZip] = useState("");
-
   const update = async (ev) => {
     ev.preventDefault();
     const updated = { id: auth.id, ...inputs };
-    // const updated = {
-    //   firstName,
-    //   lastName,
-    //   email,
-    //   address,
-    //   addressDetails,
-    //   city,
-    //   state,
-    //   zip,
-    // };
     try {
       dispatch(updateAuth(updated));
       navigate("/user/");
@@ -140,7 +121,7 @@ const UserUpdate = () => {
         <TextField
           id="standard-addressDetails-input"
           autoComplete="addressDetails"
-          vvariant="filled"
+          variant="filled"
           placeholder="Apartment"
           name="addressDetails"
           value={inputs.addressDetails}
