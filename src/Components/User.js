@@ -1,23 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchUsers,
-  sendFriendRequest,
-  acceptFriendRequest,
-  fetchFriendships,
-} from "../store";
+import { sendFriendRequest, acceptFriendRequest } from "../store";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material/";
+import { Button, Dialog, Typography } from "@mui/material";
 import PplMayKnow from "./PplMayKnow";
 import UserFriends from "./UserFriends";
 import FriendRequests from "./FriendRequests";
 import UserEvents from "./UserEvents";
-import { Typography } from "@mui/material";
+
+const RequestProp = (props) => {
+  const { onClose, open } = props;
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  return (
+    <Dialog open={open} onClose={handleClose}>
+      <FriendRequests />
+    </Dialog>
+  );
+};
 
 const User = () => {
   const { auth, users, friendships, attending } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const confirmedFriends = friendships.filter((friendship) => {
     if (friendship.status === "accepted" && friendship.ids.includes(auth.id)) {
@@ -72,12 +89,17 @@ const User = () => {
       </div>
       <div>
         <div>
-          <span>Events ({auth.attendings.length})</span>
-          <span>Friends ({myFriends.length})</span>
+          <Typography variant="button" component="h3">
+            Events ({auth.attendings.length})
+          </Typography>
+          <Typography variant="button" component="h3">
+            Friends ({myFriends.length})
+          </Typography>
           <span>
-            <Link className="link" to="/user/friendrequests">
+            <Button variant="standard" onClick={handleRequestOpen}>
               Friend Requests ({inboxReqs && inboxReqs.length})
-            </Link>
+            </Button>
+            <RequestProp open={open} onClose={handleClose} />
           </span>
         </div>
       </div>

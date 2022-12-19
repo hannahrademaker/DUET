@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, acceptFriendRequest, deleteFriendship } from "../store";
+import { acceptFriendRequest, deleteFriendship } from "../store";
 import { Link } from "react-router-dom";
-import TextField from "@mui/material/TextField";
 import { Button, Card, CardActions, Typography } from "@mui/material/";
 
 const FriendRequests = () => {
   const { auth, friendships, users } = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  // const friendRequests = auth.Accepter.filter(
-  //   (request) => request.friendship.status === "pending"
-  // );
   const inboxReqs = friendships.filter((pending) => {
     if (pending.status === "pending" && pending.accepterId === auth.id) {
       return pending;
@@ -47,8 +43,8 @@ const FriendRequests = () => {
   };
 
   return (
-    <div className="list-6-friends">
-      <Typography variant="h2">
+    <div className="list-6-friends" sx={{ padding: "0 15px 0 15px" }}>
+      <Typography variant="h3">
         You have {beMyFriend.length} requests!
       </Typography>
       {beMyFriend.map((request) => {
