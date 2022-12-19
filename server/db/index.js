@@ -61,6 +61,9 @@ const syncAndSeed = async () => {
         firstName: "Moe",
         lastName: "Money",
         bio: "Hi! My name is Moe! My favorite genres of music are bubble gum pop and hardcore rap.",
+        img: await getImage(
+          path.join(__dirname, `../../static/DUET/moe-howard-1.jpg`)
+        ),
       }),
       User.create({
         username: "lucy",
@@ -69,18 +72,25 @@ const syncAndSeed = async () => {
         lastName: "Goosey",
         address: "Old Town Road",
         bio: "I love musicals!! I'm a former performer and singer.",
+        img: await getImage(path.join(__dirname, `../../static/DUET/lucy.jpg`)),
       }),
       User.create({
         username: "larry",
         password: "123",
         firstName: "Larry",
         lastName: "Mariah-Carey",
+        bio: "Deadhead. Rock and roll.",
+        img: await getImage(
+          path.join(__dirname, `../../static/DUET/Larry.jpg`)
+        ),
       }),
       User.create({
         username: "ethyl",
         password: "123",
         firstName: "Ethyl",
         lastName: "Bobethyl",
+        bio: "Hello! I'm Ethyl. I just moved back to NYC and am looking for other sports fans. GO KNICKS!!!",
+        img: await getImage(path.join(__dirname, `../../static/DUET/th.jpg`)),
       }),
       User.create({
         username: "hannah",

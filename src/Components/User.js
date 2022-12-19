@@ -72,7 +72,6 @@ const User = () => {
       </div>
       <div>
         <div>
-          <span>Events ()</span>
           <span>Events ({auth.attendings.length})</span>
           <span>Friends ({myFriends.length})</span>
           <span>
