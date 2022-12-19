@@ -35,7 +35,6 @@ export const attendingEvent = (attending) => {
         authorization: token,
       },
     });
-    console.log(response.data);
     dispatch({ type: "CREATE_ATTENDING", attending: response.data });
   };
 };

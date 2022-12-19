@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteFriendship } from "../store";
 import FriendOfFriend from "./FriendOfFriend";
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import UserEvents from "./UserEvents";
 
 const FriendPage = () => {
@@ -15,11 +15,17 @@ const FriendPage = () => {
   const friend = users.find((user) => id === user.id);
 
   const destroyFriendship = (friend) => {
-    let friendship = friendships.find(
-      (friendship) =>
-        friendship.ids.includes(friend.id) && friendship.ids.includes(auth.id)
-    );
-    dispatch(deleteFriendship(friendship));
+    if (
+      confirm(
+        `Are you sure you want to unfriend ${friend.username}? This action cannot be undone.`
+      )
+    ) {
+      let friendship = friendships.find(
+        (friendship) =>
+          friendship.ids.includes(friend.id) && friendship.ids.includes(auth.id)
+      );
+      dispatch(deleteFriendship(friendship));
+    }
   };
 
   const confirmedFriends = friendships.filter((friendship) => {
@@ -95,14 +101,15 @@ const FriendPage = () => {
         {myFriends.includes(friend) && (
           <div className="toggle-user-details">
             {!toggle && (
-              <button
+              <Button
+                variant="contained"
                 className="see-user-details-button"
                 onClick={() => {
                   setToggle(!toggle);
                 }}
               >
                 See Friend Info
-              </button>
+              </Button>
             )}
             {toggle && (
               <div className="user-details">
@@ -110,18 +117,19 @@ const FriendPage = () => {
                   <h4>Email address</h4>
                   <p>{friend.email}</p>
                 </div>
-                <button onClick={() => destroyFriendship(friend)}>
+                <Button onClick={() => destroyFriendship(friend)}>
                   Unfriend
-                </button>
+                </Button>
                 <br />
-                <button
+                <Button
+                  variant="contained"
                   className="hide-user-details-button"
                   onClick={() => {
                     setToggle(!toggle);
                   }}
                 >
                   Hide {friend.username}'s Info'
-                </button>
+                </Button>
               </div>
             )}
             <FriendOfFriend id={id} />
