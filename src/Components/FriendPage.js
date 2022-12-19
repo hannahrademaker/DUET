@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteFriendship } from "../store";
+import {
+  deleteFriendship,
+  sendFriendRequest,
+  acceptFriendRequest,
+} from "../store";
 import FriendOfFriend from "./FriendOfFriend";
-import { Typography, Button } from "@mui/material";
+import { Typography, Card, CardActions, Button } from "@mui/material";
 import UserEvents from "./UserEvents";
 
 const FriendPage = () => {
@@ -28,11 +32,45 @@ const FriendPage = () => {
     }
   };
 
+  const sendFR = () => {
+    let friendship = {
+      accepterId: friend.id,
+      requesterId: auth.id,
+    };
+    dispatch(sendFriendRequest(friendship));
+  };
+
+  const weFriends = () => {
+    let friendship = friendships.find(
+      (friendship) =>
+        friendship.requesterId === friend.id &&
+        friendship.accepterId === auth.id
+    );
+    friendship.status = "accepted";
+    dispatch(acceptFriendRequest(friendship));
+  };
+
   const confirmedFriends = friendships.filter((friendship) => {
     if (friendship.status === "accepted" && friendship.ids.includes(auth.id)) {
       return friendship;
     }
   });
+
+  const sentRequests = friendships.filter((friendship) => {
+    if (friendship.requesterId === auth.id && friendship.status === "pending") {
+      return friendship;
+    }
+  });
+
+  const sentRequestsIds = sentRequests.map((user) => user.accepterId);
+
+  const inboxReqs = friendships.filter((pending) => {
+    if (pending.status === "pending" && pending.accepterId === auth.id) {
+      return pending;
+    }
+  });
+
+  const receivedReqIds = inboxReqs.map((user) => user.requesterId);
 
   const myFriends = users.reduce((acc, user) => {
     for (let i = 0; i < confirmedFriends.length; i++) {
@@ -43,13 +81,16 @@ const FriendPage = () => {
     return acc;
   }, []);
 
+  const myFriendsIds = myFriends.map((myFriendsId) => myFriendsId.id);
+
   const confirmedFOF = friendships.filter((friendship) => {
-    if (
-      friendship.status === "accepted" &&
-      friendship.ids.includes(friend.id)
-    ) {
-      return friendship;
-    }
+    if (friend)
+      if (
+        friendship.status === "accepted" &&
+        friendship.ids.includes(friend.id)
+      ) {
+        return friendship;
+      }
   });
 
   const friendsOfFriends = users.reduce((acc, user) => {
@@ -87,6 +128,17 @@ const FriendPage = () => {
             />
           )}
           <Typography variant="h1">{friend.username}</Typography>
+          {!sentRequestsIds.includes(friend.id) &&
+            !receivedReqIds.includes(friend.id) &&
+            !myFriendsIds.includes(friend.id) && (
+              <Button onClick={() => sendFR()}>Send Friend Request</Button>
+            )}
+          {receivedReqIds.includes(friend.id) && (
+            <Button onClick={() => weFriends()}>Accept</Button>
+          )}
+          {sentRequestsIds.includes(friend.id) && (
+            <Button disabled={true}> Friend Request Sent</Button>
+          )}
         </div>
         <div>
           <span>Events ()</span>
