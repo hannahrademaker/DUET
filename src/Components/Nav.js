@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Home from "./Home";
 import Login from "./Login";
-import Map from "./Map";
-import LoggedOut from "./LoggedOut";
-import Feed from "./Feed";
 import { useSelector, useDispatch } from "react-redux";
 import { loginWithToken } from "../store";
-import { Link, Routes, Route, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../store";
 import {
   Box,
@@ -14,9 +10,7 @@ import {
   Toolbar,
   Typography,
   Button,
-  IconButton,
   Dialog,
-  DialogTitle,
 } from "@mui/material";
 
 const NavProps = (props) => {
@@ -80,11 +74,6 @@ const Nav = () => {
             </>
           ) : (
             <>
-              {/* <Button color="inherit">
-                <Link className="link" to="/map">
-                  Map
-                </Link>
-              </Button> */}
               <Button color="inherit">
                 <Link className="link" to="/chat/">
                   Chat
