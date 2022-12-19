@@ -136,7 +136,9 @@ const FriendPage = () => {
         </div>
         <div>
           <span>Events ()</span>
-          <span>Friends ({friendsOfFriends.length})</span>
+          <span>
+            Friends {friendsOfFriends.length} ({mutualFriends.length} mutual)
+          </span>
         </div>
         <div>
           <h4>
