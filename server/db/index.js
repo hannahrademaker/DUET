@@ -68,6 +68,7 @@ const syncAndSeed = async () => {
         firstName: "Lucy",
         lastName: "Goosey",
         address: "Old Town Road",
+        bio: "I love musicals!! I'm a former performer and singer.",
       }),
       User.create({
         username: "larry",
@@ -107,7 +108,7 @@ const syncAndSeed = async () => {
         username: "alex",
         password: "123",
         firstName: "Alex",
-        lastName: "M",
+        lastName: "A",
         bio: "Hi! My name is alex! I love going to concerts and hanging out with friends!",
         img: await getImage(
           path.join(__dirname, `../../static/DUET/alexavatar.png`)

@@ -18,7 +18,7 @@ const UserEvents = ({ userId }) => {
 
   useEffect(() => {
     const user = users.find((user) => user.id === userId);
-    const attend = attending.filter((att) => att.userId === user.id);
+    const attend = attending.filter((att) => user && att.userId === user.id);
     const eventIds = attend.map((item) => item.eventId);
     Promise.all(
       eventIds.map(async (indvEvent) => {
