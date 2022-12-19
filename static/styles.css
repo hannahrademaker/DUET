@@ -98,6 +98,7 @@ nav {
   margin-left: 10rem;
   margin-right: 10rem;
   margin-top: 0;
+  vertical-align: middle
 }
 
 .duet {
@@ -503,15 +504,22 @@ textarea {
 
 .list-6-friends {
   margin: 5% 0;
+  color: #12163f;
+  text-align: center;
+  text-shadow: 2px 1px 2px #00c4cc;
+  text-transform: uppercase;
 }
 
 .list-6-friends > .MuiCard-root {
   display: inline-block;
 }
 
+.friend-img{
+  border-radius: 30px;
+}
+
 .user-update {
   width: 25%;
-
   align-items: center;
   text-align: center;
   margin: auto;

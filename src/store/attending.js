@@ -8,7 +8,7 @@ const attending = (state = [], action) => {
     state = [...state, action.attending];
   }
   if (action.type === "UPDATE_ATTENDING") {
-    state.attendings = state.map((a) =>
+    state = state.map((a) =>
       a.id === action.attending.id ? action.attending : a
     );
   }
@@ -35,6 +35,7 @@ export const attendingEvent = (attending) => {
         authorization: token,
       },
     });
+    console.log(response.data);
     dispatch({ type: "CREATE_ATTENDING", attending: response.data });
   };
 };

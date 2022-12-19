@@ -48,7 +48,7 @@ const FriendOfFriend = ({ id }) => {
                 {friendOfFriend.username}
               </Typography>
               <img
-                className="people-you-may-know-img"
+                className="friend-img"
                 src={
                   friendOfFriend.img
                     ? friendOfFriend.img

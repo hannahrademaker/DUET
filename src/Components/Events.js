@@ -32,7 +32,7 @@ const Events = ({
   const isAttending = (e) => {
     const event = attend.find((ev) => ev.eventId === e.id);
     if (event) {
-      event.isAttending = true;
+      event.isAttending = !event.isAttending;
       dispatch(updateAttending(event));
     } else {
       const letsGo = { userId: auth.id, eventId: e.id, isAttending: true };
@@ -40,10 +40,18 @@ const Events = ({
     }
   };
 
+  const buttonColor = (event) => {
+    const ev = attend.find((e) => e.eventId === event.id);
+    if (ev) {
+      if (ev.isAttending === true) return "secondary";
+    }
+    return "primary";
+  };
+
   return (
     <div className="Events">
       <h1>Events Near You</h1>
-      <FormControl sx={{ m: 1, minWidth: 200 }}>
+      <FormControl sx={{ m: 1, minWidth: 200, backgroundColor: "white" }}>
         <InputLabel id="filter-by-type">Filter by Type:</InputLabel>
         <Select value={filter} onChange={(e) => setFilter(e.target.value)}>
           <MenuItem value="">All</MenuItem>
@@ -54,7 +62,7 @@ const Events = ({
           <MenuItem value="Miscellaneous">Miscellaneous</MenuItem>
         </Select>
       </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 200 }}>
+      <FormControl sx={{ m: 1, minWidth: 200, backgroundColor: "white" }}>
         <InputLabel id="filter-by-radius">Filter by Radius:</InputLabel>
         <Select value={radius} onChange={(e) => setRadius(e.target.value)}>
           <MenuItem value="1">1 Mile</MenuItem>
@@ -86,13 +94,7 @@ const Events = ({
                   aria-label="attending"
                   variant="contained"
                   startIcon={<AddCircleIcon />}
-                  color={
-                    attend.find(
-                      (e) => e.eventId === event.id && e.isAttending === true
-                    )
-                      ? "secondary"
-                      : undefined
-                  }
+                  color={buttonColor(event)}
                   onClick={() => isAttending(event)}
                 >
                   {" "}

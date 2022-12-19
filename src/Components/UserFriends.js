@@ -26,11 +26,17 @@ const UserFriends = () => {
   const myFriendsIds = myFriends.map((myFriendsId) => myFriendsId.id);
 
   const destroyFriendship = (friend) => {
-    const friendship = friendships.find(
-      (friendship) =>
-        friendship.ids.includes(friend.id) && friendship.ids.includes(auth.id)
-    );
-    dispatch(deleteFriendship(friendship));
+    if (
+      confirm(
+        `Are you sure you want to unfriend ${friend.username}? This action cannot be undone.`
+      )
+    ) {
+      const friendship = friendships.find(
+        (friendship) =>
+          friendship.ids.includes(friend.id) && friendship.ids.includes(auth.id)
+      );
+      dispatch(deleteFriendship(friendship));
+    }
   };
 
   return (
@@ -41,7 +47,7 @@ const UserFriends = () => {
         : myFriends.map((friend) => {
             return (
               <Card
-                sx={{ width: 200 }}
+                sx={{ width: 150, height: 200 }}
                 key={friend.id}
                 className="friend-card"
                 auth={auth.id}

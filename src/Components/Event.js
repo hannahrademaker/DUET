@@ -46,7 +46,9 @@ const Event = (props) => {
       </Typography>
       <Attending eventId={id} />
       <img className="eventImg" src={event.images[0].url} alt="event" />
-      <Comments eventId={id} />
+      <center>
+        <Comments eventId={id} />
+      </center>
     </div>
   );
 };
