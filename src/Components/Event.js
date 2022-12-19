@@ -16,9 +16,8 @@ const Event = (props) => {
     fetchEvent(id)
       .then((response) => response.json())
       .then((data) => setEvent(data));
+    console.log(event);
   }, []);
-
-  // console.log(event);
 
   if (!event) {
     return <div />;
@@ -26,6 +25,9 @@ const Event = (props) => {
 
   return (
     <div className="indvEvent">
+      <a href={event.url} target="_blank" rel="noopener noreferrer">
+        Buy Tickets
+      </a>
       <Typography className="indvEventName" variant="h2">
         {event.name}
       </Typography>
@@ -44,7 +46,9 @@ const Event = (props) => {
       </Typography>
       <Attending eventId={id} />
       <img className="eventImg" src={event.images[0].url} alt="event" />
-      <Comments eventId={id} />
+      <center>
+        <Comments eventId={id} />
+      </center>
     </div>
   );
 };

@@ -16,7 +16,6 @@ import {
 const Comments = ({ eventId }) => {
   const { comments, users } = useSelector((state) => state);
   const [newComment, setNewComment] = useState("");
-  const [replies, setReplies] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -91,6 +90,7 @@ const Comments = ({ eventId }) => {
       </div>
       <form style={{ width: "500px", margin: "5% 0" }} onSubmit={handleSubmit}>
         <TextField
+          sx={{ backgroundColor: "white" }}
           placeholder="Type your comment!"
           multiline
           rows={2}

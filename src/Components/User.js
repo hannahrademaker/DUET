@@ -18,19 +18,7 @@ const User = () => {
   const { auth, users, friendships, attending } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
-  const user = useSelector((state) => state.auth);
 
-  // useEffect(() => {
-  //   dispatch(fetchUsers());
-  // }, []);
-
-  // useEffect(() => {
-  //   dispatch(fetchFriendships());
-  // }, []);
-
-  // const friendList = auth.Accepter.concat(auth.Requester).filter(
-  //   (friend) => friend.friendship.status === "accepted"
-  // );
   const confirmedFriends = friendships.filter((friendship) => {
     if (friendship.status === "accepted" && friendship.ids.includes(auth.id)) {
       return friendship;
@@ -53,31 +41,12 @@ const User = () => {
   });
   const sentRequestsIds = sentRequests.map((user) => user.accepterId);
 
-  // const pendingFriendList = auth.Accepter.concat(auth.Requester).filter(
-  //   (friend) => friend.friendship.status === "pending"
-  // );
-
-  //friend requests sent
-  // const outbox = auth.Requester.filter(
-  //   (invite) => invite.friendship.status === "pending"
-  // );
-  //const outboxIds = outbox.map((outboxId) => outboxId.id);
-  //inbox of friend request invitations
-  // const inbox = auth.Accepter.filter(
-  //   (request) => request.friendship.status === "pending"
-  // );
-  // const inboxIds = inbox.map((inboxId) => inboxId.id);
   const inboxReqs = friendships.filter((pending) => {
     if (pending.status === "pending" && pending.accepterId === auth.id) {
       return pending;
     }
   });
-  //const friendListIds = friendList.map((friendId) => friendId.id);
 
-  // const pendingFriendListIds = pendingFriendList.map(
-  //   (pendingId) => pendingId.id
-  // );
-  //        <UserEvents userId={auth.id} />
   const sendFR = (user, auth) => {
     let friendship = {
       accepterId: user.id,
@@ -156,6 +125,7 @@ const User = () => {
         </Link>
       </div>
       <UserFriends />
+      <UserEvents userId={auth.id} />
       <div>{auth.id && <PplMayKnow />}</div>
     </div>
   );
