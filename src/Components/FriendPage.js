@@ -128,18 +128,20 @@ const FriendPage = () => {
               height="200"
             />
           )}
-          <Typography variant="h1">{friend.username}</Typography>
-          {!sentRequestsIds.includes(friend.id) &&
-            !receivedReqIds.includes(friend.id) &&
-            !myFriendsIds.includes(friend.id) && (
-              <Button onClick={() => sendFR()}>Send Friend Request</Button>
+          <div className="name-photo">
+            <Typography variant="h1">{friend.username}</Typography>
+            {!sentRequestsIds.includes(friend.id) &&
+              !receivedReqIds.includes(friend.id) &&
+              !myFriendsIds.includes(friend.id) && (
+                <Button onClick={() => sendFR()}>Send Friend Request</Button>
+              )}
+            {receivedReqIds.includes(friend.id) && (
+              <Button onClick={() => weFriends()}>Accept</Button>
             )}
-          {receivedReqIds.includes(friend.id) && (
-            <Button onClick={() => weFriends()}>Accept</Button>
-          )}
-          {sentRequestsIds.includes(friend.id) && (
-            <Button disabled={true}> Friend Request Sent</Button>
-          )}
+            {sentRequestsIds.includes(friend.id) && (
+              <Button disabled={true}> Friend Request Sent</Button>
+            )}
+          </div>
         </div>
         <div>
           <span>

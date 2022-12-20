@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { attendingEvent, updateAttending } from "../store";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CheckCircle from "@mui/icons-material/CheckCircle";
 import { Link } from "react-router-dom";
 
 const Events = ({
@@ -93,7 +94,13 @@ const Events = ({
                 <Button
                   aria-label="attending"
                   variant="contained"
-                  startIcon={<AddCircleIcon />}
+                  startIcon={
+                    buttonColor(event) === "primary" ? (
+                      <AddCircleIcon />
+                    ) : (
+                      <CheckCircle />
+                    )
+                  }
                   color={buttonColor(event)}
                   onClick={() => isAttending(event)}
                 >
