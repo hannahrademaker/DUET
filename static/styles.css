@@ -577,3 +577,13 @@ textarea {
   display: flex;
   flex-direction: column;
 }
+
+.accept-deny .MuiButton-root {
+  font-size: 10px;
+ 
+}
+
+.accept .MuiButton-root{
+   background-color: #f77fbe;
+   color: black;
+}

@@ -119,18 +119,22 @@ const PplMayKnow = () => {
                       </Button>
                     )}
                   {receivedReqIds.includes(user.id) && (
-                    <div>
+                    <div className="accept-deny">
+                    <div className="accept">
                       <Button
                         startIcon={<AddCircleIcon />}
                         onClick={() => weFriends(user)}
                         variant="contained"
+          
                       >
                         Accept
                       </Button>
+                      </div>
                       <Button
                         variant="outlined"
                         onClick={() => destroyFriendship(user)}
                         startIcon={<RemoveCircleOutlineIcon />}
+                        className='deny'
                       >
                         Decline
                       </Button>
