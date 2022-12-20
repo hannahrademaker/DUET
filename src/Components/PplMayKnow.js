@@ -1,10 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { sendFriendRequest, acceptFriendRequest } from "../store";
+import {
+  sendFriendRequest,
+  acceptFriendRequest,
+  deleteFriendship,
+} from "../store";
 import { Card, Button, CardActions, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CheckCircle from "@mui/icons-material/CheckCircle";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
 const PplMayKnow = () => {
   const { auth, users, friendships } = useSelector((state) => state);
@@ -44,6 +49,14 @@ const PplMayKnow = () => {
     }
   });
 
+  const destroyFriendship = (friend) => {
+    let friendship = friendships.find(
+      (friendship) =>
+        friendship.ids.includes(friend.id) && friendship.ids.includes(auth.id)
+    );
+    dispatch(deleteFriendship(friendship));
+  };
+
   const receivedReqIds = inboxReqs.map((user) => user.requesterId);
 
   const sendFR = (user, auth) => {
@@ -63,9 +76,6 @@ const PplMayKnow = () => {
     friendship.status = "accepted";
     dispatch(acceptFriendRequest(friendship));
   };
-  //friend requests sent
-
-  //const friendListIds = friendList.map((friendId) => friendId.id);
 
   return (
     <div className="people-you-may-know-cards">
@@ -109,17 +119,31 @@ const PplMayKnow = () => {
                       </Button>
                     )}
                   {receivedReqIds.includes(user.id) && (
-                    <Button onClick={() => weFriends(user)}>Accept</Button>
+                    <div>
+                      <Button
+                        startIcon={<AddCircleIcon />}
+                        onClick={() => weFriends(user)}
+                        variant="contained"
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        onClick={() => destroyFriendship(user)}
+                        startIcon={<RemoveCircleOutlineIcon />}
+                      >
+                        Decline
+                      </Button>
+                    </div>
                   )}
                   {sentRequestsIds.includes(user.id) && (
                     <Button
-                      disabled={true}
                       className="Attending-button"
                       aria-label="attending"
                       variant="contained"
-                      color={buttonColor}
+                      color="secondary"
                       startIcon={<CheckCircle />}
-                      onClick={() => sendFR(user, auth)}
+                      onClick={() => destroyFriendship(user)}
                     >
                       Sent
                     </Button>

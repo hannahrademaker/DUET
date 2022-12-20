@@ -462,9 +462,10 @@ textarea {
   text-align: center;
   width: 100;
   height: 150;
+  padding: 10px;
 }
 
-.ppl-may-know .MuiButton-root {
+.ppl- .ppl-may-know .MuiButton-root {
   font-size: 10px;
   text-align: center;
 }
