@@ -544,3 +544,13 @@ textarea {
   text-shadow: 2px 1px 2px #00c4cc;
   text-transform: uppercase;
 }
+
+.chatCategory {
+  color: #12163f;
+  text-align: center;
+  text-shadow: 2px 1px 2px #00c4cc;
+  text-transform: uppercase;
+  text-align: left;
+  padding-top: 1rem;
+  padding-left: 1rem;
+}

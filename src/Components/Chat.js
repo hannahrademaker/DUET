@@ -7,17 +7,13 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 
 import io from "socket.io-client";
 import ChatRoom from "./ChatRoom";
 import onlineUsers from "../store/onlineUsers";
 import ForumIcon from "@mui/icons-material/Forum";
 import PeopleIcon from "@mui/icons-material/People";
+import NoMeetingRoomIcon from "@mui/icons-material/NoMeetingRoom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
@@ -57,6 +53,11 @@ export default function Chat() {
     }
   };
 
+  const leaveRoom = () => {
+    socket.emit("leave", room);
+    setRoom("");
+  };
+
   const roomName = (a, b) => {
     const list = [a, b].sort();
     return (
@@ -82,11 +83,10 @@ export default function Chat() {
         <Toolbar>
           <Typography
             variant="h6"
-            noWrap
-            component="div"
-            sx={{ margin: "auto" }}
+            component="h1"
+            style={{ color: "#00c4cc", margin: "auto" }}
           >
-            Live Chat
+            {room}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -103,17 +103,21 @@ export default function Chat() {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar />
+        <Toolbar>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ margin: "auto" }}
+          >
+            <Button onClick={leaveRoom}>
+              <NoMeetingRoomIcon />
+              &nbsp; Exit Chat
+            </Button>
+          </Typography>
+        </Toolbar>
         <Divider />
-        <Typography
-          variant="h6"
-          component="h1"
-          style={{
-            textAlign: "left",
-            paddingLeft: "1rem",
-            paddingTop: "1.5rem",
-          }}
-        >
+        <Typography className="chatCategory">
           <ForumIcon />
           &nbsp; Channels
         </Typography>
@@ -136,15 +140,7 @@ export default function Chat() {
           })}
         </List>
         <Divider />
-        <Typography
-          variant="h6"
-          component="h1"
-          style={{
-            textAlign: "left",
-            paddingLeft: "1rem",
-            paddingTop: "1.5rem",
-          }}
-        >
+        <Typography className="chatCategory">
           <PeopleIcon />
           &nbsp; Online Users{" "}
           {onlineUsers.length ? `(${onlineUsers.length})` : null}
