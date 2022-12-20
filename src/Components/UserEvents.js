@@ -41,7 +41,12 @@ const UserEvents = ({ userId }) => {
         </Typography>
       ) : (
         <List
-          sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}
+          sx={{
+            margin: "auto",
+            width: "100%",
+            maxWidth: 400,
+            bgcolor: "background.paper",
+          }}
         >
           {events.map((event) => {
             return (

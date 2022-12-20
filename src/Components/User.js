@@ -88,6 +88,18 @@ const User = () => {
         <Typography variant="h1">{auth.username}</Typography>
       </div>
       <div>
+        <Link to="/user/update">
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ textTransform: "none" }}
+          >
+            Edit Profile
+          </Button>
+        </Link>
+      </div>
+      <div>
+        <br />
         <div>
           <Typography variant="button" component="h3">
             {auth.attendings.length !== 1
@@ -137,17 +149,6 @@ const User = () => {
             </button>
           </div>
         )}
-      </div>
-      <div>
-        <Link to="/user/update">
-          <Button
-            type="submit"
-            variant="contained"
-            style={{ textTransform: "none" }}
-          >
-            Edit Profile
-          </Button>
-        </Link>
       </div>
       <UserFriends />
       <UserEvents userId={auth.id} />
