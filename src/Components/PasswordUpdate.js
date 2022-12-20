@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { updateAuth } from "../store";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material/";
+import { Typography } from "@mui/material";
 
 const PasswordUpdate = () => {
   const dispatch = useDispatch();
@@ -25,15 +26,16 @@ const PasswordUpdate = () => {
   };
 
   return (
-    <div className="account-update">
+    <div className="user-update">
       <div className="profile-head">
-        <h3>Change Password</h3>
+        <Typography variant="h5">Change Password</Typography>
       </div>
       <form onSubmit={update}>
-        <label>New Password:</label>
-        <input
+        <TextField
           placeholder="Please enter your new password"
+          variant="filled"
           value={password}
+          type="password"
           onChange={(ev) => setPassword(ev.target.value)}
         />
 

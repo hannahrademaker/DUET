@@ -1,7 +1,7 @@
 body {
   font-family: verdana;
   margin: 0;
-  background-color: #00c4cc;
+  background-color: white;
 }
 
 form {
@@ -98,7 +98,7 @@ nav {
   margin-left: 10rem;
   margin-right: 10rem;
   margin-top: 0;
-  vertical-align: middle
+  vertical-align: middle;
 }
 
 .duet {
@@ -369,7 +369,7 @@ textarea {
   padding-top: 1rem;
   border: 1px solid #263238;
   height: 665px;
-  background-color: #00c4cc;
+  background-color: white;
 }
 .chat-sidebar > ul {
   list-style-type: none;
@@ -514,7 +514,7 @@ textarea {
   display: inline-block;
 }
 
-.friend-img{
+.friend-img {
   border-radius: 30px;
 }
 
