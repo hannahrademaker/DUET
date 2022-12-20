@@ -32,11 +32,7 @@ const ChatRoom = ({ socket, username, room }) => {
 
   return (
     <div>
-      <div className="chat-header">
-        <Typography variant="h6" component="h1" style={{ color: "#00c4cc" }}>
-          {room}
-        </Typography>
-      </div>
+      <div className="chat-header"></div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
           {messageList.map((messageContent) => {
