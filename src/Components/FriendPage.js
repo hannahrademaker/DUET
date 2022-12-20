@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   deleteFriendship,
@@ -9,6 +9,7 @@ import {
 import FriendOfFriend from "./FriendOfFriend";
 import { Typography, Card, CardActions, Button } from "@mui/material";
 import UserEvents from "./UserEvents";
+import FoFList from "./FoFList";
 
 const FriendPage = () => {
   const { id } = useParams();
@@ -141,9 +142,21 @@ const FriendPage = () => {
           )}
         </div>
         <div>
-          <span>Events ()</span>
           <span>
-            Friends {friendsOfFriends.length} ({mutualFriends.length} mutual)
+            {auth.attendings.length !== 1
+              ? `${auth.attendings.length} Events`
+              : `${auth.attendings.length} Event`}
+          </span>
+          <span>
+            <Link
+              style={{ textDecoration: "none", color: "#12163f" }}
+              to={`/foflist/${friend.id}`}
+            >
+              {" "}
+              {friendsOfFriends.length !== 1
+                ? `${friendsOfFriends.length} Friends (${mutualFriends.length} mutual)`
+                : `${friendsOfFriends.length} Friend (${mutualFriends.length} mutual) `}
+            </Link>{" "}
           </span>
         </div>
         <div>

@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { acceptFriendRequest, deleteFriendship } from "../store";
-import { Link } from "react-router-dom";
+import {
+  acceptFriendRequest,
+  deleteFriendship,
+  sendFriendRequest,
+} from "../store";
+import { Link, useParams } from "react-router-dom";
 import { Button, Card, CardActions, Typography } from "@mui/material/";
 
-const FoFList = ({id}) => {
+const FoFList = () => {
   const { auth, friendships, users } = useSelector((state) => state);
   const dispatch = useDispatch();
-  
+  const { id } = useParams();
+
   const friend = users.find((user) => id === user.id);
 
   const inboxReqs = friendships.filter((pending) => {
@@ -27,7 +32,13 @@ const FoFList = ({id}) => {
     return acc;
   }, []);
 
-const myFriends = users.reduce((acc, user) => {
+  const confirmedFriends = friendships.filter((friendship) => {
+    if (friendship.status === "accepted" && friendship.ids.includes(auth.id)) {
+      return friendship;
+    }
+  });
+
+  const myFriends = users.reduce((acc, user) => {
     for (let i = 0; i < confirmedFriends.length; i++) {
       if (confirmedFriends[i].ids.includes(user.id) && user.id !== auth.id) {
         acc.push(user);
@@ -43,15 +54,8 @@ const myFriends = users.reduce((acc, user) => {
       return friendship;
     }
   });
+
   const sentRequestsIds = sentRequests.map((user) => user.accepterId);
-
-  const inboxReqs = friendships.filter((pending) => {
-    if (pending.status === "pending" && pending.accepterId === auth.id) {
-      return pending;
-    }
-  });
-
-  const receivedReqIds = inboxReqs.map((user) => user.requesterId);
 
   const sendFR = (user, auth) => {
     let friendship = {
@@ -77,8 +81,8 @@ const myFriends = users.reduce((acc, user) => {
     );
     dispatch(deleteFriendship(friendship));
   };
-  
-    const confirmedFOF = friendships.filter((friendship) => {
+
+  const confirmedFOF = friendships.filter((friendship) => {
     if (friend)
       if (
         friendship.status === "accepted" &&
@@ -87,7 +91,8 @@ const myFriends = users.reduce((acc, user) => {
         return friendship;
       }
   });
-   const friendsOfFriends = users.reduce((acc, user) => {
+
+  const friendsOfFriends = users.reduce((acc, user) => {
     for (let i = 0; i < confirmedFOF.length; i++) {
       if (confirmedFOF[i].ids.includes(user.id) && user.id !== friend.id) {
         acc.push(user);
@@ -98,7 +103,6 @@ const myFriends = users.reduce((acc, user) => {
 
   return (
     <div className="list-6-friends" sx={{ padding: "0 15px 0 15px" }}>
-
       {friendsOfFriends.map((request) => {
         return (
           <Card key={request.id} sx={{ width: 150, height: 200 }}>
@@ -118,18 +122,18 @@ const myFriends = users.reduce((acc, user) => {
               />
             </Link>
             <CardActions>
-{!sentRequestsIds.includes(user.id) &&
-                    !receivedReqIds.includes(user.id) && (
-                      <Button onClick={() => sendFR(user, auth)}>
-                        Send Friend Request
-                      </Button>
-                    )}
-                  {receivedReqIds.includes(user.id) && (
-                    <Button onClick={() => weFriends(user)}>Accept</Button>
-                  )}
-                  {sentRequestsIds.includes(user.id) && (
-                    <Button disabled={true}>Friend Request Sent</Button>
-                  )}
+              {!sentRequestsIds.includes(request.id) &&
+                !receivedReqIds.includes(request.id) && (
+                  <Button onClick={() => sendFR(request, auth)}>
+                    Send Friend Request
+                  </Button>
+                )}
+              {receivedReqIds.includes(request.id) && (
+                <Button onClick={() => weFriends(request)}>Accept</Button>
+              )}
+              {sentRequestsIds.includes(request.id) && (
+                <Button disabled={true}>Friend Request Sent</Button>
+              )}
             </CardActions>
           </Card>
         );

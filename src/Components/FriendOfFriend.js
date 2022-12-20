@@ -32,8 +32,6 @@ const FriendOfFriend = ({ id }) => {
     return acc;
   }, []);
 
-  console.log(myFriends);
-
   const mutualFriends = myFriends.reduce((acc, buddy) => {
     for (let i = 0; i < friendsOfFriends.length; i++) {
       if (buddy === friendsOfFriends[i] && !acc.includes(buddy)) {
@@ -42,8 +40,6 @@ const FriendOfFriend = ({ id }) => {
     }
     return acc;
   }, []);
-
-  console.log(mutualFriends);
 
   return (
     <div className="list-6-friends">
