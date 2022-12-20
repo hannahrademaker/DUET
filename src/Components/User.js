@@ -94,7 +94,7 @@ const User = () => {
             variant="contained"
             style={{ textTransform: "none" }}
           >
-            Edit Profile
+            EDIT PROFILE
           </Button>
         </Link>
       </div>
@@ -124,14 +124,15 @@ const User = () => {
       </div>
       <div className="toggle-user-details">
         {!toggle && (
-          <button
+          <Button
+            variant="contained"
             className="see-user-details-button"
             onClick={() => {
               setToggle(!toggle);
             }}
           >
             See Your About Info
-          </button>
+          </Button>
         )}
         {toggle && (
           <div className="user-details">
@@ -139,14 +140,15 @@ const User = () => {
               <h4>Email address</h4>
               <p>{auth.email}</p>
             </div>
-            <button
+            <Button
+              variant="contained"
               className="hide-user-details-button"
               onClick={() => {
                 setToggle(!toggle);
               }}
             >
               Hide User Details
-            </button>
+            </Button>
           </div>
         )}
       </div>

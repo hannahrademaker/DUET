@@ -240,7 +240,7 @@ nav {
 }
 
 .chat-window .chat-body {
-  height: 600px;
+  height: 775px;
   width: auto;
   /* border: 1px solid #263238; */
   background: #12163f;
@@ -368,7 +368,7 @@ textarea {
 .chat-sidebar {
   padding-top: 1rem;
   border: 1px solid #263238;
-  height: 665px;
+  height: 840px;
   background-color: white;
 }
 .chat-sidebar > ul {
@@ -523,4 +523,17 @@ textarea {
   align-items: center;
   text-align: center;
   margin: auto;
+}
+
+.commentItem {
+  list-style: none;
+}
+
+.commentList {
+  padding-inline-start: 0;
+}
+
+.feedImg {
+  width: 500px;
+  height: auto;
 }
