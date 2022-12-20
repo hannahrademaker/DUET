@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { createPost } from "../store/posts";
 import { fetchComments } from "../store/comments";
 import { createComment } from "../store/comments";
+import { Button, TextField, Typography } from "@mui/material";
 
 const Feed = () => {
   const { posts, users, comments } = useSelector((state) => state);
@@ -96,23 +97,26 @@ const Feed = () => {
 
   return (
     <div className="feed">
-      <h1>Lets Meet!</h1>
+      <Typography variant="h3">Lets Meet!</Typography>
       <form onSubmit={onSubmit}>
-        <input
+        <TextField
+          variant="filled"
           type="text"
           name="caption"
           placeholder="Caption"
           value={newPost.caption}
           onChange={onChange}
         />
-        <input
+        <TextField
+          variant="filled"
           type="text"
           name="body"
           placeholder="Body"
           value={newPost.body}
           onChange={onChange}
         />
-        <input
+        <TextField
+          variant="filled"
           type="text"
           name="img"
           placeholder="Image URL"
@@ -120,7 +124,9 @@ const Feed = () => {
           onChange={onChange}
         />
 
-        <button type="submit">Post</button>
+        <Button variant="contained" type="submit">
+          Post
+        </Button>
       </form>
       <ul className="feedList">
         {posts.map((post, index) => (
@@ -144,7 +150,7 @@ const Feed = () => {
                       <Link to={`/users/${comment.userId}`}>
                         {getUserName(comment.userId)}
                       </Link>
-                      {comment.caption}
+                      : {comment.caption}
                     </li>
                   );
                 }
@@ -154,14 +160,17 @@ const Feed = () => {
               onSubmit={(event) => handleCommentSubmit(event, post.id)}
               className="commentForm"
             >
-              <input
+              <TextField
+                variant="filled"
                 type="text"
                 name="caption"
                 placeholder="Comment"
                 value={newComment.caption}
                 onChange={onChangeComment}
               />
-              <button type="submit">Comment</button>
+              <Button variant="contained" type="submit">
+                Comment
+              </Button>
             </form>
           </div>
         ))}

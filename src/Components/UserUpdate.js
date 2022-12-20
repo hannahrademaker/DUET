@@ -65,14 +65,14 @@ const UserUpdate = () => {
   return (
     <div className="user-update">
       <div className="profile-head">
-        <h3>Profile</h3>
+        <h3>PROFILE</h3>
         <Link to="/user/password">
           <Button
             type="submit"
             variant="contained"
             style={{ textTransform: "none", width: "100%" }}
           >
-            Change Password
+            CHANGE PASSWORD
           </Button>
         </Link>
       </div>
@@ -163,7 +163,7 @@ const UserUpdate = () => {
           variant="contained"
           style={{ textTransform: "none" }}
         >
-          Update
+          UPDATE
         </Button>
       </form>
       <form className="avatar-form" onSubmit={save}>
