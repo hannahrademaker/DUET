@@ -97,7 +97,9 @@ const Feed = () => {
 
   return (
     <div className="feed">
-      <Typography variant="h3">Lets Meet!</Typography>
+      <Typography className="feedTitle" variant="h3">
+        Let's Meet!
+      </Typography>
       <form onSubmit={onSubmit}>
         <TextField
           variant="filled"
