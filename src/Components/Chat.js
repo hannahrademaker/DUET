@@ -1,17 +1,33 @@
-import { Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+
 import io from "socket.io-client";
 import ChatRoom from "./ChatRoom";
-import { Grid } from "@mui/material";
 import onlineUsers from "../store/onlineUsers";
 import ForumIcon from "@mui/icons-material/Forum";
 import PeopleIcon from "@mui/icons-material/People";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Button } from "@mui/material";
 import { Typography } from "@mui/material";
 
 const socket = io.connect("http://localhost:3001");
 
-const Chat = () => {
+const drawerWidth = 240;
+
+export default function Chat() {
   const { auth } = useSelector((state) => state);
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("Join a Channel");
@@ -53,72 +69,113 @@ const Chat = () => {
   };
 
   return (
-    <div className="ChatApp">
-      <Grid container spacing={0} sx={{ width: 1 }}>
-        <Grid item xs={2}>
-          <div className="chat-sidebar">
-            <Typography
-              variant="h6"
-              component="h1"
-              style={{ textAlign: "left", paddingLeft: "1rem" }}
-            >
-              <ForumIcon />
-              &nbsp; Channels
-            </Typography>
-            <ul>
-              {channels.map((channel) => {
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        sx={{
+          width: `calc(100% - ${drawerWidth}px)`,
+          ml: `${drawerWidth}px`,
+          top: "100",
+        }}
+      >
+        <Toolbar>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ margin: "auto" }}
+          >
+            Live Chat
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          "& .MuiDrawer-paper": {
+            width: drawerWidth,
+            boxSizing: "border-box",
+            top: 100,
+          },
+        }}
+        variant="permanent"
+        anchor="left"
+      >
+        <Toolbar />
+        <Divider />
+        <Typography
+          variant="h6"
+          component="h1"
+          style={{
+            textAlign: "left",
+            paddingLeft: "1rem",
+            paddingTop: "1.5rem",
+          }}
+        >
+          <ForumIcon />
+          &nbsp; Channels
+        </Typography>
+        <List>
+          {channels.map((channel) => {
+            return (
+              <ListItem key={channel.value}>
+                <Button
+                  variant="text"
+                  style={{ justifyContent: "flex-start", width: "100%" }}
+                  value={channel.value}
+                  onClick={() => {
+                    setRoom(channel.value);
+                  }}
+                >
+                  {channel.label}
+                </Button>
+              </ListItem>
+            );
+          })}
+        </List>
+        <Divider />
+        <Typography
+          variant="h6"
+          component="h1"
+          style={{
+            textAlign: "left",
+            paddingLeft: "1rem",
+            paddingTop: "1.5rem",
+          }}
+        >
+          <PeopleIcon />
+          &nbsp; Online Users{" "}
+          {onlineUsers.length ? `(${onlineUsers.length})` : null}
+        </Typography>
+        <List>
+          {onlineUsers.length
+            ? onlineUsers.map((user) => {
                 return (
-                  <li key={channel.value}>
+                  <ListItem key={user.id}>
                     <Button
                       variant="text"
-                      style={{ justifyContent: "flex-start" }}
-                      value={channel.value}
-                      onClick={() => {
-                        setRoom(channel.value);
-                      }}
+                      style={{ justifyContent: "flex-start", width: "100%" }}
+                      value={roomName(username, user.username)}
+                      onClick={(ev) => setRoom(event.target.value)}
                     >
-                      {channel.label}
+                      {user.username}
                     </Button>
-                  </li>
+                  </ListItem>
                 );
-              })}
-            </ul>
-
-            <Typography
-              variant="h6"
-              component="h1"
-              style={{ textAlign: "left", paddingLeft: "1rem" }}
-            >
-              <PeopleIcon />
-              &nbsp; Online Users{" "}
-              {onlineUsers.length ? `(${onlineUsers.length})` : null}
-            </Typography>
-            <ul>
-              {onlineUsers.length
-                ? onlineUsers.map((user) => {
-                    return (
-                      <li key={user.id}>
-                        <Button
-                          variant="text"
-                          style={{ justifyContent: "flex-start" }}
-                          value={roomName(username, user.username)}
-                          onClick={(ev) => setRoom(event.target.value)}
-                        >
-                          {user.username}
-                        </Button>
-                      </li>
-                    );
-                  })
-                : null}
-            </ul>
-          </div>
-        </Grid>
-        <Grid item xs={10} className="chat-window">
-          <ChatRoom socket={socket} username={username} room={room} />
-        </Grid>
-      </Grid>
-    </div>
+              })
+            : null}
+        </List>
+      </Drawer>
+      <Box
+        className="chat-window"
+        component="main"
+        sx={{ flexGrow: 1, bgcolor: "background.default" }}
+      >
+        <Toolbar />
+        <ChatRoom socket={socket} username={username} room={room} />
+      </Box>
+    </Box>
   );
-};
-
-export default Chat;
+}

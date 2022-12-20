@@ -240,7 +240,7 @@ nav {
 }
 
 .chat-window .chat-body {
-  height: 775px;
+  height: 70vh;
   width: auto;
   /* border: 1px solid #263238; */
   background: #12163f;
