@@ -9,10 +9,7 @@ const FriendOfFriend = ({ id }) => {
   const friend = users.find((user) => id === user.id);
 
   const confirmedFriends = friendships.filter((friendship) => {
-    if (
-      friendship.status === "accepted" &&
-      friendship.ids.includes(friend.id)
-    ) {
+    if (friendship.status === "accepted" && friendship.ids.includes(auth.id)) {
       return friendship;
     }
   });
@@ -26,10 +23,28 @@ const FriendOfFriend = ({ id }) => {
     return acc;
   }, []);
 
+  const myFriends = users.reduce((acc, user) => {
+    for (let i = 0; i < confirmedFriends.length; i++) {
+      if (confirmedFriends[i].ids.includes(user.id) && user.id !== auth.id) {
+        acc.push(user);
+      }
+    }
+    return acc;
+  }, []);
+
+  const mutualFriends = myFriends.reduce((acc, buddy) => {
+    for (let i = 0; i < friendsOfFriends.length; i++) {
+      if (buddy === friendsOfFriends[i] && !acc.includes(buddy)) {
+        acc.push(buddy);
+      }
+    }
+    return acc;
+  }, []);
+
   return (
     <div className="list-6-friends">
-      <Typography variant="h4">Friends</Typography>
-      {friendsOfFriends.map((friendOfFriend) => {
+      <Typography variant="h4">Mutual Friends</Typography>
+      {mutualFriends.map((friendOfFriend) => {
         return (
           <Card
             key={friendOfFriend.id}

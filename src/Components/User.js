@@ -90,10 +90,14 @@ const User = () => {
       <div>
         <div>
           <Typography variant="button" component="h3">
-            Events ({auth.attendings.length})
+            {auth.attendings.length !== 1
+              ? `${auth.attendings.length} Events`
+              : `${auth.attendings.length} Event`}
           </Typography>
           <Typography variant="button" component="h3">
-            Friends ({myFriends.length})
+            {myFriends.length !== 1
+              ? `${myFriends.length} Friends`
+              : `${myFriends.length} Friend`}
           </Typography>
           <span>
             <Button variant="standard" onClick={handleRequestOpen}>

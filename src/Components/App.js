@@ -13,6 +13,7 @@ import FriendRequests from "./FriendRequests";
 import User from "./User";
 import Chat from "./Chat";
 import FriendPage from "./FriendPage";
+import FoFList from "./FoFList";
 import UserUpdate from "./UserUpdate";
 import PasswordUpdate from "./PasswordUpdate";
 import {
@@ -97,6 +98,7 @@ const App = () => {
           path="/user/friendrequests"
           element={!!auth.id ? <FriendRequests /> : null}
         />
+        <Route path="/foflist/:id" element={!!auth.id ? <FoFList /> : null} />
       </Routes>
     </ThemeProvider>
   );
