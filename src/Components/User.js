@@ -100,7 +100,7 @@ const User = () => {
       </div>
       <div>
         <br />
-        <div>
+        <div className="you-got-friends">
           <Typography variant="button" component="h3">
             {auth.attendings.length !== 1
               ? `${auth.attendings.length} Events`

@@ -449,10 +449,11 @@ textarea {
 /*}*/
 
 .people-you-may-know-img {
-  max-height: 50px;
-  max-width: 50px;
+  height: 50px;
+  width: 50px;
   border-radius: 25px;
   margin-right: 0.5em;
+  object-fit: cover;
 }
 
 .ppl-may-know {
@@ -465,10 +466,16 @@ textarea {
 
 .ppl-may-know .MuiButton-root {
   font-size: 10px;
+  text-align: center;
+}
+
+.MuiButton-root {
+  text-align: center;
 }
 
 .may-know-list > .MuiCard-root {
   display: inline-block;
+  text-align: center;
 }
 
 .ppl-may-know-link {
@@ -490,6 +497,14 @@ textarea {
   line-height: 1;
 }
 
+.you-got-friends .MuiButton-root {
+  color: #12163f;
+  text-transform: uppercase;
+  text-align: center;
+  text-shadow: 2px 1px 2px #00c4cc;
+  line-height: 1;
+}
+
 .username-top {
   display: flex;
   justify-content: center;
@@ -498,6 +513,8 @@ textarea {
 
 .username-top img {
   max-height: 200px;
+  width: 200px;
+  height: 200px;
   max-width: 200px;
   border-radius: 40px;
 }
@@ -553,4 +570,9 @@ textarea {
   text-align: left;
   padding-top: 1rem;
   padding-left: 1rem;
+}
+
+.name-photo {
+  display: flex;
+  flex-direction: column;
 }

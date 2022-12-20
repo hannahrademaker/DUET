@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { sendFriendRequest, acceptFriendRequest } from "../store";
 import { Card, Button, CardActions, Typography } from "@mui/material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import CheckCircle from "@mui/icons-material/CheckCircle";
 
 const PplMayKnow = () => {
   const { auth, users, friendships } = useSelector((state) => state);
   const dispatch = useDispatch();
+  let buttonColor = "primary";
 
   const friendList = auth.Accepter.concat(auth.Requester).filter(
     (friend) => friend.friendship.status === "accepted"
@@ -48,6 +51,7 @@ const PplMayKnow = () => {
       accepterId: user.id,
       requesterId: auth.id,
     };
+    buttonColor = "secondary";
     dispatch(sendFriendRequest(friendship));
   };
 
@@ -93,15 +97,32 @@ const PplMayKnow = () => {
                 <CardActions>
                   {!sentRequestsIds.includes(user.id) &&
                     !receivedReqIds.includes(user.id) && (
-                      <Button onClick={() => sendFR(user, auth)}>
-                        Send Friend Request
+                      <Button
+                        className="Attending-button"
+                        aria-label="attending"
+                        variant="contained"
+                        color={buttonColor}
+                        startIcon={<AddCircleIcon />}
+                        onClick={() => sendFR(user, auth)}
+                      >
+                        Add Friend
                       </Button>
                     )}
                   {receivedReqIds.includes(user.id) && (
                     <Button onClick={() => weFriends(user)}>Accept</Button>
                   )}
                   {sentRequestsIds.includes(user.id) && (
-                    <Button disabled={true}>Friend Request Sent</Button>
+                    <Button
+                      disabled={true}
+                      className="Attending-button"
+                      aria-label="attending"
+                      variant="contained"
+                      color={buttonColor}
+                      startIcon={<CheckCircle />}
+                      onClick={() => sendFR(user, auth)}
+                    >
+                      Sent
+                    </Button>
                   )}
                 </CardActions>
               </Card>
