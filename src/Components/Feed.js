@@ -7,7 +7,16 @@ import { Link } from "react-router-dom";
 import { createPost } from "../store/posts";
 import { fetchComments } from "../store/comments";
 import { createComment } from "../store/comments";
-import { Button, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Typography,
+  Card,
+  CardHeader,
+  CardMedia,
+  CardContent,
+  Avatar,
+} from "@mui/material";
 
 const Feed = () => {
   const { posts, users, comments } = useSelector((state) => state);
@@ -132,18 +141,36 @@ const Feed = () => {
       </form>
       <ul className="feedList">
         {posts.map((post, index) => (
-          <div>
-            <Link to={`/users/${post.userId}`}>
-              <img className="profileImg" src={getProfileImg(post.userId)} />
-              {getUserName(post.userId)}
-            </Link>
-            <li className="feedCaption" key={index}>
-              {post.caption}
-            </li>
-            {post.img && <img className="feedImg" src={post.img} />}
-            <li className="feedItem" key={post.body}>
-              {post.body}
-            </li>
+          <div key={post.id}>
+            <Card>
+              <CardHeader
+                avatar={
+                  <Link
+                    to={`/users/${post.userId}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <Avatar src={getProfileImg(post.userId)} />{" "}
+                  </Link>
+                }
+                title={post.caption}
+                subheader={
+                  <Link
+                    to={`/users/${post.userId}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    {getUserName(post.userId)}
+                  </Link>
+                }
+              />
+              <CardMedia
+                component="img"
+                sx={{ width: "500px", height: "auto" }}
+                image={post.img}
+              />
+              <CardContent>
+                <Typography variant="body1">{post.body}</Typography>
+              </CardContent>
+            </Card>
             <ul className="commentList">
               {postComments.map((comment) => {
                 if (comment.postId === post.id) {
