@@ -198,13 +198,19 @@ const syncAndSeed = async () => {
     }),
     Comment.create({
       userId: ethyl.id,
-      caption: "This is a comment",
+      caption: "@lucy I would love to go to this event! Lets chat :)",
       eventId: "Z7r9jZ1Ad4s-N",
     }),
     Comment.create({
       userId: larry.id,
       caption:
         "Hey guys, I'm going to this event! None of my friends like Shinia Twain, who wants to join me?",
+      eventId: "G5diZ94NPjotW",
+    }),
+    Comment.create({
+      userId: alex.id,
+      caption:
+        "@larry I would love to go to this event with you! I love Shinia Twain!",
       eventId: "G5diZ94NPjotW",
     }),
     Comment.create({
