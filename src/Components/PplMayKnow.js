@@ -112,25 +112,31 @@ const PplMayKnow = () => {
                         aria-label="attending"
                         variant="contained"
                         color={buttonColor}
+                        size="small"
                         startIcon={<AddCircleIcon />}
                         onClick={() => sendFR(user, auth)}
                       >
-                        Add Friend
+                        Add
                       </Button>
                     )}
                   {receivedReqIds.includes(user.id) && (
-                    <div>
-                      <Button
-                        startIcon={<AddCircleIcon />}
-                        onClick={() => weFriends(user)}
-                        variant="contained"
-                      >
-                        Accept
-                      </Button>
+                    <div className="accept-deny">
+                      <div className="accept">
+                        <Button
+                          startIcon={<AddCircleIcon />}
+                          onClick={() => weFriends(user)}
+                          variant="contained"
+                          size="small"
+                        >
+                          Accept
+                        </Button>
+                      </div>
                       <Button
                         variant="outlined"
                         onClick={() => destroyFriendship(user)}
                         startIcon={<RemoveCircleOutlineIcon />}
+                        className="deny"
+                        size="small"
                       >
                         Decline
                       </Button>
@@ -144,6 +150,7 @@ const PplMayKnow = () => {
                       color="secondary"
                       startIcon={<CheckCircle />}
                       onClick={() => destroyFriendship(user)}
+                      size="small"
                     >
                       Sent
                     </Button>

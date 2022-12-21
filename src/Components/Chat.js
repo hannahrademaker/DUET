@@ -7,6 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
+import { useLocation } from "react-router-dom";
 
 import io from "socket.io-client";
 import ChatRoom from "./ChatRoom";
@@ -29,6 +30,8 @@ export default function Chat() {
   const [room, setRoom] = useState("Join a Channel");
   const [showChat, setShowChat] = useState(false);
   const { onlineUsers } = useSelector((state) => state);
+  const location = useLocation();
+  let from;
 
   useEffect(() => {
     setUsername(auth.username);
@@ -37,6 +40,15 @@ export default function Chat() {
   useEffect(() => {
     joinRoom();
   }, [room]);
+
+  if (location.state) {
+    const { from } = location.state;
+    console.log(from);
+  }
+
+  if (from) {
+    return setRoom(from);
+  }
 
   const channels = [
     { label: "All", value: "All" },
