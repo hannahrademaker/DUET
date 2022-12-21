@@ -114,6 +114,19 @@ const FriendPage = () => {
 
   const friendsIds = friendsOfFriends.map((myFriendsId) => myFriendsId.id);
 
+  const roomName = (a, b) => {
+    const list = [a, b].sort();
+    return (
+      list[0].slice(0, 1).toUpperCase(0, 1) +
+      list[0].slice(1) +
+      ", " +
+      list[1].slice(0, 1).toUpperCase(0, 1) +
+      list[1].slice(1)
+    );
+  };
+
+  const chatRoom = roomName(auth.username, friend.username);
+
   // const friendListIds = friendList.map((friendId) => friendId.id);
   if (!friend) return null;
   if (friend)
@@ -165,6 +178,12 @@ const FriendPage = () => {
           <h4>
             {friend.firstName} {friend.lastName}
           </h4>
+          <Button variant="contained" className="see-user-details-button">
+            <Link className="link" to="/chat/" state={{ from: chatRoom }}>
+              SEND {friend.username} A MESSAGE
+            </Link>
+          </Button>
+
           <p>{friend.bio}</p>
         </div>
         {myFriends.includes(friend) && (
