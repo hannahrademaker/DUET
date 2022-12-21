@@ -37,7 +37,7 @@ const Register = () => {
       <form onSubmit={login}>
         <TextField
           id="standard-basic"
-          variant="standard"
+          variant="filled"
           placeholder="username"
           value={credentials.username}
           name="username"
@@ -47,7 +47,7 @@ const Register = () => {
         <TextField
           id="standard-password-input"
           autoComplete="current-password"
-          variant="standard"
+          variant="filled"
           placeholder="password"
           type="password"
           name="password"
@@ -58,7 +58,7 @@ const Register = () => {
         <TextField
           id="standard-email-input"
           autoComplete="email"
-          variant="standard"
+          variant="filled"
           placeholder="email"
           type="email"
           name="email"
@@ -69,7 +69,7 @@ const Register = () => {
         <TextField
           id="standard-firstName-input"
           autoComplete="firstName"
-          variant="standard"
+          variant="filled"
           placeholder="First Name"
           name="firstName"
           value={credentials.firstName}
@@ -79,7 +79,7 @@ const Register = () => {
         <TextField
           id="standard-lastName-input"
           autoComplete="lastName"
-          variant="standard"
+          variant="filled"
           placeholder="Last Name"
           name="lastName"
           value={credentials.lastName}
@@ -89,7 +89,7 @@ const Register = () => {
         <TextField
           id="standard-address-input"
           autoComplete="address"
-          variant="standard"
+          variant="filled"
           placeholder="Address"
           name="address"
           value={credentials.address}
@@ -99,7 +99,7 @@ const Register = () => {
         <TextField
           id="standard-addressDetails-input"
           autoComplete="addressDetails"
-          variant="standard"
+          variant="filled"
           placeholder="Apartment"
           name="addressDetails"
           value={credentials.addressDetails}
@@ -109,7 +109,7 @@ const Register = () => {
         <TextField
           id="standard-city-input"
           autoComplete="city"
-          variant="standard"
+          variant="filled"
           placeholder="City"
           name="city"
           value={credentials.city}
@@ -119,7 +119,7 @@ const Register = () => {
         <TextField
           id="standard-state-input"
           autoComplete="state"
-          variant="standard"
+          variant="filled"
           placeholder="State"
           name="state"
           value={credentials.state}
@@ -129,7 +129,7 @@ const Register = () => {
         <TextField
           id="standard-zip-input"
           autoComplete="zip"
-          variant="standard"
+          variant="filled"
           placeholder="Zip"
           name="zip"
           value={credentials.zip}

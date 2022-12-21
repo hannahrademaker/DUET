@@ -162,6 +162,7 @@ nav {
   justify-content: space-around;
   text-align: center;
   width: 50vw;
+  margin: auto;
 }
 
 /* Begin Chat CSS */
@@ -580,10 +581,9 @@ textarea {
 
 .accept-deny .MuiButton-root {
   font-size: 10px;
- 
 }
 
-.accept .MuiButton-root{
-   background-color: #12163f;
-   color: #00c4cc;
+.accept .MuiButton-root {
+  background-color: #12163f;
+  color: #00c4cc;
 }
