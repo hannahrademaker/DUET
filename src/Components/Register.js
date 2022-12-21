@@ -14,11 +14,11 @@ const Register = () => {
     email: "",
     firstName: "",
     lastName: "",
-    address: "",
-    addressDetails: "",
-    city: "",
-    state: "",
-    zip: "",
+    address: null,
+    addressDetails: null,
+    city: null,
+    state: null,
+    zip: null,
   });
 
   const onChange = (ev) => {
@@ -30,6 +30,7 @@ const Register = () => {
     dispatch(register(credentials));
     navigate("/");
   };
+
   return (
     <div className="register">
       <h2>Register</h2>
