@@ -1,4 +1,4 @@
-const API_KEY = "fmAEcxmSvwqhltBAynkfzAyvdJLNg28X";
+const API_KEY = ""; // TicketMaster API Key;
 
 export const filterEvents = (events, filter) => {
   if (filter) {

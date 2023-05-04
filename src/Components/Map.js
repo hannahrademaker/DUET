@@ -19,8 +19,8 @@ const options = {
 
 const Map = ({ filteredEvents, userLocation, setUserLocation }) => {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBM-kc17ICi5elvOP04xO4yj_HZR3F2hTw",
-    libraries,
+    // api key
+    googleMapsApiKey: libraries,
   });
 
   const [selected, setSelected] = useState(null);

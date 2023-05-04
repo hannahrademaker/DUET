@@ -28,14 +28,6 @@ const Home = () => {
     }
   }, [userLocation, radius]);
 
-  // const { events } = useSelector(state => state);
-
-  // useEffect(()=>{
-  //   dispatch(fetchTicketMasterEvents())
-  // }, []);
-  // console.log(auth);
-  //console.log(userProfile.city);
-
   return (
     <div className="home_container">
       <h2>What do you want to do?!</h2>
