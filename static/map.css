@@ -1,0 +1,12 @@
+#map_events_container {
+  display: flex;
+}
+
+.mapLink {
+  text-decoration: none;
+  color: inherit;
+}
+.map-container {
+  width: 30vw;
+  height: 70vh;
+}

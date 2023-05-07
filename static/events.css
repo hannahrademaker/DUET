@@ -1,0 +1,25 @@
+.Events-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  /* width: 50vw; */
+}
+
+.MuiCard-root {
+  margin: 0.5em;
+  justify-content: space-around;
+}
+
+.MuiCard-root:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16), 0 4px 8px rgba(0, 0, 0, 0.23);
+}
+
+.MuiCardMedia-img {
+  width: 100%;
+  height: auto;
+}
+
+.event_link {
+  text-decoration: none;
+  color: inherit;
+}

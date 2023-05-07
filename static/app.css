@@ -1,0 +1,36 @@
+body {
+  margin: 0;
+  font-family: Roboto;
+  background-color: white;
+}
+
+form {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+form > * {
+  margin: 1rem;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+.logo {
+  height: 75px;
+  width: auto;
+}
+
+.avatar-preview {
+  width: 50px;
+  height: auto;
+  border-radius: 50px;
+}
