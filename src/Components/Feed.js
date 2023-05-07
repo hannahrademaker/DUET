@@ -1,22 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { fetchPosts } from "../store/posts";
+import { fetchPosts, createPost } from "../store/posts";
 import { useDispatch } from "react-redux";
 import { fetchUsers } from "../store";
-import { Link } from "react-router-dom";
-import { createPost } from "../store/posts";
-import { fetchComments } from "../store/comments";
-import { createComment } from "../store/comments";
-import {
-  Button,
-  TextField,
-  Typography,
-  Card,
-  CardHeader,
-  CardMedia,
-  CardContent,
-  Avatar,
-} from "@mui/material";
+import { fetchComments, createComment } from "../store/comments";
+import Post from "./Post";
+import Comment from "./Comment";
+import PostForm from "./PostForm";
+import { Button, TextField, Typography } from "@mui/material";
 
 const Feed = () => {
   const { posts, users, comments } = useSelector((state) => state);
@@ -27,14 +18,46 @@ const Feed = () => {
     userId: null,
   });
   const [newComment, setNewComment] = useState("");
+  const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchComments());
+    const fetchData = async () => {
+      try {
+        await Promise.all([
+          dispatch(fetchComments()),
+          dispatch(fetchUsers()),
+          dispatch(fetchPosts()),
+        ]);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const postComments = comments.filter((comment) => comment.postId !== null);
+
+  useEffect(() => {
+    dispatch(fetchComments()).catch((error) => {
+      console.error("Error fetching comments:", error);
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchUsers()).catch((error) => {
+      console.error("Error fetching users:", error);
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchPosts()).catch((error) => {
+      console.error("Error fetching posts:", error);
+    });
+  }, []);
 
   const onChange = (ev) => {
     setNewPost({ ...newPost, [ev.target.name]: ev.target.value });
@@ -49,12 +72,9 @@ const Feed = () => {
       userId,
     };
     dispatch(createComment(comment));
-    setNewComment({
-      caption: "",
-      postId: null,
-      userId: null,
-    });
+    setNewComment("");
   };
+
   const onChangeComment = (ev) => {
     setNewComment(ev.target.value);
   };
@@ -78,13 +98,6 @@ const Feed = () => {
       userId: null,
     });
   };
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-  }, []);
 
   const getUserName = (userId) => {
     if (userId === null) return "Anonymous";
@@ -103,86 +116,40 @@ const Feed = () => {
       return profileImg;
     }
   };
+  if (loading) {
+    return (
+      <div className="loading">
+        <Typography>Loading...</Typography>
+      </div>
+    );
+  }
 
   return (
     <div className="feed">
       <Typography className="feedTitle" variant="h3">
         Let's Meet!
       </Typography>
-      <form onSubmit={onSubmit}>
-        <TextField
-          variant="filled"
-          type="text"
-          name="caption"
-          placeholder="Caption"
-          value={newPost.caption}
-          onChange={onChange}
-        />
-        <TextField
-          variant="filled"
-          type="text"
-          name="body"
-          placeholder="Body"
-          value={newPost.body}
-          onChange={onChange}
-        />
-        <TextField
-          variant="filled"
-          type="text"
-          name="img"
-          placeholder="Image URL"
-          value={newPost.img}
-          onChange={onChange}
-        />
-
-        <Button variant="contained" type="submit">
-          Post
-        </Button>
-      </form>
+      <PostForm onSubmit={onSubmit} newPost={newPost} onChange={onChange} />
       <ul className="feedList">
         {posts.map((post, index) => (
           <div key={post.id}>
-            <Card>
-              <CardHeader
-                avatar={
-                  <Link
-                    to={`/users/${post.userId}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <Avatar src={getProfileImg(post.userId)} />{" "}
-                  </Link>
-                }
-                title={post.caption}
-                subheader={
-                  <Link
-                    to={`/users/${post.userId}`}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    {getUserName(post.userId)}
-                  </Link>
-                }
-              />
-              <CardMedia
-                component="img"
-                sx={{ width: "500px", height: "auto" }}
-                image={post.img}
-              />
-              <CardContent>
-                <Typography variant="body1">{post.body}</Typography>
-              </CardContent>
-            </Card>
+            <Post
+              post={post}
+              getUserName={getUserName}
+              getProfileImg={getProfileImg}
+            />
             <ul className="commentList">
               {postComments.map((comment) => {
                 if (comment.postId === post.id) {
                   return (
-                    <li className="commentItem" key={comment.id}>
-                      <Link to={`/users/${comment.userId}`}>
-                        {getUserName(comment.userId)}
-                      </Link>
-                      : {comment.caption}
-                    </li>
+                    <Comment
+                      key={comment.id}
+                      comment={comment}
+                      getUserName={getUserName}
+                    />
                   );
                 }
+                return null;
               })}
             </ul>
             <form
@@ -194,7 +161,7 @@ const Feed = () => {
                 type="text"
                 name="caption"
                 placeholder="Comment"
-                value={newComment.caption}
+                value={newComment}
                 onChange={onChangeComment}
               />
               <Button variant="contained" type="submit">

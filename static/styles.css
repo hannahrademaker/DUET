@@ -61,7 +61,7 @@ nav {
 }
 
 .MuiCardMedia-img {
-  max-width: 250px;
+  width: 100%;
   height: auto;
 }
 
@@ -385,6 +385,7 @@ nav {
   background: #12163f;
   position: relative;
 }
+
 .chat-window .chat-body .message-container {
   width: 100%;
   height: 100%;

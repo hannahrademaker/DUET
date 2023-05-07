@@ -26,7 +26,10 @@ export const fetchPosts = () => {
           authorization: token,
         },
       });
-      dispatch({ type: "GET_POSTS", posts: response.data });
+      const sortedPosts = response.data.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+      dispatch({ type: "GET_POSTS", posts: sortedPosts });
     } catch (ex) {
       console.log(ex);
     }

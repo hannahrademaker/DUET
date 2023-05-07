@@ -22,6 +22,7 @@ import {
   fetchUsers,
   fetchFriendships,
 } from "../store";
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -47,32 +48,6 @@ const theme = createTheme({
     fontWeightRegular: 400,
     fontWeightMedium: 500,
     fontWeightBold: 700,
-  },
-  overrides: {
-    MuiCard: {
-      root: {
-        backgroundColor: "#ffffff",
-        boxShadow: "none",
-        borderRadius: "10px",
-        overflow: "hidden",
-        transition: "all 0.3s ease",
-        "&:hover": {
-          boxShadow: "0 3px 6px rgba(0, 0, 0, 0.08)",
-        },
-      },
-    },
-    MuiButton: {
-      root: {
-        textTransform: "none",
-        borderRadius: "12px",
-      },
-      contained: {
-        boxShadow: "none",
-        "&:hover": {
-          boxShadow: "none",
-        },
-      },
-    },
   },
 });
 
