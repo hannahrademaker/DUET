@@ -1,4 +1,4 @@
-const API_KEY = ""; // TicketMaster API Key;
+const API_KEY = process.env.REACT_APP_TICKETMASTER_API_KEY;
 
 export const filterEvents = (events, filter) => {
   if (filter) {

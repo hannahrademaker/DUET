@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "@mui/material";
 import dayjs from "dayjs";
-const API_KEY = "fmAEcxmSvwqhltBAynkfzAyvdJLNg28X";
 import Comments from "./Comments";
 import { fetchEvent } from "../Helpers/TicketMaster";
 import { useSelector } from "react-redux";
@@ -27,13 +26,13 @@ const Event = (props) => {
       <a href={event.url} target="_blank" rel="noopener noreferrer">
         Buy Tickets
       </a>
-      <Typography className="indvEventName" variant="h2">
+      <Typography className="indvEventName" variant="h3">
         {event.name}
       </Typography>
-      <Typography variant="h4">
+      <Typography variant="h5">
         {dayjs(event.dates.start.localDate).toString()}
       </Typography>
-      <Typography variant="h4">{event._embedded.venues[0].name}</Typography>
+      <Typography variant="h5">{event._embedded.venues[0].name}</Typography>
       <Typography>
         {event._embedded.venues[0].address.line1 +
           " " +

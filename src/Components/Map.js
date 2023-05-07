@@ -19,8 +19,8 @@ const options = {
 
 const Map = ({ filteredEvents, userLocation, setUserLocation }) => {
   const { isLoaded, loadError } = useLoadScript({
-    // api key
-    googleMapsApiKey: libraries,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries,
   });
 
   const [selected, setSelected] = useState(null);
@@ -72,7 +72,7 @@ function Maps({
 
   return (
     <GoogleMap
-      zoom={11.5}
+      zoom={13}
       center={center}
       mapContainerClassName="map-container"
       options={options}
