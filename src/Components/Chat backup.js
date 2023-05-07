@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import ChatRoom from "./ChatRoom";
 import { Grid } from "@mui/material";
-import onlineUsers from "../store/onlineUsers";
 import ForumIcon from "@mui/icons-material/Forum";
 import PeopleIcon from "@mui/icons-material/People";
 import { Typography } from "@mui/material";
@@ -15,7 +14,6 @@ const Chat = () => {
   const { auth } = useSelector((state) => state);
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("Join a Channel");
-  const [showChat, setShowChat] = useState(false);
   const { onlineUsers } = useSelector((state) => state);
 
   useEffect(() => {

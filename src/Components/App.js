@@ -3,7 +3,6 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Link, Routes, Route } from "react-router-dom";
 import { useSelector, connect, useDispatch } from "react-redux";
 import Register from "./Register";
-import Map from "./Map";
 import Feed from "./Feed";
 import Event from "./Event";
 import Nav from "./Nav";

@@ -8,10 +8,8 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import { useLocation } from "react-router-dom";
-
 import io from "socket.io-client";
 import ChatRoom from "./ChatRoom";
-import onlineUsers from "../store/onlineUsers";
 import ForumIcon from "@mui/icons-material/Forum";
 import PeopleIcon from "@mui/icons-material/People";
 import NoMeetingRoomIcon from "@mui/icons-material/NoMeetingRoom";

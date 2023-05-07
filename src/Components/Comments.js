@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { fetchComments } from "../store";
 import { createComment } from "../store";
 import { fetchUsers } from "../store";

@@ -16,10 +16,6 @@ const PplMayKnow = () => {
   const dispatch = useDispatch();
   let buttonColor = "primary";
 
-  const friendList = auth.Accepter.concat(auth.Requester).filter(
-    (friend) => friend.friendship.status === "accepted"
-  );
-
   const confirmedFriends = friendships.filter((friendship) => {
     if (friendship.status === "accepted" && friendship.ids.includes(auth.id)) {
       return friendship;
@@ -82,7 +78,6 @@ const PplMayKnow = () => {
       <Typography variant="h5">People you may know</Typography>
       <ul className="may-know-list">
         {users.map((user) => {
-          //set up a max of 6 people you may know?? or just show all?
           if (!myFriendsIds.includes(user.id) && user.id !== auth.id) {
             return (
               <Card key={user.id} className="ppl-may-know">

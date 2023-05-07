@@ -4,7 +4,6 @@ import { Typography } from "@mui/material";
 import dayjs from "dayjs";
 import Comments from "./Comments";
 import { fetchEvent } from "../Helpers/TicketMaster";
-import { useSelector } from "react-redux";
 import Attending from "./Attending";
 
 const Event = (props) => {

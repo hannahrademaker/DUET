@@ -10,7 +10,6 @@ import {
   ListItemButton,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 
 const UserEvents = ({ userId }) => {
   const [events, setEvents] = useState([]);

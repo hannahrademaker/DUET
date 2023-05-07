@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendFriendRequest, acceptFriendRequest } from "../store";
 import { Link } from "react-router-dom";
 import { Button, Dialog, Typography } from "@mui/material";
 import PplMayKnow from "./PplMayKnow";
@@ -23,8 +22,7 @@ const RequestProp = (props) => {
 };
 
 const User = () => {
-  const { auth, users, friendships, attending } = useSelector((state) => state);
-  const dispatch = useDispatch();
+  const { auth, users, friendships } = useSelector((state) => state);
   const [toggle, setToggle] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -51,35 +49,11 @@ const User = () => {
     return acc;
   }, []);
 
-  const sentRequests = friendships.filter((friendship) => {
-    if (friendship.requesterId === auth.id && friendship.status === "pending") {
-      return friendship;
-    }
-  });
-  const sentRequestsIds = sentRequests.map((user) => user.accepterId);
-
   const inboxReqs = friendships.filter((pending) => {
     if (pending.status === "pending" && pending.accepterId === auth.id) {
       return pending;
     }
   });
-
-  const sendFR = (user, auth) => {
-    let friendship = {
-      accepterId: user.id,
-      requesterId: auth.id,
-    };
-    dispatch(sendFriendRequest(friendship));
-  };
-
-  const weFriends = (user) => {
-    let friendship = friendships.find(
-      (friendship) =>
-        friendship.requesterId === user.id && friendship.accepterId === auth.id
-    );
-    friendship.status = "accepted";
-    dispatch(acceptFriendRequest(friendship));
-  };
 
   return (
     <div className="user-page">

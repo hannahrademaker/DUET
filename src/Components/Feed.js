@@ -126,9 +126,7 @@ const Feed = () => {
 
   return (
     <div className="feed">
-      <Typography className="feedTitle" variant="h3">
-        Let's Meet!
-      </Typography>
+      <Typography variant="h5">FEED</Typography>
       <PostForm onSubmit={onSubmit} newPost={newPost} onChange={onChange} />
       <ul className="feedList">
         {posts.map((post, index) => (

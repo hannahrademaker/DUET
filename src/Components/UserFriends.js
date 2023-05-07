@@ -23,8 +23,6 @@ const UserFriends = () => {
     return acc;
   }, []);
 
-  const myFriendsIds = myFriends.map((myFriendsId) => myFriendsId.id);
-
   const destroyFriendship = (friend) => {
     if (
       confirm(

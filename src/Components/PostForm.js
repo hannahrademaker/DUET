@@ -1,4 +1,3 @@
-// PostForm.js
 import React from "react";
 import { TextField, Button } from "@mui/material";
 
