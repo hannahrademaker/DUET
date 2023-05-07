@@ -30,20 +30,21 @@ const Home = () => {
 
   return (
     <div className="home_container">
-      <h2>What do you want to do?!</h2>
-      <div id="map_events_container">
-        <Map filteredEvents={filteredEvents} />
-        <Events
-          filter={filter}
-          radius={radius}
-          userLocation={userLocation}
-          setUserLocation={setUserLocation}
-          filteredEvents={filteredEvents}
-          setFilter={setFilter}
-          setRadius={setRadius}
-        />
-        <div>{}</div>
-      </div>
+      <Events
+        filter={filter}
+        radius={radius}
+        userLocation={userLocation}
+        setUserLocation={setUserLocation}
+        filteredEvents={filteredEvents}
+        setFilter={setFilter}
+        setRadius={setRadius}
+      />
+      <div>{}</div>
+      {/* <div id="map_events_container">
+        <div className="mapcontainer">
+          <Map filteredEvents={filteredEvents} />
+        </div>
+      </div> */}
     </div>
   );
 };

@@ -19,13 +19,13 @@ nav {
 }
 
 .map-container {
-  width: 50vw;
-  height: 100vh;
+  width: 30vw;
+  height: 70vh;
 }
 
 .link {
   text-decoration: none;
-  color: inherit;
+  color: black;
 }
 
 .logo {
@@ -48,26 +48,8 @@ nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  width: 50vw;
+  /* width: 50vw; */
 }
-
-/*.Events-list li {*/
-/*  list-style-type: none;*/
-/*  flex: 0 0 25%;*/
-/*  margin: 1rem;*/
-/*  padding: 1rem;*/
-/*  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);*/
-/*  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);*/
-/*}*/
-
-/*.Events-list li:hover {*/
-/*  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);*/
-/*}*/
-
-/*.Events-list img {*/
-/*  max-width: 100%;*/
-/*  height: auto;*/
-/*}*/
 
 .MuiCard-root {
   margin: 0.5em;
@@ -89,26 +71,24 @@ nav {
 }
 
 .welcome {
-  color: #12163f;
+  color: #1c1c1c;
   font-size: 3rem;
-  text-transform: uppercase;
+  text-transform: none;
   text-align: center;
-  text-shadow: 2px 1px 2px #e43397, 0 0 1em #00c4cc, 0 0 0.5em #00c4cc;
   line-height: 1;
   margin-left: 10rem;
   margin-right: 10rem;
   margin-top: 0;
-  vertical-align: middle;
 }
 
 .duet {
-  color: #00c4cc;
+  color: #1c1c1c;
 }
 
 .welcomeP {
-  color: #12163f;
+  color: #1c1c1c;
+  font-size: 1.25rem;
   text-align: center;
-  text-shadow: 2px 1px 2px #e43397, 0 0 1em #00c4cc, 0 0 0.5em #00c4cc;
   margin: 0 100px;
 }
 
@@ -127,29 +107,30 @@ nav {
   text-decoration: none;
   color: inherit;
 }
+
 #login {
   padding: 0 15px 0 15px;
 }
 
 #login > h2 {
-  color: #12163f;
+  color: #1c1c1c;
+  font-size: 1.75rem;
+  font-weight: 600;
   text-align: center;
-  text-shadow: 2px 1px 2px #e43397, 0 0 1em #00c4cc, 0 0 0.5em #00c4cc;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .home_container {
-  color: #12163f;
+  font-size: 1rem;
   text-align: center;
-  text-shadow: 2px 1px 2px #00c4cc;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .indvEvent {
-  color: #12163f;
+  color: #1c1c1c;
+  font-size: 1.5rem;
   text-align: center;
-  text-transform: uppercase;
-  text-shadow: 2px 1px 2px #00c4cc;
+  text-transform: none;
 }
 
 .indvEventName {
@@ -165,55 +146,212 @@ nav {
   margin: auto;
 }
 
-/* Begin Chat CSS */
+.feed {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ededed;
+}
+
+.feedList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.feedItem {
+  margin: 0 0 20px;
+  padding: 20px;
+  border: 1px solid #ededed;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.feedCaption {
+  font-weight: 600;
+  color: #1c1c1c;
+}
+
+.profileImg {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 0.5em;
+}
+
+.feedImg {
+  width: 100px;
+  height: 100px;
+  margin-right: 0.5em;
+}
+
+.PostInput {
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  border-bottom: 1px solid #ededed;
+}
+
+.PostInput input {
+  flex-grow: 1;
+  padding: 0.5em;
+  font-size: 1em;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border: none;
+  outline: none;
+  color: #1c1c1c;
+}
+
+.PostInput button {
+  padding: 0.5em;
+  font-size: 1em;
+  background-color: #ffffff;
+  color: #1c1c1c;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+.people-you-may-know-img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 0.5em;
+  object-fit: cover;
+}
+
+.ppl-may-know {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 100;
+  height: 150;
+  padding: 10px;
+}
+
+.ppl-may-know .MuiButton-root {
+  font-size: 10px;
+  text-align: center;
+}
+
+.MuiButton-root {
+  text-align: center;
+}
+
+.may-know-list > .MuiCard-root {
+  display: inline-block;
+  text-align: center;
+}
+
+.ppl-may-know-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.eventImg {
+  width: 40%;
+  height: auto;
+  padding-top: 1rem;
+}
+
+.user-page {
+  color: #1c1c1c;
+  text-transform: none;
+  text-align: center;
+  text-shadow: none;
+  line-height: 1;
+}
+
+.you-got-friends .MuiButton-root {
+  color: #1c1c1c;
+  text-transform: none;
+  text-align: center;
+  text-shadow: none;
+  line-height: 1;
+}
+
+.username-top {
+  display: flex;
+  justify-content: center;
+  margin: 5% 0;
+}
+
+.username-top img {
+  max-height: 200px;
+  width: 200px;
+  height: 200px;
+  max-width: 200px;
+  border-radius: 40px;
+}
+
+.list-6-friends {
+  margin: 5% 0;
+  color: #1c1c1c;
+  text-align: center;
+  text-shadow: none;
+  text-transform: none;
+}
+
+.list-6-friends > .MuiCard-root {
+  display: inline-block;
+}
+.friend-img {
+  border-radius: 30px;
+}
+
+.user-update {
+  width: 25%;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+}
+
+.commentItem {
+  list-style: none;
+}
+
+.commentList {
+  padding-inline-start: 0;
+}
+
+.feedImg {
+  width: 500px;
+  height: auto;
+}
+
+.feedTitle {
+  color: #1c1c1c;
+  text-align: center;
+  text-shadow: none;
+  text-transform: none;
+}
+
+.name-photo {
+  display: flex;
+  flex-direction: column;
+}
+
+.accept-deny .MuiButton-root {
+  font-size: 10px;
+}
+
+.chatCategory {
+  color: #1c1c1c;
+  text-align: left;
+  text-shadow: none;
+  text-transform: none;
+  padding-top: 1rem;
+  padding-left: 1rem;
+}
 .ChatApp {
   width: 100%;
   height: 100%;
-  background: #fff;
   color: #212121;
   font-family: "Open Sans", sans-serif;
   display: grid;
-  /* place-items: center; */
 }
-/* body {
-  margin: 0%;
-  padding: 0%;
-}
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700"); */
-
-/* .joinChatContainer {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  place-items: center;
-} */
-/* 
-.joinChatContainer h3 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-} */
-/* .joinChatContainer input {
-  width: 210px;
-  height: 40px;
-  margin: 7px;
-  border: 2px solid #43a047;
-  border-radius: 5px;
-  padding: 5px;
-  font-size: 16px;
-} */
-
-/* .joinChatContainer button {
-  width: auto;
-  height: 50px;
-  margin: 7px;
-  border: none;
-  border-radius: 5px;
-  padding: 5px;
-  font-size: 16px;
-  background: #43a047;
-  color: #fff;
-  cursor: pointer;
-} */
 
 .chat-window {
   width: 100%;
@@ -333,7 +471,7 @@ nav {
   border: 1px;
   padding: 0 0.5em;
   font-size: 1em;
-  border-right: 1px dotted #607d8b;
+  border-right: 1px dotted #ffffff;
   background-color: #263238;
   outline: none;
   font-family: "Open Sans", sans-serif;
@@ -375,215 +513,4 @@ textarea {
 .chat-sidebar > ul {
   list-style-type: none;
   padding: 1rem;
-}
-/* End Chat CSS */
-
-.feed {
-  width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-}
-
-.feedList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.feedItem {
-  margin: 0 0 20px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  display: flex;
-  align-items: center;
-  margin-bottom: 1em;
-}
-
-.feedCaption {
-  font-weight: bold;
-}
-
-.profileImg {
-  width: 30px;
-  height: 30px;
-  border-radius: 25px;
-  margin-right: 0.5em;
-}
-
-.feedImg {
-  width: 100px;
-  height: 100px;
-  margin-right: 0.5em;
-}
-
-.PostInput {
-  display: flex;
-  align-items: center;
-  padding: 1em;
-  border-bottom: 1px solid #ccc;
-}
-
-.PostInput input {
-  flex-grow: 1;
-  padding: 0.5em;
-  font-size: 1em;
-  font-family: verdana;
-  border: none;
-  outline: none;
-}
-
-.PostInput button {
-  padding: 0.5em;
-  font-size: 1em;
-  /* color: white; */
-  border: none;
-  outline: none;
-  cursor: pointer;
-}
-
-/*.people-you-may-know-cards{*/
-/*  display: flex;*/
-/*  flex-wrap: wrap;*/
-/*  flex-direction: column;*/
-/*}*/
-
-.people-you-may-know-img {
-  height: 50px;
-  width: 50px;
-  border-radius: 25px;
-  margin-right: 0.5em;
-  object-fit: cover;
-}
-
-.ppl-may-know {
-  display: flex;
-  align-items: center;
-  text-align: center;
-  width: 100;
-  height: 150;
-  padding: 10px;
-}
-
-.ppl- .ppl-may-know .MuiButton-root {
-  font-size: 10px;
-  text-align: center;
-}
-
-.MuiButton-root {
-  text-align: center;
-}
-
-.may-know-list > .MuiCard-root {
-  display: inline-block;
-  text-align: center;
-}
-
-.ppl-may-know-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.eventImg {
-  width: 40%;
-  height: auto;
-  padding-top: 1rem;
-}
-
-.user-page {
-  color: #12163f;
-  text-transform: uppercase;
-  text-align: center;
-  text-shadow: 2px 1px 2px #00c4cc;
-  line-height: 1;
-}
-
-.you-got-friends .MuiButton-root {
-  color: #12163f;
-  text-transform: uppercase;
-  text-align: center;
-  text-shadow: 2px 1px 2px #00c4cc;
-  line-height: 1;
-}
-
-.username-top {
-  display: flex;
-  justify-content: center;
-  margin: 5% 0;
-}
-
-.username-top img {
-  max-height: 200px;
-  width: 200px;
-  height: 200px;
-  max-width: 200px;
-  border-radius: 40px;
-}
-
-.list-6-friends {
-  margin: 5% 0;
-  color: #12163f;
-  text-align: center;
-  text-shadow: 2px 1px 2px #00c4cc;
-  text-transform: uppercase;
-}
-
-.list-6-friends > .MuiCard-root {
-  display: inline-block;
-}
-
-.friend-img {
-  border-radius: 30px;
-}
-
-.user-update {
-  width: 25%;
-  align-items: center;
-  text-align: center;
-  margin: auto;
-}
-
-.commentItem {
-  list-style: none;
-}
-
-.commentList {
-  padding-inline-start: 0;
-}
-
-.feedImg {
-  width: 500px;
-  height: auto;
-}
-
-.feedTitle {
-  color: #12163f;
-  text-align: center;
-  text-shadow: 2px 1px 2px #00c4cc;
-  text-transform: uppercase;
-}
-
-.chatCategory {
-  color: #12163f;
-  text-align: center;
-  text-shadow: 2px 1px 2px #00c4cc;
-  text-transform: uppercase;
-  text-align: left;
-  padding-top: 1rem;
-  padding-left: 1rem;
-}
-
-.name-photo {
-  display: flex;
-  flex-direction: column;
-}
-
-.accept-deny .MuiButton-root {
-  font-size: 10px;
-}
-
-.accept .MuiButton-root {
-  background-color: #12163f;
-  color: #00c4cc;
 }

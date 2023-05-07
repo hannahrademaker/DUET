@@ -243,24 +243,6 @@ const syncAndSeed = async () => {
     }),
   ]);
 
-  //console.log(test1);
-  // console.log(test2);
-  // console.log(fs1);
-  // console.log(lucy.findThisUser());
-  //console.log(lucy.findMyFriendships());
-
-  // const test = () => {
-  //   let friend;
-  //   if (lucy.id === friendship.requesterId) {
-  //     friend = friendship.accepterId;
-  //   } else {
-  //     friend = friendship.requesterId;
-  //   }
-  //   return friend;
-  // };
-
-  // console.log(test(lucy));
-  //console.log(User_Friendships)
   return {
     users: {
       moe,

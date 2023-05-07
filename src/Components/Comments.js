@@ -73,7 +73,7 @@ const Comments = ({ eventId }) => {
 
   return (
     <div className="Comments">
-      <h1>Comments</h1>
+      <h4>Comments</h4>
       <div className="Comments-list">
         {eventComments.map((comment) => (
           <Card key={comment.id} href={`/#/users/${comment.userId}`}>

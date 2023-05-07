@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Login from "./Login";
+import Register from "./Register";
 import { useSelector, useDispatch } from "react-redux";
 import { loginWithToken } from "../store";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,18 +12,18 @@ import {
   Typography,
   Button,
   Dialog,
+  DialogTitle,
 } from "@mui/material";
 
-const NavProps = (props) => {
-  const { onClose, open } = props;
-
+const ModalDialog = ({ title, children, onClose, open }) => {
   const handleClose = () => {
     onClose();
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <Login />
+    <Dialog onClose={handleClose} open={open}>
+      <DialogTitle>{title}</DialogTitle>
+      {children}
     </Dialog>
   );
 };
@@ -36,14 +37,16 @@ const Nav = () => {
     dispatch(loginWithToken());
   }, []);
 
-  const [open, setOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
-  const handleLoginOpen = () => {
-    setOpen(true);
+  const handleModalOpen = (content) => {
+    setModalContent(content);
+    setModalOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleModalClose = () => {
+    setModalOpen(false);
   };
 
   const _logout = () => {
@@ -53,7 +56,10 @@ const Nav = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: "#ffffff", boxShadow: "none" }}
+      >
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link to="/" className="link">
@@ -62,39 +68,39 @@ const Nav = () => {
           </Typography>
           {!auth.id ? (
             <>
-              <Button color="inherit" onClick={handleLoginOpen}>
-                Login
+              <Button onClick={() => handleModalOpen(<Login />)}>Login</Button>
+              <Button onClick={() => handleModalOpen(<Register />)}>
+                Signup
               </Button>
-              <Button color="inherit">
-                <Link to="/register" className="link">
-                  Register
-                </Link>
-              </Button>
-              <NavProps open={open} onClose={handleClose} />
+              <ModalDialog
+                title={modalContent === <Login /> ? "Login" : "Register"}
+                open={modalOpen}
+                onClose={handleModalClose}
+              >
+                {modalContent}
+              </ModalDialog>
             </>
           ) : (
             <>
-              <Button color="inherit">
+              <Button>
                 <Link className="link" to="/chat/">
                   Chat
                 </Link>
               </Button>
-              <Button color="inherit">
+              <Button>
                 <Link className="link" to="/user/">
                   Profile
                 </Link>
               </Button>
-              <Button color="inherit">
+              <Button>
                 <Link className="link" to="/feed/">
                   Feed
                 </Link>
               </Button>
-              <Button color="inherit" onClick={() => _logout()}>
-                Logout
-              </Button>
+              <Button onClick={() => _logout()}>Logout</Button>
               {!!auth.img && <img className="profile-image" src={auth.img} />}
             </>
-          )}{" "}
+          )}
         </Toolbar>
       </AppBar>
     </Box>
